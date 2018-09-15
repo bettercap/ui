@@ -1,0 +1,33 @@
+{
+  "name": "hydra",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/http-server -a localhost -p 8000 -c-1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guizzo/hydra.git"
+  },
+  "author": "Simone \"Guizzo\" Gizzi",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/guizzo/hydra/issues"
+  },
+  "homepage": "https://github.com/guizzo/hydra#readme",
+  "dependencies": {
+    "@uirouter/angularjs": "^1.0.20",
+    "angular": "^1.7.2",
+    "bootstrap-4-grid": "^2.4.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-watch": "^5.0.1",
+    "http-server": "^0.11.1"
+  }
+}
