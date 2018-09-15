@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" ng-app="Hydra">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hydra</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap-4-grid/css/grid.min.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+<body>
+
+    <login authorized=""></login>
+
+    <hydra></hydra>
+
+    <!-- Dependencies -->
+    <script src="./node_modules/angular/angular.js"></script>
+    <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+
+    <!-- Core -->
+    <script src="./app.js"></script>
+    <script src="./app.config.js"></script>
+    <script src="./app.run.js"></script>
+
+    <!-- Routing -->
+    <script src="./router.js"></script>
+
+    <!-- Factories -->
+    <script src="./src/factories/eventHandler.factory.js"></script>
+    <script src="./src/factories/session.factory.js"></script>
+
+    <!-- Controllers -->
+
+
+    <!-- Components -->
+    <script src="./src/templates/login/login.component.js"></script>
+
+</body>
+</html>
