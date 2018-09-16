@@ -1,0 +1,17 @@
+.img-responsive{
+    display:block;
+    margin:0 auto;
+    max-width:100%;
+    height:auto;
+}
+.float-left{
+    float:left;
+}
+.float-right{
+    float:right;
+}
+.clearfix:after{
+    content:'';
+    display:table;
+    clear:both;
+}

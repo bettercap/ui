@@ -6,13 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hydra</title>
     <link rel="stylesheet" href="./node_modules/bootstrap-4-grid/css/grid.min.css">
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 <body>
 
-    <login authorized=""></login>
-
-    <hydra></hydra>
+    <ui-view></ui-view>
 
     <!-- Dependencies -->
     <script src="./node_modules/angular/angular.js"></script>
@@ -26,15 +25,17 @@
     <!-- Routing -->
     <script src="./router.js"></script>
 
+    <!-- Interceptors -->
+    <!--<script src="./src/interceptors/session.interceptor.js"></script>-->
+
     <!-- Factories -->
     <script src="./src/factories/eventHandler.factory.js"></script>
     <script src="./src/factories/session.factory.js"></script>
+    <script src="./src/factories/authentication.factory.js"></script>
 
     <!-- Controllers -->
-
-
-    <!-- Components -->
-    <script src="./src/templates/login/login.component.js"></script>
+    <script src="src/templates/login/login.controller.js"></script>
+    <script src="src/templates/hydra/dashboard/dashboard.controller.js"></script>
 
 </body>
 </html>
