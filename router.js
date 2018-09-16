@@ -8,12 +8,15 @@
 
     function Router($stateProvider, $urlRouterProvider){
         $stateProvider
+            .state('login', {
+                url: '/login',
+                controller: 'loginController',
+                templateUrl: './src/templates/login/login.html'
+            })
             .state('dashboard', {
                 url: '/',
-                templateUrl: './src/templates/views/dashboard.html',
-                resolve: function() {
-                    return true;
-                }
+                controller: 'dashboardController',
+                templateUrl: './src/templates/hydra/dashboard/dashboard.html'
             });
         $urlRouterProvider.otherwise('/');
     }

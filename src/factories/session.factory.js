@@ -4,15 +4,18 @@
 
     angular
         .module('Hydra')
-        .factory('sessionFactory', ['$http', 'eventHandler', sessionFactory]);
+        .factory('sessionFactory', ['configuration', '$http', 'eventHandler', sessionFactory]);
 
-    function sessionFactory($http, eventHandler) {
+    function sessionFactory(configuration, $http, eventHandler) {
         return {
-            openSession: function() {
-                return $http.get('https://192.168.1.8:8083/api/session')
+            checkSession: function() {
+                return localStorage.getItem('username') !== null && localStorage.getItem('password') !== null;
+            },
+            getSession: function() {
+                return $http.get(configuration.apiEndpoint + 'session')
                     .then(function(response) {
                         console.log(response);
-                        eventHandler.emit('sessionReady');
+                        return response;
                     })
                     .catch(function(error) {
                        console.log(error);
