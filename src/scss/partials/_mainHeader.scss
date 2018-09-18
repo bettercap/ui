@@ -5,6 +5,11 @@
     box-shadow: 0 1px 3px rgba(0,0,0,.35);
     position:relative;
     z-index:2;
+    transition:transform .3s cubic-bezier(0, 1.12, 0.63, 1.13);
+    transform:translateY(0);
+    &.hydra-mode{
+        transform:translateY(-100%);
+    }
     .logo{
         max-width:50px;
         display: inline-block;
