@@ -1,0 +1,288 @@
+{
+  "options": {
+    "InterfaceName": "",
+    "Caplet": "../caplets/netmon.cap",
+    "Debug": false,
+    "Silent": false,
+    "NoHistory": false,
+    "Commands": "",
+    "CpuProfile": "",
+    "MemProfile": ""
+  },
+  "interface": {
+    "ipv4": "192.168.1.17",
+    "ipv6": "-",
+    "mac": "-",
+    "hostname": "enx18fffffff",
+    "alias": "",
+    "vendor": "Dell",
+    "first_seen": "2018-02-23T06:28:43.565053179+01:00",
+    "last_seen": "2018-02-23T06:28:43.565053179+01:00",
+    "meta": {
+      "values": {}
+    }
+  },
+  "gateway": {
+    "ipv4": "192.168.1.1",
+    "ipv6": "",
+    "mac": "-",
+    "hostname": "gateway.",
+    "alias": "",
+    "vendor": "Technicolor",
+    "first_seen": "2018-02-23T06:28:43.649440315+01:00",
+    "last_seen": "2018-02-23T06:28:43.649440315+01:00",
+    "meta": {
+      "values": {}
+    }
+  },
+  "env": {
+    "data": {
+      "$": "{by}{fw}{cidr} {fb}\u003e {env.iface.ipv4} {reset} {bold}» {reset}",
+      "api.rest.address": "\u003cinterface address\u003e",
+      "api.rest.certificate": "~/.bcap-api.rest.certificate.pem",
+      "api.rest.key": "~/.bcap-api.rest.key.pem",
+      "api.rest.password": "bcap",
+      "api.rest.port": "8083",
+      "api.rest.username": "bcap",
+      "arp.spoof.targets": "\u003centire subnet\u003e",
+      "dhcp6.spoof.domains": "microsoft.com, goole.com, facebook.com, apple.com, twitter.com",
+      "dns.spoof.address": "\u003cinterface address\u003e",
+      "dns.spoof.all": "false",
+      "dns.spoof.domains": "*",
+      "events.stream.filter": "",
+      "gateway.address": "192.168.1.1",
+      "gateway.mac": "e0:b9:e5:17:22:e4",
+      "http.port": "80",
+      "http.proxy.address": "\u003cinterface address\u003e",
+      "http.proxy.port": "8080",
+      "http.proxy.script": "",
+      "http.server.address": "\u003cinterface address\u003e",
+      "http.server.path": ".",
+      "http.server.port": "80",
+      "https.port": "443",
+      "https.proxy.address": "\u003cinterface address\u003e",
+      "https.proxy.certificate": "~/.bettercap-ca.cert.pem",
+      "https.proxy.key": "~/.bettercap-ca.key.pem",
+      "https.proxy.port": "8083",
+      "https.proxy.script": "",
+      "iface.index": "6",
+      "iface.ipv4": "192.168.1.17",
+      "iface.ipv6": "-",
+      "iface.mac": "-",
+      "iface.name": "enx18fffffff",
+      "log.debug": "false",
+      "log.silent": "false",
+      "mac.changer.address": "\u003crandom mac\u003e",
+      "mac.changer.iface": "\u003cinterface name\u003e",
+      "net.probe.throttle": "10",
+      "net.sniff.filter": "not arp",
+      "net.sniff.local": "false",
+      "net.sniff.output": "",
+      "net.sniff.regexp": "",
+      "net.sniff.source": "",
+      "net.sniff.verbose": "true",
+      "ticker.commands": "clear; net.show",
+      "ticker.period": "1",
+      "wifi.recon.channel": ""
+    }
+  },
+  "lan": {
+    "hosts": [{
+      "ipv4": "192.168.1.33",
+      "ipv6": "",
+      "mac": "-",
+      "hostname": "",
+      "alias": "nas",
+      "vendor": "Noon Technology Co.",
+      "first_seen": "2018-02-23T06:28:43.661773691+01:00",
+      "last_seen": "2018-02-23T06:29:10.402653849+01:00",
+      "meta": {
+        "values": {}
+      }
+    }, {
+      "ipv4": "192.168.1.29",
+      "ipv6": "",
+      "mac": "-",
+      "hostname": "osxvm",
+      "alias": "",
+      "vendor": "PCS Systemtechnik GmbH",
+      "first_seen": "2018-02-23T06:28:43.661807871+01:00",
+      "last_seen": "2018-02-23T06:28:43.661807871+01:00",
+      "meta": {
+        "values": {}
+      }
+    }, {
+      "ipv4": "192.168.1.22",
+      "ipv6": "",
+      "mac": "-",
+      "hostname": "yamato",
+      "alias": "",
+      "vendor": "Apple",
+      "first_seen": "2018-02-23T06:28:43.661869827+01:00",
+      "last_seen": "2018-02-23T06:29:13.734671382+01:00",
+      "meta": {
+        "values": {}
+      }
+    }, {
+      "ipv4": "192.168.1.254",
+      "ipv6": "",
+      "mac": "-",
+      "hostname": "",
+      "alias": "gateway",
+      "vendor": "",
+      "first_seen": "2018-02-23T06:28:43.6617926+01:00",
+      "last_seen": "2018-02-23T06:28:43.6617926+01:00",
+      "meta": {
+        "values": {}
+      }
+    }, {
+      "ipv4": "192.168.1.26",
+      "ipv6": "",
+      "mac": "-",
+      "hostname": "winvm",
+      "alias": "",
+      "vendor": "PCS Systemtechnik GmbH",
+      "first_seen": "2018-02-23T06:28:43.661830083+01:00",
+      "last_seen": "2018-02-23T06:28:43.661830083+01:00",
+      "meta": {
+        "values": {}
+      }
+    }, {
+      "ipv4": "192.168.1.76",
+      "ipv6": "",
+      "mac": "-",
+      "hostname": "pibak",
+      "alias": "",
+      "vendor": "Raspberry Pi Foundation",
+      "first_seen": "2018-02-23T06:28:43.661833177+01:00",
+      "last_seen": "2018-02-23T06:29:07.391079854+01:00",
+      "meta": {
+        "values": {}
+      }
+    }, {
+      "ipv4": "192.168.1.3",
+      "ipv6": "",
+      "mac": "00:17:88:29:97:bc",
+      "hostname": "",
+      "alias": "lights",
+      "vendor": "Philips Lighting BV",
+      "first_seen": "2018-02-23T06:28:43.661849075+01:00",
+      "last_seen": "2018-02-23T06:29:14.306812147+01:00",
+      "meta": {
+        "values": {}
+      }
+    }, {
+      "ipv4": "192.168.1.23",
+      "ipv6": "",
+      "mac": "-",
+      "hostname": "pihole",
+      "alias": "",
+      "vendor": "Raspberry Pi Foundation",
+      "first_seen": "2018-02-23T06:28:43.661854928+01:00",
+      "last_seen": "2018-02-23T06:29:14.786637323+01:00",
+      "meta": {
+        "values": {}
+      }
+    }]
+  },
+  "wifi": {
+    "aps": []
+  },
+  "packets": {
+    "Stats": {
+      "Sent": 1080,
+      "Received": 213207,
+      "PktReceived": 3549,
+      "Errors": 0
+    },
+    "Protos": {
+      "ARP": 2918,
+      "DNS": 32,
+      "Ethernet": 3549,
+      "ICMPv4": 44,
+      "IPv4": 631,
+      "TCP": 394,
+      "UDP": 193
+    },
+    "Traffic": {
+      "192.168.1.0": {
+        "Sent": 0,
+        "Received": 215
+      },
+      "192.168.1.1": {
+        "Sent": 0,
+        "Received": 289
+      },
+      "192.168.1.13": {
+        "Sent": 415,
+        "Received": 289
+      },
+      "192.168.1.14": {
+        "Sent": 0,
+        "Received": 289
+      },
+      "192.168.1.17": {
+        "Sent": 41356,
+        "Received": 46456
+      },
+      "192.168.1.20": {
+        "Sent": 2658,
+        "Received": 2018
+      },
+      "192.168.1.22": {
+        "Sent": 1426,
+        "Received": 215
+      },
+      "192.168.1.23": {
+        "Sent": 2220,
+        "Received": 1747
+      },
+      "192.168.1.254": {
+        "Sent": 120,
+        "Received": 320
+      },
+      "192.168.1.255": {
+        "Sent": 0,
+        "Received": 1140
+      },
+      "192.168.1.26": {
+        "Sent": 0,
+        "Received": 215
+      },
+      "192.168.1.29": {
+        "Sent": 0,
+        "Received": 215
+      },
+      "192.168.1.3": {
+        "Sent": 1438,
+        "Received": 654
+      },
+      "192.168.1.33": {
+        "Sent": 130,
+        "Received": 355
+      },
+      "192.168.1.34": {
+        "Sent": 2303,
+        "Received": 2018
+      },
+      "192.168.1.43": {
+        "Sent": 10756,
+        "Received": 8721
+      },
+      "192.168.1.6": {
+        "Sent": 497,
+        "Received": 375
+      },
+      "192.168.1.76": {
+        "Sent": 284,
+        "Received": 172
+      },
+      "192.168.1.78": {
+        "Sent": 284,
+        "Received": 172
+      }
+    }
+  },
+  "started_at": "2018-02-23T06:28:43.650628576+01:00",
+  "active": true
+}
