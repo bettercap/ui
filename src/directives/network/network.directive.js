@@ -180,7 +180,6 @@
             network = new vis.Network($scope.container, $scope.data, $scope.options);
             // eventHandler.emit('networkStarted');
             network.on('selectNode', function(params) {
-                console.log(this.getSeed());
                 // let node = this.getSelectedNodes();
                 // this.moveNode(node, 123, 312);
             });

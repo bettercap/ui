@@ -1,8 +1,30 @@
 <network hosts="hosts" edges="edges"></network>
 
-<header id="hydraMainHeader" ng-include="'./src/templates/hydra/template-parts/header.html'"></header>
+<header id="hydraMainHeader"
+        ng-include="'./src/templates/hydra/template-parts/header.html'"
+        ng-class="{ 'hydra-mode' : hydraModeEnabled }"></header>
 
-<div id="hydraWrapper">
+<button class="btn btn-hydra-mode btn__shadow"
+        ng-click="hydraMode()"
+        ng-mouseenter="enableHydraBtnHover()"
+        ng-mouseleave="disableHydraBtnHover()"
+        ng-class="{ 'hydra-mode' : hydraModeEnabled }">
+    <i class="fab fa-connectdevelop fa-lg"
+       ng-class="{ 'fa-pulse' : hydraModeEnabled }"></i>
+    <span class="btn-label"
+          ng-class="{ 'visible' : hydraBtnHover }">
+        Hydra Mode:
+        <span ng-class="{
+         'text__acid-green' : hydraModeEnabled,
+         'text__acid-red' : !hydraModeEnabled
+         }">
+            <strong>{{ hydraModeEnabled ? 'ON' : 'OFF' }}</strong>
+        </span>
+    </span>
+</button>
+
+<div id="hydraWrapper"
+     ng-class="{ 'hydra-mode' : hydraModeEnabled }">
 
     <aside id="hydraMainMenu" ng-include="'./src/templates/hydra/template-parts/mainMenu.html'"></aside>
 
@@ -10,4 +32,6 @@
 
 </div>
 
-<footer id="hydraMainFooter" ng-include="'./src/templates/hydra/template-parts/footer.html'"></footer>
+<footer id="hydraMainFooter"
+        ng-include="'./src/templates/hydra/template-parts/footer.html'"
+        ng-class="{ 'hydra-mode' : hydraModeEnabled }"></footer>

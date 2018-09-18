@@ -6,4 +6,9 @@
     color:#fff;
     z-index:1;
     padding:10px;
+    transition:transform .3s cubic-bezier(0, 1.12, 0.63, 1.13);
+    transform:translateY(0);
+    &.hydra-mode{
+        transform:translateY(100%);
+    }
 }
