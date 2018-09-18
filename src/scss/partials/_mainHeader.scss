@@ -1,0 +1,25 @@
+#hydraMainHeader{
+    padding:10px;
+    background-color:$mainBackground;
+    color:#fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.35);
+    position:relative;
+    z-index:2;
+    .logo{
+        max-width:50px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .title{
+        display: inline-block;
+        vertical-align: middle;
+        h1{
+            margin:0;
+            font-size:1rem;
+        }
+    }
+    .logout{
+        display: inline-block;
+        vertical-align: middle;
+    }
+}

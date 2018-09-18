@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hydra</title>
-    <link rel="stylesheet" href="./node_modules/bootstrap-4-grid/css/grid.min.css">
-    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/main.css">
+    <link href="./node_modules/bootstrap-4-grid/css/grid.min.css" rel="stylesheet">
+    <link href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,500" rel="stylesheet">
+    <link href="./node_modules/vis/dist/vis.min.css" rel="stylesheet">
+    <link href="./assets/css/main.css" rel="stylesheet">
 </head>
 <body>
 
@@ -16,6 +18,7 @@
     <!-- Dependencies -->
     <script src="./node_modules/angular/angular.js"></script>
     <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+    <script src="./node_modules/vis/dist/vis.js"></script>
 
     <!-- Core -->
     <script src="./app.js"></script>
@@ -32,10 +35,46 @@
     <script src="./src/factories/eventHandler.factory.js"></script>
     <script src="./src/factories/session.factory.js"></script>
     <script src="./src/factories/authentication.factory.js"></script>
+    <script src="./src/factories/networkHandler.factory.js"></script>
 
     <!-- Controllers -->
     <script src="src/templates/login/login.controller.js"></script>
     <script src="src/templates/hydra/dashboard/dashboard.controller.js"></script>
+
+    <!-- Directives -->
+    <script src="src/directives/network/network.directive.js"></script>
+
+    <!--<script type="text/javascript">-->
+        <!--// create an array with nodes-->
+        <!--var nodes = new vis.DataSet([-->
+            <!--{id: 1, label: 'Node 1'},-->
+            <!--{id: 2, label: 'Node 2'},-->
+            <!--{id: 3, label: 'Node 3'},-->
+            <!--{id: 4, label: 'Node 4'},-->
+            <!--{id: 5, label: 'Node 5'}-->
+        <!--]);-->
+
+        <!--// create an array with edges-->
+        <!--var edges = new vis.DataSet([-->
+            <!--{from: 1, to: 3},-->
+            <!--{from: 1, to: 2},-->
+            <!--{from: 2, to: 4},-->
+            <!--{from: 2, to: 5}-->
+        <!--]);-->
+
+        <!--// create a network-->
+        <!--var container = document.getElementById('network');-->
+
+        <!--// provide the data in the vis format-->
+        <!--var data = {-->
+            <!--nodes: nodes,-->
+            <!--edges: edges-->
+        <!--};-->
+        <!--var options = {};-->
+
+        <!--// initialize your network!-->
+        <!--var network = new vis.Network(container, data, options);-->
+    <!--</script>-->
 
 </body>
 </html>

@@ -21,10 +21,11 @@
     "@fortawesome/fontawesome-free": "^5.3.1",
     "@uirouter/angularjs": "^1.0.20",
     "angular": "^1.7.2",
-    "bootstrap-4-grid": "^2.4.1"
+    "bootstrap-4-grid": "^2.4.1",
+    "vis": "^4.21.0"
   },
   "devDependencies": {
-    "gulp": "^4.0.0",
+    "gulp": "^3.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",

@@ -1,0 +1,19 @@
+#hydraMainMenu{
+    width:220px;
+    height:100%;
+    background-color: rgba(38, 45, 53, .95);
+    overflow-y: auto;
+    box-shadow: 1px 0 3px rgba(0,0,0,.35);
+    position:relative;
+    z-index:2;
+    float:left;
+    li{
+        border-bottom:1px solid $borderColor;
+        a{
+            color:#fff;
+            padding:10px;
+            display:block;
+            text-decoration:none;
+        }
+    }
+}

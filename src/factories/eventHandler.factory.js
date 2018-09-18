@@ -10,6 +10,7 @@
         return {
             emit: function(event) {
                 $rootScope.$broadcast(event);
+                console.log('[EventHandler] Emitted: ' + event);
             }
         }
     }

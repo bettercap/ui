@@ -1,23 +1,13 @@
-<header>
-    <p>header</p>
-</header>
+<network hosts="hosts" edges="edges"></network>
+
+<header id="hydraMainHeader" ng-include="'./src/templates/hydra/template-parts/header.html'"></header>
 
 <div id="hydraWrapper">
 
-    <aside id="hydraMenu">
-        <ul>
-            <li><a href="#">Link 01</a></li>
-            <li><a href="#">Link 02</a></li>
-            <li><a href="#">Link 03</a></li>
-        </ul>
-    </aside>
+    <aside id="hydraMainMenu" ng-include="'./src/templates/hydra/template-parts/mainMenu.html'"></aside>
 
-    <main id="hydraView">
-        <h1>Dashboard</h1>
-    </main>
+    <main id="hydraViewContainer" ng-include="'./src/templates/hydra/template-parts/viewContainer.html'"></main>
 
 </div>
 
-<footer>
-    <p>footer</p>
-</footer>
+<footer id="hydraMainFooter" ng-include="'./src/templates/hydra/template-parts/footer.html'"></footer>
