@@ -1,1 +1,20 @@
 <div id="network"></div>
+<div id="context-menu-overlay"
+     ng-click="closeContextMenu($event)"
+     ng-class="{ 'opened' : opened }"></div>
+<div id="context-menu" ng-class="{ 'opened' : opened }">
+    <ul>
+        <li class="context-menu__item">
+            <i class="fas fa-broadcast-tower fa-lg"></i> Open Gateway webInterface
+        </li>
+        <li class="context-menu__item">
+            <i class="fas fa-terminal fa-lg"></i> Open Terminal
+        </li>
+        <li class="context-menu__item">
+            <i class="fas fa-user-secret fa-lg"></i> Launch MITM
+        </li>
+        <li class="context-menu__item">
+            <i class="fas fa-grin-beam-sweat fa-lg"></i> Non sò più che scrive xD
+        </li>
+    </ul>
+</div>
