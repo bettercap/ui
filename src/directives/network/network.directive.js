@@ -26,12 +26,14 @@
         });
 
     function link($scope, $element, $attrs) {
+        /**
+         * Variables
+         */
         let network = undefined;
         $scope.container = $element[0].querySelector('#network');
-        $scope.data = {
-            nodes: undefined,
-            edges: undefined
-        };
+        $scope.contextMenu = $element[0].querySelector('#context-menu');
+        $scope.contextMenuItems = $element[0].querySelectorAll('.context-menu__item');
+        $scope.opened = false;
         $scope.options = {
             autoResize: true,
             height: '100%',
@@ -161,6 +163,35 @@
                 }
             }
         };
+        $scope.data = {
+            nodes: undefined,
+            edges: undefined
+        };
+
+        /**
+         * Listeners
+         */
+        $element.bind('contextmenu', function(e) {
+            e.preventDefault();
+            let coords = {
+                x: e.clientX + 5,
+                y: e.clientY + 5
+            };
+            $scope.contextMenu.style.top = coords.y + 'px';
+            $scope.contextMenu.style.left = coords.x + 'px';
+            $scope.opened = true;
+            $scope.$apply();
+        });
+        $scope.contextMenuItems.forEach(function(el) {
+            el.addEventListener('click', function() {
+                $scope.opened = false;
+                $scope.$apply();
+            });
+        });
+
+        /**
+         * Watchers
+         */
         $scope.$watch('hosts', function(hosts){
             if(hosts) {
                 $scope.data.nodes = new vis.DataSet(hosts);
@@ -176,6 +207,10 @@
                 $scope.launch();
             }
         });
+
+        /**
+         * Methods
+         */
         $scope.launch = function() {
             network = new vis.Network($scope.container, $scope.data, $scope.options);
             // eventHandler.emit('networkStarted');
@@ -183,6 +218,13 @@
                 // let node = this.getSelectedNodes();
                 // this.moveNode(node, 123, 312);
             });
+            // network.setSelection({nodes:[0], edges:[]});
+            // let node = network.getSelection();
+            // network.moveNode(node.nodes[0], 2000, 2000);
+            // console.log(node);
+        };
+        $scope.closeContextMenu = function(e) {
+            $scope.opened = false;
         };
     }
 
