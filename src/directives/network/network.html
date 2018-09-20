@@ -7,8 +7,11 @@
         <li class="context-menu__item">
             <i class="fas fa-broadcast-tower fa-lg"></i> Open Gateway webInterface
         </li>
-        <li class="context-menu__item">
+        <li ng-show="!terminalOpened" class="context-menu__item" ng-click="openTerminal()">
             <i class="fas fa-terminal fa-lg"></i> Open Terminal
+        </li>
+        <li ng-show="terminalOpened" class="context-menu__item" ng-click="closeTerminal()">
+            <i class="fas fa-terminal fa-lg"></i> Close Terminal
         </li>
         <li class="context-menu__item">
             <i class="fas fa-user-secret fa-lg"></i> Launch MITM

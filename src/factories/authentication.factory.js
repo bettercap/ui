@@ -32,7 +32,18 @@
                 if (checkLocalStorage()){
                     localStorage.setItem('username', credentials.username);
                     localStorage.setItem('password', credentials.password);
-                    eventHandler.emit('User Log-in');
+                    eventHandler.emit('userLogin');
+                } else {
+                    //TODO: su browser senza localStorage, ripiegare su cookie (?)
+                }
+            },
+            clearCredentials: function() {
+                if (checkLocalStorage()){
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('password');
+                    eventHandler.emit('userLogout');
+                } else {
+                    //TODO: leggi sopra :)
                 }
             }
         }
