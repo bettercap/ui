@@ -20,7 +20,7 @@
                 },
                 templateUrl: './src/directives/network/network.html',
                 link: link,
-                controller: ['$scope', networkController],
+                controller: ['$scope', 'eventHandler', networkController],
                 controllerAs: 'nc'
             }
         });
@@ -171,17 +171,7 @@
         /**
          * Listeners
          */
-        $element.bind('contextmenu', function(e) {
-            e.preventDefault();
-            let coords = {
-                x: e.clientX + 5,
-                y: e.clientY + 5
-            };
-            $scope.contextMenu.style.top = coords.y + 'px';
-            $scope.contextMenu.style.left = coords.x + 'px';
-            $scope.opened = true;
-            $scope.$apply();
-        });
+        $element.bind('contextmenu', openContextMenu);
         $scope.contextMenuItems.forEach(function(el) {
             el.addEventListener('click', function() {
                 $scope.opened = false;
@@ -226,10 +216,48 @@
         $scope.closeContextMenu = function(e) {
             $scope.opened = false;
         };
+
+        /**
+         * Functions
+         */
+        function openContextMenu(e) {
+            e.preventDefault();
+            let coords = {
+                x: e.clientX + 5,
+                y: e.clientY + 5
+            };
+            $scope.contextMenu.style.top = coords.y + 'px';
+            $scope.contextMenu.style.left = coords.x + 'px';
+            $scope.opened = true;
+            $scope.$apply();
+        }
     }
 
-    function networkController($scope) {
+    function networkController($scope, eventHandler) {
+        /**
+         * Variables
+         */
+        $scope.terminalOpened = false;
 
+        /**
+         * Watchers
+         */
+        $scope.$on('openTerminal', function() {
+            $scope.terminalOpened = true;
+        });
+        $scope.$on('closeTerminal', function() {
+            $scope.terminalOpened = false;
+        });
+
+        /**
+         * Methods
+         */
+        $scope.openTerminal = function() {
+            eventHandler.emit('openTerminal');
+        };
+        $scope.closeTerminal = function() {
+            eventHandler.emit('closeTerminal');
+        };
     }
 
 })();

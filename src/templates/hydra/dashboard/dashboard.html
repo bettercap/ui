@@ -4,11 +4,11 @@
         ng-include="'./src/templates/hydra/template-parts/header.html'"
         ng-class="{ 'hydra-mode' : hydraModeEnabled }"></header>
 
-<button class="btn btn-hydra-mode btn__shadow"
+<button class="btn btn-hydra-mode btn__shadow btn-special-action"
         ng-click="hydraMode()"
-        ng-mouseenter="enableHydraBtnHover()"
-        ng-mouseleave="disableHydraBtnHover()"
-        ng-class="{ 'hydra-mode' : hydraModeEnabled }">
+        ng-mouseenter="enableBtnHover('hydraBtnHover')"
+        ng-mouseleave="disableBtnHover('hydraBtnHover')"
+        ng-class="{ 'label-visible' : hydraModeEnabled }">
     <i class="fab fa-connectdevelop fa-lg"
        ng-class="{ 'fa-pulse' : hydraModeEnabled }"></i>
     <span class="btn-label"
@@ -19,6 +19,25 @@
          'text__acid-red' : !hydraModeEnabled
          }">
             <strong>{{ hydraModeEnabled ? 'ON' : 'OFF' }}</strong>
+        </span>
+    </span>
+</button>
+
+<button class="btn btn-terminal btn__shadow btn-special-action"
+        ng-click="toggleTerminal()"
+        ng-mouseenter="enableBtnHover('terminalBtnHover')"
+        ng-mouseleave="disableBtnHover('terminalBtnHover')"
+        ng-class="{ 'label-visible' : terminal }">
+    <i class="fas fa-terminal fa-lg"
+       ng-class="{ 'fa-blink' : terminal }"></i>
+    <span class="btn-label"
+          ng-class="{ 'visible' : terminalBtnHover }">
+        Terminal:
+        <span ng-class="{
+         'text__acid-green' : terminal,
+         'text__acid-red' : !terminal
+         }">
+            <strong>{{ terminal ? 'ON' : 'OFF' }}</strong>
         </span>
     </span>
 </button>

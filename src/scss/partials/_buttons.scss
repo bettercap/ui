@@ -30,9 +30,8 @@
     border-color:$netBlue;
     color:$netBlue;
 }
-.btn-hydra-mode{
+.btn-special-action{
     position: absolute;
-    top: 90px;
     right: 10px;
     z-index: 2;
     border-color:$darkRed;
@@ -45,11 +44,16 @@
     align-content: center;
     justify-content: center;
     transition:all .3s cubic-bezier(0, 1.12, 0.63, 1.13);
-    &.hydra-mode{
-        top: 20px;
+    &.label-visible{
         border-color:$acidGreen;
         color:$acidGreen;
     }
+}
+.btn-hydra-mode{
+    top: 90px;
+}
+.btn-terminal{
+    top: 150px;
 }
 .btn-label{
     display: inline-block;

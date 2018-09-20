@@ -17,7 +17,7 @@
             $scope.submitted = true;
             authentication.setCredentials($scope.credentials);
         };
-        $scope.$on('User Log-in', function() {
+        $scope.$on('userLogin', function() {
             $state.go('dashboard');
         });
     }
