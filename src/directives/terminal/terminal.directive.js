@@ -15,7 +15,6 @@
                      * "="   Direct model binding / two-way binding
                      * "&"   Behaviour binding / Method binding
                      **/
-
                 },
                 templateUrl: './src/directives/terminal/terminal.html',
                 link: link,
@@ -43,11 +42,21 @@
         $scope.maximized = false;
         $scope.currentLine = '';
         $scope.totalLine = [];
+        $scope.lastLogin = undefined;
 
         /**
          * Listeners
          */
         $scope.$on('openTerminal', function() {
+            let currentdate = new Date();
+            let datetime = "Last Login: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/"
+                + currentdate.getFullYear() + " @ "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":"
+                + currentdate.getSeconds();
+            // console.log(currentdate.getDate());
+            $scope.lastLogin = datetime;
             $scope.terminal = true;
         });
         $scope.$on('closeTerminal', function() {
@@ -138,7 +147,6 @@
                 // Detect any other key
                 $scope.currentLine += e.key;
             }
-            console.log($scope.currentLine);
             $scope.$apply();
         }
     }

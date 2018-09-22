@@ -8,6 +8,15 @@ ol, ul{
     margin:0;
     list-style-type:none;
 }
+::-webkit-scrollbar {
+    background-color: rgba(149, 216, 85, 0.15);
+    height: 2px;
+    width: 2px;
+    border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #95D855;
+}
 .text__acid-green{
     color:$acidGreen;
 }
