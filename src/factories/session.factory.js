@@ -7,6 +7,13 @@
         .factory('sessionFactory', ['configuration', '$http', '$rootScope', 'eventHandler', sessionFactory]);
 
     function sessionFactory(configuration, $http, $rootScope, eventHandler) {
+        function bindPacketsToIp(packets, ip) {
+            for (let prop in packets) {
+                if (packets.hasOwnProperty(prop) && prop === ip) {
+                    return packets[prop];
+                }
+            }
+        }
         return {
             checkSession: function() {
                 return localStorage.getItem('username') !== null && localStorage.getItem('password') !== null;
@@ -15,6 +22,10 @@
                 return $http.get(configuration.apiEndpoint + 'session')
                 // return $http.get('/session.mock.json')
                     .then(function(response) {
+                        response.data.lan.hosts.forEach(function(el) {
+                            el.packets = bindPacketsToIp(response.data.packets.Traffic, el.ipv4);
+                        });
+                        console.log(response.data.lan.hosts);
                         $rootScope.session = response.data;
                         eventHandler.emit('sessionReady');
                     })

@@ -1,0 +1,35 @@
+table {
+    border-collapse: collapse;
+}
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom:1rem;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.table__session{
+    color: #fff;
+    background-color: #212529;
+    box-shadow:0 0 3px rgba(0,0,0,.45);
+    thead{
+        th{
+            border-color: #32383e;
+            vertical-align: bottom;
+            padding: .75rem;
+        }
+    }
+    tbody{
+        tr{
+            &:nth-of-type(odd){
+                background-color: rgba(255,255,255,.05);
+            }
+        }
+        td{
+            border-color: #32383e;
+            vertical-align: bottom;
+            padding: .75rem;
+        }
+    }
+}

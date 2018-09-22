@@ -1,1 +1,235 @@
-<p>VIEW CONTAINER</p>
+<!-- Start provisional layout -->
+<div ng-if="v1" class="table-responsive">
+    <table class="table__session">
+        <thead>
+        <tr>
+            <th>Ipv4</th>
+            <!--<th>Ipv6</th>-->
+            <th>MAC</th>
+            <th>Name</th>
+            <th>Vendor</th>
+            <!--<th>Alias</th>-->
+            <th>Send</th>
+            <th>Received</th>
+            <th>Last seen</th>
+            <th>Meta</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="host in session.lan.hosts | orderBy:'-packets.Sent'">
+            <td>{{ host.ipv4 }}</td>
+            <!--<td>{{ host.ipv6 }}</td>-->
+            <td>{{ host.mac }}</td>
+            <td>{{ host.hostname }}</td>
+            <td>{{ host.vendor }}</td>
+            <!--<td>{{ host.alias }}</td>-->
+            <td>{{ host.packets.Sent }}</td>
+            <td>{{ host.packets.Received }}</td>
+            <td>{{ host.last_seen | date: 'dd-MM-yyyy @ hh:MM:ss' }}</td>
+            <td>
+                <i ng-if="host.meta.values.hasOwnProperty('mdns:id')" class="fas fa-info"></i>
+                <span ng-if="!host.meta.values.hasOwnProperty('mdns:id')">n/a</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .session-device {
+        min-height:180px;
+        padding: 5px;
+        border-radius: 4px;
+        box-shadow: 0 0 3px rgba(0,0,0,.35);
+        margin-bottom: 10px;
+        background-color: #242a31;
+        color: #fff;
+        border: 1px solid #3c3c3c;
+        max-width: calc(100% - 35px);
+        position:relative;
+        overflow:hidden;
+    }
+    .session-device > div,
+    .session-device__meta-panel > .row > div{
+        margin-bottom: 10px;
+    }
+    .session-device .session-device__meta-panel{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #242a31;
+        padding: 20px;
+        transform: translateY(100%);
+        transition: transform .3s ease-in-out;
+    }
+    .session-device .session-device__meta-panel.opened{
+        transform: translateY(0%);
+    }
+    .show-meta{
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        z-index: 10;
+        margin: 0 !important;
+        cursor:pointer;
+    }
+    .show-meta > span{
+        color: #95D855;
+        border: 1px solid #95D855;
+        border-radius: 4px;
+        padding: 2px 5px;
+    }
+    .no-meta{
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        z-index: 10;
+        margin: 0 !important;
+        color:#95D855;
+    }
+    strong.hl{
+        color:#95D855;
+    }
+</style>
+<div class="container-fluid">
+    <div ng-if="v2" class="session-overview">
+        <div class="session-device row" ng-repeat="host in session.lan.hosts | orderBy:'-packets.Sent'">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div>
+                    <span>Ipv4: </span>
+                </div>
+                <strong class="hl">{{ host.ipv4 }}</strong>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div>
+                    <span>Mac: </span>
+                </div>
+                <strong class="hl">{{ host.mac }}</strong>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div>
+                    <span>Hostname: </span>
+                </div>
+                <strong class="hl">{{ host.hostname }}</strong>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div>
+                    <span>Vendor: </span>
+                </div>
+                <strong class="hl">{{ host.vendor }}</strong>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div>
+                    <span>Sent: </span>
+                </div>
+                <strong class="hl">{{ host.packets.Sent }}</strong>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div>
+                    <span>Received: </span>
+                </div>
+                <strong class="hl">{{ host.packets.Received }}</strong>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div>
+                    <span>Last seen: </span>
+                </div>
+                <strong class="hl">{{ host.last_seen | date: 'dd-MM-yyyy @ hh:MM:ss' }}</strong>
+            </div>
+            <div ng-click="toggleMeta(host)" class="show-meta">
+                <span ng-if="host.meta.values.hasOwnProperty('mdns:id') && !host.showMeta">
+                    <i class="fas fa-info-circle"></i> Show Meta
+                </span>
+                <span ng-if="host.meta.values.hasOwnProperty('mdns:id') && host.showMeta">
+                    <i class="fas fa-info-circle"></i> Close Meta
+                </span>
+            </div>
+            <div class="no-meta">
+                <span ng-if="!host.meta.values.hasOwnProperty('mdns:id')">
+                    Meta missing :/
+                </span>
+            </div>
+            <div class="session-device__meta-panel"
+                 ng-if="host.meta.values.hasOwnProperty('mdns:id')"
+                 ng-class="{ 'opened' : host.showMeta }">
+                <div class="row">
+                    <div ng-show="host.meta.values['mdns:bs']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:bs:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:bs'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:ca']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:ca:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:ca'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:cd']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:cd:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:cd'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:fn']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:fn:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:fn'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:ic']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:ic:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:ic'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:id']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:id:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:id'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:md']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:md:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:md'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:nf']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:nf:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:nf'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:rm']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:rm:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:rm'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:rs']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:rs:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:rs'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:st']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:st:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:st'] }}</strong>
+                    </div>
+                    <div ng-show="host.meta.values['mdns:ve']" class="col-12 col-md-6 col-lg-3">
+                        <div>
+                            <span>mdns:ve:</span>
+                        </div>
+                        <strong class="hl">{{ host.meta.values['mdns:ve'] }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End provisional layout -->
