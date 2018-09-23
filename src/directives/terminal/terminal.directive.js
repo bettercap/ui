@@ -48,15 +48,7 @@
          * Listeners
          */
         $scope.$on('openTerminal', function() {
-            let currentdate = new Date();
-            let datetime = "Last Login: " + currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/"
-                + currentdate.getFullYear() + " @ "
-                + currentdate.getHours() + ":"
-                + currentdate.getMinutes() + ":"
-                + currentdate.getSeconds();
-            // console.log(currentdate.getDate());
-            $scope.lastLogin = datetime;
+            $scope.lastLogin = getCurrentTime();
             $scope.terminal = true;
         });
         $scope.$on('closeTerminal', function() {
@@ -100,6 +92,25 @@
         /**
          * Functions
          */
+        function getCurrentTime() {
+            let currentdate = new Date();
+            let date = {
+                d: currentdate.getDate(),
+                m: currentdate.getMonth() + 1,
+                y: currentdate.getFullYear(),
+                hh: currentdate.getHours(),
+                mm: currentdate.getMinutes(),
+                ss: currentdate.getSeconds()
+            };
+            for(let prop in date) {
+                if(date.hasOwnProperty(prop)) {
+                    if(date[prop] < 10) {
+                        date[prop] = '0' + date[prop];
+                    }
+                }
+            }
+            return 'Last login: ' + date.d + '/' + date.m + '/' + date.y + ' @ ' + date.hh + ':' + date.mm + ':' + date.ss;
+        }
         function sendInputToTerminal(e) {
             console.log(e);
             e.preventDefault();

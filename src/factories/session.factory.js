@@ -25,7 +25,6 @@
                         response.data.lan.hosts.forEach(function(el) {
                             el.packets = bindPacketsToIp(response.data.packets.Traffic, el.ipv4);
                         });
-                        console.log(response.data.lan.hosts);
                         $rootScope.session = response.data;
                         eventHandler.emit('sessionReady');
                     })

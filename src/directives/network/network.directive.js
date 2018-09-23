@@ -55,11 +55,8 @@
                 },
                 chosen: {
                     node: function(values, id, selected, hovering) {
-                        // console.log(this);
-                        // console.log(values);
-                        // console.log(id);
-                        // console.log(selected);
-                        // console.log(hovering);
+                        console.log(values);
+                        values.shadowColor = 'rgba(0,0,0,1)';
                     },
                     label: function(values, id, selected, hovering) {
                         // console.log(values);
@@ -89,8 +86,12 @@
                     shapeProperties: {
                         borderDashes: false
                     },
-                    shape: 'hexagon',
+                    // shape: 'hexagon',
                     color: '#4169e1',
+                    shape: 'image',
+                    image: {
+                          unselected: 'https://svgshare.com/getbyhash/sha1-hna/zfdXydVBRrM1ptMiFgtw2v4='
+                    },
                     // icon: {
                     //     face: '"Font Awesome 5 Free"',
                     //     code: '',
@@ -99,7 +100,7 @@
                     // },
                     font: {
                         face: "'Roboto Mono', monospace",
-                        color: '#4169e1',
+                        color: '#fff',
                         background: 'rgba(0,0,0,.75)',
                         // strokeWidth: 1,
                         // strokeColor: '#4169e1'
@@ -109,8 +110,12 @@
                     shapeProperties: {
                         borderDashes: false
                     },
-                    shape: 'hexagon',
+                    // shape: 'hexagon',
                     color: '#95D855',
+                    shape: 'image',
+                    image: {
+                        unselected: 'https://svgshare.com/getbyhash/sha1-jJOcLt1obsHmTVdXfN1EGijN/10='
+                    },
                     label: 'Gateway',
                     margin: {
                         top: 10,
@@ -120,13 +125,13 @@
                     },
                     // icon: {
                     //     face: '"Font Awesome 5 Free"',
-                    //     code: '',
+                    //     code: '\uf519',
                     //     color: '#95D855',
                     //     size: 80
                     // },
                     font: {
                         face: "'Roboto Mono', monospace",
-                        color: '#95D855',
+                        color: '#fff',
                         background: 'rgba(0,0,0,.75)',
                         // strokeWidth: 1,
                         // strokeColor: '#95D855'
@@ -202,16 +207,20 @@
          * Methods
          */
         $scope.launch = function() {
+            $scope.listener = false;
             network = new vis.Network($scope.container, $scope.data, $scope.options);
             // eventHandler.emit('networkStarted');
-            network.on('selectNode', function(params) {
-                // let node = this.getSelectedNodes();
-                // this.moveNode(node, 123, 312);
+            network.on('selectNode', function(e) {
+                // console.log(e);
             });
-            // network.setSelection({nodes:[0], edges:[]});
-            // let node = network.getSelection();
-            // network.moveNode(node.nodes[0], 2000, 2000);
-            // console.log(node);
+            network.on('click', function(e) {
+                // console.log(e);
+                // e.event = "[original event]";
+                // console.log('click event, getNodeAt returns: ' + this.getNodeAt(e.pointer.DOM));
+            });
+            network.on('afterDrawing', function(e) {
+                // console.log(e);
+            });
         };
         $scope.closeContextMenu = function(e) {
             $scope.opened = false;
