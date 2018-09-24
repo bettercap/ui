@@ -23,6 +23,9 @@
             node.group = group;
             return node;
         }
+        function generateRandomId() {
+            return (Math.random() * 1e7).toString(32);
+        }
         return {
             getHosts: function() {
                 let hosts = [];
@@ -46,6 +49,12 @@
                     }
                 });
                 return edges;
+            },
+            getRandomId: function() {
+                return generateRandomId();
+            },
+            createNode: function(obj, nodeId) {
+                return Node(obj, nodeId, 'device');
             }
         }
     }
