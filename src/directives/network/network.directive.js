@@ -20,7 +20,7 @@
                 },
                 templateUrl: './src/directives/network/network.html',
                 link: link,
-                controller: ['$scope', 'eventHandler', networkController],
+                controller: ['$scope', 'eventHandler', 'networkHandler', networkController],
                 controllerAs: 'nc'
             }
         });
@@ -198,6 +198,7 @@
         $scope.$watchCollection('data', function(data) {
             if(data.nodes.length && data.edges.length) {
                 $scope.launch();
+                console.log($scope.data);
             }
         });
 
@@ -240,7 +241,7 @@
         }
     }
 
-    function networkController($scope, eventHandler) {
+    function networkController($scope, eventHandler, networkHandler) {
         /**
          * Variables
          */
@@ -251,6 +252,7 @@
          */
         $scope.$on('openTerminal', function() {
             $scope.terminalOpened = true;
+            $scope.addEdge($scope.addNode());
         });
         $scope.$on('closeTerminal', function() {
             $scope.terminalOpened = false;
@@ -259,6 +261,29 @@
         /**
          * Methods
          */
+        $scope.addNode = function() {
+            let tempNodeSample = {
+                "ipv4": "192.168.1.22",
+                "ipv6": "",
+                "mac": "-",
+                "hostname": "yamato",
+                "alias": "",
+                "vendor": "Apple",
+                "first_seen": "2018-02-23T06:28:43.661869827+01:00",
+                "last_seen": "2018-02-23T06:29:13.734671382+01:00",
+                "meta": {
+                    "values": {}
+                }
+            };
+            let nodeId = Object.keys($scope.data.nodes._data).length + 1;
+            let newNode = networkHandler.createNode(tempNodeSample, nodeId);
+            $scope.data.nodes.add(newNode);
+            return nodeId;
+        };
+        $scope.addEdge = function(nodeId) {
+            let id = networkHandler.getRandomId();
+            $scope.data.edges.add({id:id, from:$scope.data.nodes._data[0].id, to:nodeId});
+        };
         $scope.openTerminal = function() {
             eventHandler.emit('openTerminal');
         };
