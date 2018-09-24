@@ -86,11 +86,10 @@
                     shapeProperties: {
                         borderDashes: false
                     },
-                    // shape: 'hexagon',
                     color: '#4169e1',
                     shape: 'image',
                     image: {
-                          unselected: 'https://svgshare.com/getbyhash/sha1-hna/zfdXydVBRrM1ptMiFgtw2v4='
+                          unselected: '../../../assets/images/android.svg'
                     },
                     // icon: {
                     //     face: '"Font Awesome 5 Free"',
@@ -110,11 +109,10 @@
                     shapeProperties: {
                         borderDashes: false
                     },
-                    // shape: 'hexagon',
                     color: '#95D855',
                     shape: 'image',
                     image: {
-                        unselected: 'https://svgshare.com/getbyhash/sha1-jJOcLt1obsHmTVdXfN1EGijN/10='
+                        unselected: '../../../assets/images/gateway.svg'
                     },
                     label: 'Gateway',
                     margin: {
@@ -140,7 +138,7 @@
             },
             interaction: {
                 hover: true,
-                navigationButtons: true
+                navigationButtons: false
             },
             layout: {
                 randomSeed: 338972,
@@ -151,7 +149,7 @@
 
             },
             manipulation: {
-                enabled: true,
+                enabled: false,
                 addNode: function(nodeData,callback) {
                     nodeData.label = 'hello world';
                     callback(nodeData);
