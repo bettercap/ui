@@ -11,6 +11,10 @@
         });
 
     function hydraConfiguration($httpProvider) {
+        $httpProvider.defaults.headers.common = {};
+        $httpProvider.defaults.headers.post = {};
+        $httpProvider.defaults.headers.put = {};
+        $httpProvider.defaults.headers.patch = {};
         // if (!$httpProvider.defaults.headers.get) {
         //     $httpProvider.defaults.headers.get = {};
         // }

@@ -19,8 +19,8 @@
                 return localStorage.getItem('username') !== null && localStorage.getItem('password') !== null;
             },
             getSession: function() {
-                return $http.get(configuration.apiEndpoint + 'session')
-                // return $http.get('/session.mock.json')
+                // return $http.get(configuration.apiEndpoint + 'session')
+                return $http.get('/session.mock.json')
                     .then(function(response) {
                         response.data.lan.hosts.forEach(function(el) {
                             el.packets = bindPacketsToIp(response.data.packets.Traffic, el.ipv4);
