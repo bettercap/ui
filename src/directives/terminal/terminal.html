@@ -11,8 +11,13 @@
     <div class="terminal__panel">
         <p class="terminal__line">{{ lastLogin }}</p>
         <p class="terminal__line"
-           ng-class="{ 'text__acid-green' : line.success, 'text__acid-red' : !line.success }"
-           ng-repeat="line in totalLine">{{ line.command }} => {{ line.message }}</p>
-        <p class="terminal__line">root$ {{ currentLine }}<span class="terminal__cursor">_</span></p>
+           ng-class="{ 'text__light-blue' : line.success, 'text__acid-red' : !line.success }"
+           ng-repeat="line in totalLine | orderBy: '-'">{{ line.command }} => {{ line.message }}</p>
+        <p class="terminal__line">
+            root$ {{ currentLine }}<span ng-show="!sendCommand" class="terminal__cursor">_</span>
+            <span ng-show="sendCommand" class="terminal__cursor--sendCommand">
+                <i class="fas fa-sm fa-spinner fa-spin"></i>
+            </span>
+        </p>
     </div>
 </div>

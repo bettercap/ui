@@ -37,12 +37,14 @@
         /**
          * Variables
          */
+        let commandIndex = 0;
         $scope.terminal = false;
         $scope.minimized = false;
         $scope.maximized = false;
         $scope.currentLine = '';
         $scope.totalLine = [];
         $scope.lastLogin = undefined;
+        $scope.sendCommand = false;
 
         /**
          * Listeners
@@ -109,51 +111,97 @@
                     }
                 }
             }
-            return 'Last login: ' + date.d + '/' + date.m + '/' + date.y + ' @ ' + date.hh + ':' + date.mm + ':' + date.ss;
+            return 'Last login: ' +
+                date.d + '/' +
+                date.m + '/' +
+                date.y + ' @ ' +
+                date.hh + ':' +
+                date.mm + ':' +
+                date.ss;
+        }
+        function previousCommand() {
+            console.log('Current index: ' + commandIndex);
+            // if (commandIndex === 0) {
+            //     // commandIndex++;
+            //     // $scope.currentLine = $scope.totalLine[commandIndex].command;
+            // }
+            // if ($scope.currentLine === '') {
+            //     $scope.currentLine = $scope.totalLine[commandIndex].command;
+            // } else {
+            //     // commandIndex = ($scope.totalLine.length - 1) -
+            // }
+            if (commandIndex >= 0 && commandIndex < $scope.totalLine.length) {
+                $scope.currentLine = $scope.totalLine[commandIndex].command;
+                if (commandIndex + 1 < $scope.totalLine.length) {
+                    commandIndex++;
+                }
+            }
+        }
+        function nextCommand() {
+            console.log('Current index: ' + commandIndex);
+            if (commandIndex >= 0 && commandIndex < $scope.totalLine.length) {
+                if (commandIndex === 0) {
+                    $scope.currentLine = '';
+                } else {
+                    commandIndex--;
+                    $scope.currentLine = $scope.totalLine[commandIndex].command;
+                }
+            }
         }
         function sendInputToTerminal(e) {
-            console.log(e);
+            // console.log(e);
             e.preventDefault();
             if (e.which === 8) {
                 // Detect backspace
                 $scope.currentLine = $scope.currentLine.slice(0, $scope.currentLine.length - 1);
+            } else if (e.which === 38) {
+                // Detect arrowUp
+                previousCommand();
+            } else if (e.which === 40) {
+                // Detect arrowDown
+                nextCommand();
             } else if (e.which === 13) {
                 // Detect enter
-                let command = {
-                    cmd: $scope.currentLine
-                };
-                let newLine = {
-                    command: $scope.currentLine,
-                    success: undefined,
-                    message: undefined
-                };
-                //YOU ARE HERE
-                terminalFactory.launchCommand(command)
-                    .then(function(response) {
-                        console.log(response);
-                        if(response.data.success) {
-                            // $scope.totalLine.push($scope.currentLine);
-                            newLine.success = response.data.success;
-                            newLine.message = response.data.message;
-
-
-                        } else {
-
-
-                        }
-                    })
-                    .catch(function(error) {
-
-                    })
-                    .finally(function(response) {
-                        if(response.data.success){
-                            eventHandler.emit('commandAccepted');
-                        } else {
-                            eventHandler.emit('commandRefused');
-                        }
-                        $scope.totalLine.push(newLine);
-                        $scope.currentLine = '';
-                    });
+                if ($scope.currentLine.toLowerCase() === 'exit') {
+                    eventHandler.emit('closeTerminal');
+                    $scope.currentLine = '';
+                } else {
+                    $scope.sendCommand = true;
+                    let command = {
+                        cmd: $scope.currentLine
+                    };
+                    terminalFactory.launchCommand(command)
+                        .then(function(response) {
+                            let newLine = {
+                                command: $scope.currentLine,
+                                success: undefined,
+                                message: undefined
+                            };
+                            if(response.data.success) {
+                                // $scope.totalLine.push($scope.currentLine);
+                                newLine.success = response.data.success;
+                                newLine.message = response.data.msg.length ? response.data.msg : 'Executed';
+                                eventHandler.emit('commandAccepted');
+                            } else {
+                                newLine.success = false;
+                                newLine.message = response.data;
+                                eventHandler.emit('commandRefused');
+                            }
+                            $scope.totalLine.unshift(newLine);
+                            console.log($scope.totalLine);
+                            commandIndex = 0;
+                            // if (commandIndex === undefined) {
+                            //     commandIndex = 0;
+                            // }
+                            $scope.currentLine = '';
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        })
+                        .finally(function() {
+                            $scope.sendCommand = false;
+                        });
+                }
             } else {
                 // Detect any other key
                 $scope.currentLine += e.key;
