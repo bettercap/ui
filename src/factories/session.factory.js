@@ -20,13 +20,14 @@
             },
             getSession: function() {
                 // return $http.get(configuration.apiEndpoint + 'session')
-                return $http.get('/session.mock.json')
+                return $http.get('/session-complete.mock.json')
                     .then(function(response) {
                         response.data.lan.hosts.forEach(function(el) {
                             el.packets = bindPacketsToIp(response.data.packets.Traffic, el.ipv4);
                         });
                         $rootScope.session = response.data;
                         eventHandler.emit('sessionReady');
+                        console.log($rootScope.session);
                     })
                     .catch(function(error) {
                        console.log(error);

@@ -1,3 +1,14 @@
+<div class="protocol-switch">
+    <div class="lan" ng-click="switchProtocol('lan')" ng-class="{ 'active' : protocol === 'lan' }">
+        <span>LAN</span>
+    </div>
+    <div class="wifi" ng-click="switchProtocol('wifi')" ng-class="{ 'active' : protocol === 'wifi' }">
+        <span>WIFI</span>
+    </div>
+    <div class="ble" ng-click="switchProtocol('ble')" ng-class="{ 'active' : protocol === 'ble' }">
+        <span>BLE</span>
+    </div>
+</div>
 <ul>
     <li><a ng-click="view1()" href="#">Bozza 01</a></li>
     <li><a ng-click="view2()" href="#">Bozza 02</a></li>
