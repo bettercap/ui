@@ -2,7 +2,7 @@
     width:220px;
     height:100%;
     background-color: rgba(38, 45, 53, .95);
-    overflow-y: auto;
+    //overflow-y: auto;
     box-shadow: 1px 0 3px rgba(0,0,0,.35);
     position:relative;
     z-index:2;
@@ -13,6 +13,8 @@
         border-bottom: 1px solid $borderColorLight;
         height: 100px;
         color: #fff;
+        z-index: 2;
+        box-shadow: 0 0 8px rgba(0,0,0,0.35);
         > div{
             cursor:pointer;
             user-select: none;
@@ -85,6 +87,12 @@
                 //background-color: #000;
             }
         }
+    }
+    ul{
+        height: calc(100% - 100px);
+        overflow-y: auto;
+        position: relative;
+        z-index: 1;
     }
     li{
         border-bottom:1px solid $borderColorLight;
