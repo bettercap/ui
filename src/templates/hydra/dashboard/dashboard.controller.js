@@ -13,6 +13,7 @@
         // $scope.session = sessionFactory.getSession();
         $scope.hosts = [];
         $scope.edges = [];
+        $scope.protocol = 'lan';
 
         // Start Temp
         $rootScope.v1 = false;
@@ -31,6 +32,9 @@
         $rootScope.toggleMeta = function(host) {
             host.showMeta = !host.showMeta;
         };
+        $rootScope.switchProtocol = function(protocol) {
+            $rootScope.$broadcast('switchProtocol', protocol);
+        };
         // End Temp
 
 
@@ -40,6 +44,9 @@
         $scope.$on('sessionReady', function() {
             $scope.hosts = networkHandler.getHosts();
             $scope.edges = networkHandler.getEdges($scope.hosts);
+        });
+        $scope.$on('switchProtocol', function(event, protocol) {
+            $scope.protocol = protocol;
         });
 
         /**
