@@ -61,3 +61,5 @@ typings/
 .next
 /node_modules/
 /.idea/
+/session-complete.mock.json
+/session.mock.json
