@@ -198,7 +198,6 @@
         $scope.$watchCollection('data', function(data) {
             if(data.nodes.length && data.edges.length) {
                 $scope.launch();
-                console.log($scope.data);
             }
         });
 
