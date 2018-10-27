@@ -4,13 +4,12 @@
 
     angular
         .module('Hydra')
-        .controller('dashboardController', ['$scope', '$rootScope', '$interval','networkHandler', 'sessionFactory', dashboardController]);
+        .controller('dashboardController', ['$scope', '$rootScope', 'networkHandler', 'sessionFactory', dashboardController]);
 
-    function dashboardController($scope, $rootScope, $interval, networkHandler, sessionFactory) {
+    function dashboardController($scope, $rootScope, networkHandler, sessionFactory) {
         /**
          * Variables
          */
-        // $scope.session = sessionFactory.getSession();
         $scope.hosts = [];
         $scope.edges = [];
         $scope.modules = [];
@@ -50,6 +49,7 @@
             $scope.hosts = networkHandler.getHosts();
             $scope.edges = networkHandler.getEdges($scope.hosts);
             $scope.modules = $rootScope.session.modules;
+            console.log($rootScope.session);
         });
         $scope.$on('switchProtocol', function(event, protocol) {
             $scope.protocol = protocol;
@@ -75,9 +75,7 @@
         /**
          * Bootstrap
          */
-        // $interval(function() {
-            sessionFactory.getSession();
-        // }, 500);
+        sessionFactory.storeSession();
 
     }
 
