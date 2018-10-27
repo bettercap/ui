@@ -15,6 +15,7 @@
         $scope.edges = [];
         $scope.modules = [];
         $scope.protocol = 'lan';
+        $scope.currentModule = null;
 
         // Start Temp
         $rootScope.v1 = true;
@@ -36,6 +37,9 @@
         $scope.switchProtocol = function(protocol) {
             $rootScope.$broadcast('switchProtocol', protocol);
         };
+        $scope.setCurrentModule = function(module) {
+            $rootScope.$broadcast('setCurrentModule', module);
+        };
         // End Temp
 
 
@@ -50,11 +54,23 @@
         $scope.$on('switchProtocol', function(event, protocol) {
             $scope.protocol = protocol;
         });
+        $scope.$on('setCurrentModule', function(event, module) {
+            $scope.currentModule = module;
+            if($scope.currentModule !== null) {
+                $scope.currentModule.saving = false;
+            }
+        });
 
         /**
          * Methods
          */
+        $scope.saveModuleSettings = function () {
+            $scope.currentModule.saving = true;
 
+        };
+        $scope.toggleModuleRunning = function (module) {
+            module.running = !module.running;
+        };
 
         /**
          * Bootstrap

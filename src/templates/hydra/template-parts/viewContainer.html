@@ -1,38 +1,44 @@
 <!-- Start provisional layout -->
-<div ng-if="v1" class="table-responsive">
-    <table class="table__session">
-        <thead>
-        <tr>
-            <th>Ipv4</th>
-            <!--<th>Ipv6</th>-->
-            <th>MAC</th>
-            <th>Name</th>
-            <th>Vendor</th>
-            <!--<th>Alias</th>-->
-            <th>Send</th>
-            <th>Received</th>
-            <th>Last seen</th>
-            <th>Meta</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="host in session.lan.hosts | orderBy:'-packets.Sent'">
-            <td>{{ host.ipv4 }}</td>
-            <!--<td>{{ host.ipv6 }}</td>-->
-            <td>{{ host.mac }}</td>
-            <td>{{ host.hostname }}</td>
-            <td>{{ host.vendor }}</td>
-            <!--<td>{{ host.alias }}</td>-->
-            <td>{{ host.packets.Sent }}</td>
-            <td>{{ host.packets.Received }}</td>
-            <td>{{ host.last_seen | date: 'dd-MM-yyyy @ hh:MM:ss' }}</td>
-            <td>
-                <i ng-if="host.meta.values.hasOwnProperty('mdns:id')" class="fas fa-info"></i>
-                <span ng-if="!host.meta.values.hasOwnProperty('mdns:id')">n/a</span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-11 col-lg-11 col-xl-11">
+            <div ng-if="v1 && !currentModule" class="table-responsive">
+                <table class="table__session">
+                    <thead>
+                    <tr>
+                        <th>Ipv4</th>
+                        <!--<th>Ipv6</th>-->
+                        <th>MAC</th>
+                        <th>Name</th>
+                        <th>Vendor</th>
+                        <!--<th>Alias</th>-->
+                        <th>Send</th>
+                        <th>Received</th>
+                        <th>Last seen</th>
+                        <th>Meta</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="host in session.lan.hosts | orderBy:'-packets.Sent'">
+                        <td>{{ host.ipv4 }}</td>
+                        <!--<td>{{ host.ipv6 }}</td>-->
+                        <td>{{ host.mac }}</td>
+                        <td>{{ host.hostname }}</td>
+                        <td>{{ host.vendor }}</td>
+                        <!--<td>{{ host.alias }}</td>-->
+                        <td>{{ host.packets.Sent }}</td>
+                        <td>{{ host.packets.Received }}</td>
+                        <td>{{ host.last_seen | date: 'dd-MM-yyyy @ hh:MM:ss' }}</td>
+                        <td>
+                            <i ng-if="host.meta.values.hasOwnProperty('mdns:id')" class="fas fa-info"></i>
+                            <span ng-if="!host.meta.values.hasOwnProperty('mdns:id')">n/a</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -233,3 +239,52 @@
     </div>
 </div>
 <!-- End provisional layout -->
+<style>
+    .form-group label,
+    .form-group small,
+    .module-header{
+        color:#fff;
+    }
+    form{
+        margin:25px auto;
+    }
+</style>
+<div ng-if="currentModule">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2 col-lg-8 offset-lg-2">
+                <div class="module-header">
+                    <h3>Module: {{ currentModule.name }}</h3>
+                    <p>Description: {{ currentModule.description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2 col-lg-8 offset-lg-2">
+                <form ng-attr-name="form-{{currentModule.name}}" novalidate>
+                    <div class="form-group" ng-repeat="parameter in currentModule.parameters">
+                        <label for="{{parameter.Name}}">
+                            <small>Name: <strong>{{parameter.Name}}</strong></small>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" ng-attr-name="{{parameter.Name}}" id="{{parameter.Name}}" ng-model="parameter.Value">
+                        <small class="form-text text-muted">Description: <strong>{{ parameter.Description }}</strong></small>
+
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary float-right" ng-click="saveModuleSettings()" ng-disabled="currentModule.saving">
+                            <span ng-show="!currentModule.saving">
+                                <i class="far fa-save"></i> Save Settings
+                            </span>
+                            <span ng-show="currentModule.saving">
+                                <i class="fas fa-circle-notch fa-spin"></i> Saving Settings
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
