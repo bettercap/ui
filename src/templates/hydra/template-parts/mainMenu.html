@@ -14,10 +14,78 @@
     <!--<li><a ng-click="view2()" href="#">Bozza 02</a></li>-->
     <!--<li><a href="#">Link 03</a></li>-->
 <!--</ul>-->
-<ul>
-    <li ng-repeat="module in modules">
-        <a href="#">
+<ul class="module-list">
+    <li class="module-list-item" ng-class="{ 'active' : !currentModule }">
+        <a href="#" class="module-list-item--name" ng-click="setCurrentModule(null)">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+    </li>
+    <li ng-repeat="module in modules" class="module-list-item" ng-class="{ 'active' : currentModule.name === module.name }">
+        <a href="#" class="module-list-item--name" ng-click="setCurrentModule(module)">
             {{ module.name }}
+            <!--<span class="float-right" ng-class="{-->
+                <!--'text-success' : module.running,-->
+                <!--'text-danger' : !module.running-->
+            <!--}">-->
+                <!--<i class="fas fa-circle" ></i>-->
+            <!--</span>-->
+        </a>
+        <a href="#" class="module-list-item--switch" ng-click="toggleModuleRunning(module)">
+            <span class="badge badge-dark" ng-class="{
+                'on' : module.running,
+                'off' : !module.running
+            }">
+                <span class="badge--switch"
+                      ng-class="{'text-success':module.running, 'text-danger':!module.running}">
+                    <i class="fas fa-circle fa-lg"></i>
+                </span>
+            </span>
         </a>
     </li>
 </ul>
+
+<style>
+    .active .module-list-item--name{
+        border-color:#F09601;
+    }
+    .module-list-item--name{
+        border-left:4px solid transparent;
+        display: inline-block !important;
+        width: calc(100% - 50px);
+        transition:all .2s ease-in-out;
+    }
+    .module-list-item--switch{
+        display: inline-block !important;
+        width: 40px;
+        height: 40px;
+        padding: 0 !important;
+        vertical-align: middle;
+        border-left: 1px solid #313131;
+        position: relative;
+    }
+    .module-list-item .badge{
+        display:inline-block;
+        position:absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+    }
+    span.badge {
+        width: 30px;
+        position: relative;
+        transition:all .2s ease-in-out;
+    }
+    .badge--switch {
+        position: absolute;
+        top: 50%;
+        left:50%;
+        transform: translate(-50%, -50%);
+        transition:all .2s ease-in-out;
+    }
+    span.badge.on .badge--switch {
+        transform: translate(3px, -50%);
+    }
+    span.badge.off .badge--switch {
+        transform: translate(-15px, -50%);
+    }
+</style>
