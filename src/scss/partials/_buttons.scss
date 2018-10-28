@@ -1,3 +1,10 @@
+.btn:enabled{
+    cursor:pointer;
+}
+.btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
 .btn{
     -webkit-appearance: none;
     background-color: transparent;
@@ -12,13 +19,6 @@
     &:last-child{
         margin-right:0;
     }
-}
-.btn:enabled{
-    cursor:pointer;
-}
-.btn:disabled{
-    cursor:not-allowed;
-    opacity:.6;
 }
 .btn__shadow{
     box-shadow:1px 1px 15px rgba(0,0,0,0.5);
