@@ -249,7 +249,7 @@
         margin:25px auto;
     }
 </style>
-<div ng-if="currentModule">
+<div ng-if="currentModule" class="module-view-container">
 
     <div class="container-fluid">
         <div class="row">
@@ -257,6 +257,7 @@
                 <div class="module-header">
                     <h3>Module: {{ currentModule.name }}</h3>
                     <p>Description: {{ currentModule.description }}</p>
+                    <p>Author: {{ currentModule.author }}</p>
                 </div>
             </div>
         </div>
@@ -266,11 +267,10 @@
                 <form ng-attr-name="form-{{currentModule.name}}" novalidate>
                     <div class="form-group" ng-repeat="parameter in currentModule.parameters">
                         <label for="{{parameter.Name}}">
-                            <small>Name: <strong>{{parameter.Name}}</strong></small>
+                            Name: <strong>{{parameter.Name}}</strong>
                         </label>
                         <input type="text" class="form-control form-control-sm" ng-attr-name="{{parameter.Name}}" id="{{parameter.Name}}" ng-model="parameter.Value">
-                        <small class="form-text text-muted">Description: <strong>{{ parameter.Description }}</strong></small>
-
+                        <p class="form-text text-muted">Description: <strong>{{ parameter.Description }}</strong></p>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary float-right" ng-click="saveModuleSettings()" ng-disabled="currentModule.saving">

@@ -32,13 +32,8 @@ body{
     font-weight: $fontWeightNormal;
     line-height:$lineHeight;
 }
-button:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-    &:hover{
-        background-color:inherit;
-        color:inherit;
-    }
+p{
+    margin-bottom: .5rem;
 }
 #hydraWrapper{
     position:relative;

@@ -11,7 +11,11 @@
     "type": "git",
     "url": "git+https://github.com/guizzo/hydra.git"
   },
-  "author": "Simone \"Guizzo\" Gizzi",
+  "author": {
+    "name": "Simone Gizzi",
+    "email": "simonegizzi85@gmail.com",
+    "url": "https://www.linkedin.com/in/simonegizzi/"
+  },
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/guizzo/hydra/issues"
