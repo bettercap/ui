@@ -12,8 +12,8 @@
                 return localStorage.getItem('username') !== null && localStorage.getItem('password') !== null;
             },
             storeSession: function() {
-                // return $http.get(configuration.apiEndpoint + 'session')
-                return $http.get('/session-complete.mock.json')
+                return $http.get(configuration.apiEndpoint + 'session')
+                // return $http.get('/session-complete.mock.json')
                     .then(function(response) {
                         $rootScope.session = new Session(response.data);
                         eventHandler.emit('sessionReady');
