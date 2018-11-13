@@ -6,7 +6,7 @@
         .module('Hydra')
         .config(['$httpProvider', hydraConfiguration])
         .constant('configuration', {
-            apiEndpoint: 'https://127.0.0.1:8081/api/',
+            apiEndpoint: 'http://192.168.1.2:8081/api/',
             appVersion: '0.0.1'
         });
 
