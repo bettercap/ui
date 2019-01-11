@@ -4,9 +4,9 @@
 
     angular
         .module('Hydra')
-        .controller('dashboardController', ['$scope', '$rootScope', 'networkHandler', 'sessionFactory', dashboardController]);
+        .controller('dashboardController', ['$scope', '$interval', '$rootScope', 'networkHandler', 'sessionFactory', dashboardController]);
 
-    function dashboardController($scope, $rootScope, networkHandler, sessionFactory) {
+    function dashboardController($scope, $interval, $rootScope, networkHandler, sessionFactory) {
         /**
          * Variables
          */
@@ -75,8 +75,8 @@
         /**
          * Bootstrap
          */
-        sessionFactory.storeSession();
-
+        console.log("AO?!");
+        $interval(sessionFactory.storeSession, 1000);
     }
 
 })();
