@@ -1,13 +1,10 @@
 <p align="center">
   <img alt="Hydra" src="https://github.com/guizzo/hydra/blob/master/assets/images/logo.png" height="140" />
 </p>
-<p align="center">
-    Project Hydra - A [bettercap](https://www.bettercap.org/) UI
-</p>
 
 # Hydra
 
-Awesome description here
+Hydra is a UI crafted on top of [bettercap](https://www.bettercap.org/).
 
 ## Getting Started
 
