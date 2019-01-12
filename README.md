@@ -1,9 +1,9 @@
 <p align="center">
   <img alt="Hydra" src="https://github.com/guizzo/hydra/blob/master/assets/images/logo.png" height="140" />
-    Hail Hydra!
 </p>
-
-A [bettercap](https://www.bettercap.org/) UI
+<p align="center">
+    Project Hydra - A [bettercap](https://www.bettercap.org/) UI
+</p>
 
 # Hydra
 
