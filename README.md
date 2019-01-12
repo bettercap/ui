@@ -1,5 +1,8 @@
 <p align="center">
   <img alt="Hydra" src="https://github.com/guizzo/hydra/blob/master/assets/images/logo.png" height="140" />
+  <p align="center">
+    <a href="https://github.com/bettercap/bettercap/blob/master/LICENSE.md"><img alt="Software License" src="https://img.shields.io/badge/license-GPL3-brightgreen.svg?style=flat-square"></a>
+  </p>
 </p>
 
 # Hydra
@@ -47,7 +50,7 @@ npm start
 ## Authors
 
 * **[guizzo](https://github.com/guizzo)** - *Creator*
-* **[evilsocket](https://github.com/evilsocket)** - *[bettercap](https://www.bettercap.org/) Creator*
+* **[evilsocket](https://github.com/evilsocket)** - *[bettercap](https://www.bettercap.org/) creator*
 
 See also the list of [contributors](https://github.com/guizzo/hydra/graphs/contributors) who participated in this project.
 
