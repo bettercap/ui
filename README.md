@@ -40,17 +40,14 @@ npm start
 
 ## Built With
 
-* [Node.js](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [NPM](https://maven.apache.org/) - Dependency Management
-* [AngularJS](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+* [Node.js](https://nodejs.org/en/)
+* [NPM](https://www.npmjs.com/)
+* [AngularJS](https://angularjs.org/)
 
 ## Authors
 
-* **Simone "Guizzo" Gizzi** - *Creator* - [guizzo](https://github.com/guizzo)
+* **[guizzo](https://github.com/guizzo)** - *Creator*
+* **[evilsocket](https://github.com/evilsocket)** - *[bettercap](https://www.bettercap.org/) Creator*
 
 See also the list of [contributors](https://github.com/guizzo/hydra/graphs/contributors) who participated in this project.
 
