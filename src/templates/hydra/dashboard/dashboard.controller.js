@@ -89,7 +89,6 @@
          */
         sessionFactory.storeSession();
         $interval(sessionFactory.storeSession, 1000);
-        // sessionFactory.storeSession();
     }
 
 })();
