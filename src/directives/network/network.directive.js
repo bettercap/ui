@@ -251,7 +251,7 @@
          */
         $scope.$on('openTerminal', function() {
             $scope.terminalOpened = true;
-            $scope.addEdge($scope.addNode());
+            // $scope.addEdge($scope.addNode());
         });
         $scope.$on('closeTerminal', function() {
             $scope.terminalOpened = false;

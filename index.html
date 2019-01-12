@@ -11,48 +11,51 @@
     <link href="./node_modules/vis/dist/vis.min.css" rel="stylesheet">
     <link href="./assets/css/main.css" rel="stylesheet">
 </head>
-<body>
+<body ng-style="{
+        'font-size': options.fontSize
+        }">
 
-    <ui-view></ui-view>
+<ui-view></ui-view>
 
-    <terminal></terminal>
+<terminal></terminal>
 
-    <!-- Dependencies -->
-    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="./node_modules/angular/angular.js"></script>
-    <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
-    <script src="./node_modules/vis/dist/vis.js"></script>
-    <script src="./node_modules/moment/min/moment-with-locales.min.js"></script>
+<!-- Dependencies -->
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="./node_modules/angular/angular.js"></script>
+<script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+<script src="./node_modules/vis/dist/vis.js"></script>
+<script src="./node_modules/moment/min/moment-with-locales.min.js"></script>
 
-    <!-- Core -->
-    <script src="./app.js"></script>
-    <script src="./app.config.js"></script>
-    <script src="./app.run.js"></script>
+<!-- Core -->
+<script src="./app.js"></script>
+<script src="./app.config.js"></script>
+<script src="./app.run.js"></script>
 
-    <!-- Routing -->
-    <script src="./router.js"></script>
+<!-- Routing -->
+<script src="./router.js"></script>
 
-    <!-- Class -->
-    <script src="./src/model/Session.js"></script>
+<!-- Class -->
+<script src="./src/model/Session.js"></script>
 
-    <!-- Interceptors -->
-    <!--<script src="./src/interceptors/session.interceptor.js"></script>-->
+<!-- Interceptors -->
+<!--<script src="./src/interceptors/session.interceptor.js"></script>-->
 
-    <!-- Factories -->
-    <script src="./src/factories/eventHandler.factory.js"></script>
-    <script src="./src/factories/session.factory.js"></script>
-    <script src="./src/factories/authentication.factory.js"></script>
-    <script src="./src/factories/networkHandler.factory.js"></script>
-    <script src="./src/factories/terminal.factory.js"></script>
+<!-- Factories -->
+<script src="./src/factories/eventHandler.factory.js"></script>
+<script src="./src/factories/session.factory.js"></script>
+<script src="./src/factories/authentication.factory.js"></script>
+<script src="./src/factories/networkHandler.factory.js"></script>
+<script src="./src/factories/terminal.factory.js"></script>
+<script src="./src/factories/option.factory.js"></script>
 
-    <!-- Controllers -->
-    <script src="src/templates/login/login.controller.js"></script>
-    <script src="src/templates/hydra/dashboard/dashboard.controller.js"></script>
+<!-- Controllers -->
+<script src="src/templates/login/login.controller.js"></script>
+<script src="src/templates/hydra/dashboard/dashboard.controller.js"></script>
 
-    <!-- Directives -->
-    <script src="src/directives/network/network.directive.js"></script>
-    <script src="src/directives/terminal/terminal.directive.js"></script>
+<!-- Directives -->
+<script src="src/directives/network/network.directive.js"></script>
+<script src="src/directives/terminal/terminal.directive.js"></script>
 
 </body>
 </html>
