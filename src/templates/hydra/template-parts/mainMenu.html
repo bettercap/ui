@@ -15,11 +15,11 @@
     <!--<li><a href="#">Link 03</a></li>-->
 <!--</ul>-->
 <ul class="module-list">
-    <li class="module-list-item" ng-class="{ 'active' : !currentModule }">
-        <a href="#" class="module-list-item--name" ng-click="setCurrentModule(null)">
-            <i class="fas fa-tachometer-alt"></i> Dashboard
-        </a>
-    </li>
+    <!--<li class="module-list-item" ng-class="{ 'active' : !currentModule }">-->
+        <!--<a href="#" class="module-list-item&#45;&#45;name" ng-click="setCurrentModule(null)">-->
+            <!--<i class="fas fa-tachometer-alt"></i> Dashboard-->
+        <!--</a>-->
+    <!--</li>-->
     <li ng-repeat="module in modules" class="module-list-item" ng-class="{
         'active' : currentModule.name === module.name
     }">
@@ -36,6 +36,24 @@
                     <i class="fas fa-circle fa-lg"></i>
                 </span>
             </span>
+        </a>
+    </li>
+</ul>
+
+<ul class="bottom-bar">
+    <li class="bottom-bar__item">
+        <a href="#" ng-click="toggleOptionPanel()">
+            <i class="fas fa-user-cog fa-lg"></i>
+        </a>
+    </li>
+    <li class="bottom-bar__item">
+        <a href="#">
+            <i class="fas fa-question fa-lg"></i>
+        </a>
+    </li>
+    <li class="bottom-bar__item">
+        <a href="#">
+            <i class="fas fa-question fa-lg"></i>
         </a>
     </li>
 </ul>

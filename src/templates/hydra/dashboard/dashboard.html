@@ -50,6 +50,50 @@
 
 </div>
 
+<div id="optionPanel" ng-show="optionPanel">
+    <div class="heading">
+        <h1>User Options</h1>
+        <ul class="optionPanel--list_buttons">
+            <li ng-click="saveOptionSettings()">
+                <span ng-show="!options.saving" class="btn btn-primary btn-options">
+                    <i class="far fa-save fa-lg"></i>
+                </span>
+                    <span ng-show="options.saving" class="btn btn-primary btn-options">
+                    <i class="fas fa-circle-notch fa-spin fa-lg"></i>
+                </span>
+            </li>
+            <li ng-click="toggleOptionPanel()">
+                <span class="btn btn-primary btn-options">
+                    <i class="fa fa-times fa-lg"></i>
+                </span>
+            </li>
+        </ul>
+    </div>
+    <hr>
+    <div class="content">
+        <aside>
+            <ul ng-if="options" class="optionPanel--option_list">
+                <li ng-repeat="(key, value) in options">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="option-{{key}}">
+                            <strong>{{key}}</strong>
+                        </label>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <input type="text"
+                               class="form-control form-inline form-control-sm"
+                               ng-attr-name="option-{{key}}"
+                               id="option-{{key}}"
+                               ng-model="value"
+                               ng-blur="saveOption(key, value, null)"
+                               ng-keyup="saveOption(key, value, $event)">
+                    </div>
+                </li>
+            </ul>
+        </aside>
+    </div>
+</div>
+
 <!--<footer id="hydraMainFooter"-->
-        <!--ng-include="'./src/templates/hydra/template-parts/footer.html'"-->
-        <!--ng-class="{ 'hydra-mode' : hydraModeEnabled }"></footer>-->
+<!--ng-include="'./src/templates/hydra/template-parts/footer.html'"-->
+<!--ng-class="{ 'hydra-mode' : hydraModeEnabled }"></footer>-->
