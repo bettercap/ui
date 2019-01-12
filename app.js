@@ -4,9 +4,9 @@
 
     angular
         .module('Hydra', ['ui.router'])
-        .run(['$rootScope', '$window', '$timeout', '$state', 'eventHandler', 'authentication', hydraController]);
+        .run(['$rootScope', '$window', '$timeout', '$state', 'eventHandler', 'authentication', 'optionFactory', hydraController]);
 
-    function hydraController($rootScope, $window, $timeout, $state, eventHandler, authentication) {
+    function hydraController($rootScope, $window, $timeout, $state, eventHandler, authentication, optionFactory) {
         /**
          * Variables
          */
@@ -27,6 +27,16 @@
         $rootScope.$on('closeTerminal', function() {
             $rootScope.terminal = false;
         });
+        $rootScope.$on('defaultOptionsReady', function() {
+            optionFactory.getOptions();
+        });
+        $rootScope.$on('userOptionsUpdated', function() {
+            optionFactory.getOptions();
+        });
+        // $rootScope.$on('defaultOptionsReady', function() {
+        //     console.log($rootScope.options);
+        //     optionFactory.getOptions();
+        // });
 
         /**
          * Emitters
@@ -67,6 +77,7 @@
         }, 500);
         $window.addEventListener('resize', setHydraWrapperHeight);
 
+        optionFactory.getDefault();
     }
 
 })();
