@@ -4,9 +4,9 @@
 
     angular
         .module('Hydra')
-        .controller('dashboardController', ['$scope', '$interval', '$rootScope', 'networkHandler', 'sessionFactory', dashboardController]);
+        .controller('dashboardController', ['$scope', '$interval', '$rootScope', 'networkHandler', 'sessionFactory', 'eventHandler', 'optionFactory', dashboardController]);
 
-    function dashboardController($scope, $interval, $rootScope, networkHandler, sessionFactory) {
+    function dashboardController($scope, $interval, $rootScope, networkHandler, sessionFactory, eventHandler, optionFactory) {
         /**
          * Variables
          */
@@ -15,6 +15,7 @@
         $scope.modules = [];
         $scope.protocol = 'lan';
         $scope.currentModule = null;
+        $scope.optionPanel = false;
 
         // Start Temp
         $rootScope.v1 = true;
@@ -52,9 +53,11 @@
             console.log($rootScope.session);
         });
         $scope.$on('switchProtocol', function(event, protocol) {
+            $scope.currentModule = null;
             $scope.protocol = protocol;
         });
         $scope.$on('setCurrentModule', function(event, module) {
+            $scope.protocol = null;
             $scope.currentModule = module;
             if($scope.currentModule !== null) {
                 $scope.currentModule.saving = false;
@@ -66,17 +69,27 @@
          */
         $scope.saveModuleSettings = function () {
             $scope.currentModule.saving = true;
-
         };
         $scope.toggleModuleRunning = function (module) {
             module.running = !module.running;
         };
-
+        $scope.toggleOptionPanel = function() {
+            $scope.optionPanel = !$scope.optionPanel;
+        };
+        $scope.saveOption = function(k, v, event) {
+            if (!event) {
+                optionFactory.set(k, v);
+            } else if (event && event.key === 'Enter') {
+                event.preventDefault();
+                optionFactory.set(k, v);
+            }
+        };
         /**
          * Bootstrap
          */
-        console.log("AO?!");
+        sessionFactory.storeSession();
         $interval(sessionFactory.storeSession, 1000);
+        // sessionFactory.storeSession();
     }
 
 })();

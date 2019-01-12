@@ -88,6 +88,39 @@
             }
         }
     }
+    .bottom-bar{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 3;
+        background-color: rgba(38,45,53,1);
+        box-shadow: 1px -1px 3px rgba(0,0,0,0.35);
+        width: 100%;
+        height: auto;
+        &:after{
+            content:'';
+            display:table;
+            clear:both;
+        }
+        .bottom-bar__item {
+            display: block;
+            width: 100%;
+            max-width: calc(100% / 3);
+            float: left;
+            border-right:1px solid $borderColorLight;
+            &:last-child{
+                border-right:none;
+            }
+            > a {
+                text-align: center;
+            }
+            &:hover{
+                a {
+                    color:$acidOrange;
+                }
+            }
+        }
+    }
     ul{
         height: calc(100% - 100px);
         overflow-y: auto;
