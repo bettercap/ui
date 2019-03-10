@@ -1,0 +1,11 @@
+<div class="signal-indicator--wrapper" placement="top" ngbTooltip="{{ signalstrength + 'Db' }}" [ngClass]="{
+ 'step__1': signal === 1,
+ 'step__2': signal === 2,
+ 'step__3': signal === 3,
+ 'step__4': signal === 4
+ }">
+  <span class="signal-indicator--step signal-indicator__step1" [class.currentStep]="signal >= 1"></span>
+  <span class="signal-indicator--step signal-indicator__step2" [class.currentStep]="signal >= 2"></span>
+  <span class="signal-indicator--step signal-indicator__step3" [class.currentStep]="signal >= 3"></span>
+  <span class="signal-indicator--step signal-indicator__step4" [class.currentStep]="signal === 4"></span>
+</div>

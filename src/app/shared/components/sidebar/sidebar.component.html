@@ -1,0 +1,56 @@
+<aside id="hydraMainMenu">
+  <div class="protocol-switch">
+    <div class="lan" routerLink="/lan" routerLinkActive="active">
+      <span>
+        <fa-icon [icon]="faLan"></fa-icon>
+        LAN
+      </span>
+    </div>
+    <div class="wifi" routerLink="/wifi" routerLinkActive="active">
+      <span>
+        <fa-icon [icon]="faWiFi"></fa-icon>
+        WIFI
+      </span>
+    </div>
+    <div class="ble" routerLink="/ble" routerLinkActive="active">
+      <span>
+        <fa-icon [icon]="faBluetooth"></fa-icon>
+        BLE
+      </span>
+    </div>
+  </div>
+  <ul class="module-list">
+    <li *ngFor="let module of modules" class="module-list-item" [class.active]="store.selectedModule === module.name">
+      <a class="module-list-item--name" (click)="switchModule(module.name)" routerLink="/modules/{{ module.name }}">
+        {{ module.name }}
+      </a>
+      <a class="module-list-item--switch" (click)="toggleModuleRunning(module)">
+          <span class="badge badge-dark" [ngClass]="{ 'on': module.running, 'off': !module.running }">
+              <span class="badge--switch"
+                    [class.text-success]="module.running" [class.text-danger]="!module.running">
+                <fa-icon [icon]="faCircle" size="lg"></fa-icon>
+              </span>
+          </span>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="bottom-bar">
+    <li class="bottom-bar__item" placement="top" ngbTooltip="Open options panel">
+      <a [href]="" (click)="toggleOptionPanel()">
+        <fa-icon [icon]="faUserCog"></fa-icon>
+      </a>
+    </li>
+    <li class="bottom-bar__item" placement="top" ngbTooltip="Open terminal session">
+      <a [href]="" (click)="toggleTerminal()">
+        <fa-icon [icon]="faTerminal"></fa-icon>
+      </a>
+    </li>
+    <li class="bottom-bar__item">
+      <a [href]="">
+        <fa-icon [icon]="faQuestion"></fa-icon>
+      </a>
+    </li>
+  </ul>
+
+</aside>
