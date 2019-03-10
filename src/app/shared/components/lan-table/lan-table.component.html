@@ -5,32 +5,33 @@
         <table class="table__session">
           <thead>
             <tr>
-              <th>Ipv4</th>
-              <th>Ipv6</th>
+              <th>IP</th>
               <th>MAC</th>
               <th>Name</th>
               <th>Vendor</th>
-              <th>Alias</th>
-              <th>Send</th>
+              <th>Sent</th>
               <th>Received</th>
               <th>Last seen</th>
-              <th>Meta</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let host of hosts">
-              <td>{{ host.ipv4 ? host.ipv4 : 'n/a' }}</td>
-              <td>{{ host.ipv6 ? host.ipv6 : 'n/a' }}</td>
-              <td>{{ host.mac ? host.mac : 'n/a' }}</td>
-              <td>{{ host.hostname ? host.hostname : 'n/a' }}</td>
-              <td>{{ host.vendor ? host.vendor : 'n/a' }}</td>
-              <td>{{ host.alias ? host.alias : 'n/a' }}</td>
-              <td>{{ host.packets.Sent ? host.packets.Sent : 'n/a' }}</td>
-              <td>{{ host.packets.Received ? host.packets.Received : 'n/a' }}</td>
-              <td>{{ host.last_seen | date: 'dd.MM.yyyy @ HH:mm:ss z'}}</td>
+              <td>{{ host.ipv4 ? host.ipv4 : '' }}</td>
+              <td>{{ host.mac ? host.mac : '' }}</td>
+              <td>{{ host.alias ? host.alias : host.hostname }}</td>
+              <td><i>{{ host.vendor ? host.vendor : '' }}</i></td>
+              <td>{{ host.packets.Sent ? host.packets.Sent : '' }}</td>
+              <td>{{ host.packets.Received ? host.packets.Received : '' }}</td>
+              <td>{{ host.last_seen | date: 'HH:mm:ss'}}</td>
               <td>
-                <fa-icon *ngIf="host.meta.values.hasOwnProperty('mdns:id')" [icon]="faInfo"></fa-icon>
-                <span *ngIf="!host.meta.values.hasOwnProperty('mdns:id')">n/a</span>
+                <small *ngIf="host.meta.values">
+                  <ul>
+                    <li *ngFor="let item of host.meta.values | keyvalue">
+                      <strong>{{ item.key }}</strong>: {{ item.value }}
+                    </li>
+                  </ul>
+                </small>
               </td>
             </tr>
           </tbody>

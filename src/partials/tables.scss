@@ -1,6 +1,7 @@
 table {
   border-collapse: collapse;
 }
+
 .table-responsive {
   display: block;
   width: 100%;
@@ -9,6 +10,7 @@ table {
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
 .table__session{
   width:100%;
   color: #fff;
@@ -36,7 +38,7 @@ table {
     }
     td{
       border-color: #32383e;
-      vertical-align: bottom;
+      vertical-align: top;
       padding: .75rem;
     }
   }
