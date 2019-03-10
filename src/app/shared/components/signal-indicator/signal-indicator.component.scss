@@ -1,0 +1,53 @@
+.signal-indicator--wrapper {
+  &:after {
+    content: '';
+    display:table;
+    clear:both;
+  }
+  width:30px;
+  display:table-cell;
+  .signal-indicator--step {
+    display:inline-block;
+    background-color:#32383e;
+    width:5px;
+    transition: height .2s ease-in-out;
+    margin-right:3px;
+    margin-bottom: 4px;
+    vertical-align: bottom;
+    &:last-child {
+      margin-right:0;
+    }
+    &.signal-indicator__step1{
+      height:5px;
+    }
+    &.signal-indicator__step2{
+      height:10px;
+    }
+    &.signal-indicator__step3{
+      height:15px;
+    }
+    &.signal-indicator__step4{
+      height:20px;
+    }
+  }
+  &.step__1{
+    .currentStep {
+      background-color:red;
+    }
+  }
+  &.step__2{
+    .currentStep {
+      background-color:yellow;
+    }
+  }
+  &.step__3{
+    .currentStep {
+      background-color:yellowgreen;
+    }
+  }
+  &.step__4{
+    .currentStep {
+      background-color:green;
+    }
+  }
+}

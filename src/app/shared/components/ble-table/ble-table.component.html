@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table__session">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>MAC</th>
+              <th>Vendor</th>
+              <th>RSSI</th>
+              <th>Last seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let device of ble">
+              <td>{{ device.name ? device.name : 'n/a' }}</td>
+              <td>{{ device.mac ? device.mac : 'n/a' }}</td>
+              <td>{{ device.vendor ? device.vendor : 'n/a' }}</td>
+              <td>
+                <hydra-signal-indicator [signalstrength]="device.rssi"></hydra-signal-indicator>
+              </td>
+              <td>{{ device.last_seen ? device.last_seen : 'n/a' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

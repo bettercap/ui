@@ -1,0 +1,30 @@
+export interface HostValues {
+  'nbns:hostname'?: string;
+  'mdns:bs'?: string;
+  'mdns:ca'?: string;
+  'mdns:cd'?: string;
+  'mdns:fn'?: string;
+  'mdns:ic'?: string;
+  'mdns:id'?: string;
+  'mdns:md'?: string;
+  'mdns:nf'?: string;
+  'mdns:rm'?: string;
+  'mdns:rs'?: string;
+  'mdns:st'?: string;
+  'mdns:ve'?: string;
+  'mdns:c#'?: string;
+  'mdns:ci'?: string;
+  'mdns:ff'?: string;
+  'mdns:hostname'?: string;
+  'mdns:pv'?: string;
+  'mdns:s#'?: string;
+  'mdns:sf'?: string;
+  'upnp:Host'?: string;
+  'upnp:Hue-Bridgeid'?: string;
+  'upnp:Location'?: string;
+  'upnp:Server'?: string;
+  'upnp:St'?: string;
+  'upnp:Usn'?: string;
+  'mdns:__common_time__'?: string;
+  'mdns:si'?: string;
+}

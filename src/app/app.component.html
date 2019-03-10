@@ -1,0 +1,4 @@
+<hydra-main-header (logoutEvent)="logout($event)"></hydra-main-header>
+<hydra-sidebar [session]="store.session" (terminalEvent)="changeTerminalStatus()"></hydra-sidebar>
+<hydra-view-container></hydra-view-container>
+<hydra-terminal (terminalEvent)="changeTerminalStatus()" [terminalStatus]="terminalStatus"></hydra-terminal>
