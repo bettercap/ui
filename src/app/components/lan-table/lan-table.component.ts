@@ -4,6 +4,18 @@ import { Host } from '../../models/host';
 
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 
+function ipCmp( a, b ) {
+    a = a.ipv4.split( '.' );
+    b = b.ipv4.split( '.' );
+    for( var i = 0; i < a.length; i++ ) {
+        if( ( a[i] = parseInt( a[i] ) ) < ( b[i] = parseInt( b[i] ) ) )
+            return -1;
+        else if( a[i] > b[i] )
+            return 1;
+    }
+    return 0;
+}
+
 @Component({
     selector: 'hydra-lan-table',
     templateUrl: './lan-table.component.html',
@@ -27,6 +39,6 @@ export class LanTableComponent implements OnInit {
 
     private update(hosts) {
         this.hosts = hosts; 
-        this.hosts.sort((a,b) => (a.ipv4 < b.ipv4) ? -1 : (a.ipv4 > b.ipv4) ? 1 : 0);
+        this.hosts.sort(ipCmp);
     }
 }
