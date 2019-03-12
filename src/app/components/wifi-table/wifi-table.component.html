@@ -1,0 +1,73 @@
+<div class="table-responsive">
+  <ngb-alert *ngIf="aps.length == 0" type="primary">
+    No wireless access points discovered so far.
+  </ngb-alert>
+
+  <table *ngIf="aps.length > 0" class="table table-dark">
+    <thead>
+      <tr>
+        <th>RSSI</th>
+        <th>BSSID</th>
+        <th>ESSID</th>
+        <th>Vendor</th>
+        <th>Encryption</th>
+        <th>Ch</th>
+        <th>Clients</th>
+        <th>Sent</th>
+        <th>Received</th>
+        <th>Last seen</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ap of aps">
+        <td>
+          <hydra-signal-indicator [signalstrength]="ap.rssi"></hydra-signal-indicator>
+        </td>
+        <td>{{ ap.mac }}</td>
+        <td>{{ ap.hostname }}</td>
+        <td>{{ ap.vendor }}</td>
+        <td>
+          <fa-icon *ngIf="ap.encryption === 'OPEN'" [icon]="faUnlock" [style.color]="'green'" placement="top"></fa-icon>
+          <span *ngIf="ap.encryption !== 'OPEN'">{{ ap.encryption }} ({{ ap.cipher }}, {{ ap.authentication }})</span>
+        </td>
+        <td>{{ ap.channel }}</td>
+
+        <td>
+          <span *ngIf="ap.clients.length > 0">
+            <span style="cursor:pointer;" class="badge badge-pill badge-info" (click)="visibleClients[ap.mac] = !visibleClients[ap.mac]">
+              {{ ap.clients.length }}
+            </span>
+
+            <table *ngIf="visibleClients[ap.mac]" class="table table-sm table-dark">
+              <tbody>
+                <tr *ngFor="let sta of ap.clients">
+                  <td>{{ sta.mac }}</td>
+                  <td>{{ sta.vendor }}</td>
+                  <td>{{ sta.last_seen | date: 'HH:mm:ss' }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </span>
+        </td>
+
+        <td>{{ ap.sent }}</td>
+        <td>{{ ap.received }}</td>
+        <td>{{ ap.last_seen | date: 'HH:mm:ss' }}</td>
+
+        <td>
+          <span style="cursor:pointer; margin-left:10px;" class="badge badge-pill badge-warning" (click)="visibleWPS[ap.mac] = !visibleWPS[ap.mac]" *ngIf="(ap.wps | json) != '{}'">
+            WPS {{ ap.wps.Version }}
+          </span>
+          <ul *ngIf="visibleWPS[ap.mac]">
+            <li *ngFor="let item of ap.wps | keyvalue">
+              <strong>{{ item.key }}</strong>: {{ item.value }}
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
