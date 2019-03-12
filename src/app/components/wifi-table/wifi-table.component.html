@@ -25,7 +25,7 @@
           <hydra-signal-indicator [signalstrength]="ap.rssi"></hydra-signal-indicator>
         </td>
         <td>{{ ap.mac }}</td>
-        <td>{{ ap.hostname }}</td>
+        <td [class.hidden]="ap.hostname === '<hidden>'">{{ ap.hostname }}</td>
         <td>{{ ap.vendor }}</td>
         <td>
           <fa-icon *ngIf="ap.encryption === 'OPEN'" [icon]="faUnlock" [style.color]="'green'" placement="top"></fa-icon>

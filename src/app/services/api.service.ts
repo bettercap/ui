@@ -125,7 +125,6 @@ export class ApiService {
                 console.log("error.emit");
                 this.onError.emit(error);
             }
-
             return throwError(error);
         });
     }
