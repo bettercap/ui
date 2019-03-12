@@ -1,5 +1,5 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-signin">
-  <img [src]="'./assets/images/logo.png'" alt="Hydra - Logo" class="img-responsive" [ngStyle]="{ 'height':'72px', 'width':'72px' }">
+  <img [src]="'./assets/images/logo.png'" alt="Hydra - Logo" class="img-responsive">
   <br/>
   <ngb-alert *ngIf="error" type="danger" (close)="error=null">{{ error.statusText }}</ngb-alert>
 
