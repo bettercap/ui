@@ -1,0 +1,13 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-signin">
+  <img [src]="'./assets/images/logo.png'" alt="Hydra - Logo" class="img-responsive" [ngStyle]="{ 'height':'72px', 'width':'72px' }">
+  <br/>
+  <ngb-alert *ngIf="error" type="danger" (close)="error=null">{{ error.statusText }}</ngb-alert>
+
+  <input type="text" formControlName="username" class="form-control" placeholder="username" required autofocus>
+  <ngb-alert *ngIf="submitted && form.username.errors && form.username.errors.required" type="danger">username is required</ngb-alert>
+  
+  <input type="password" formControlName="password" class="form-control" placeholder="password" required>
+  <ngb-alert *ngIf="submitted && form.password.errors && form.password.errors.required" type="danger">password is required</ngb-alert>
+
+  <button class="btn btn-primary btn-lg btn-block">Login</button>
+</form>

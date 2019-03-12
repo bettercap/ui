@@ -1,0 +1,69 @@
+<header id="hydraMainHeader">
+
+  <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="/">
+      <img [src]="'./assets/images/logo.png'" alt="Hydra - Logo" class="img-responsive" [ngStyle]="{ 'height':'50px' }">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/lan">
+            <i class="fa fa-network-wired">
+              <span *ngIf="numHosts > 0" class="badge badge-danger">{{ numHosts }}</span>
+            </i>
+            LAN
+          </a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/wifi">
+            <i class="fa fa-wifi">
+              <span *ngIf="numAps > 0" class="badge badge-danger">{{ numAps }}</span>
+            </i>
+            WiFi
+          </a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/ble">
+            <i class="fab fa-bluetooth-b">
+              <span *ngIf="numBLE > 0" class="badge badge-danger">{{ numBLE }}</span>
+            </i>
+            BLE
+          </a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/hid">
+            <i class="fa fa-keyboard">
+              <span *ngIf="numHID > 0" class="badge badge-danger">{{ numHID }}</span>
+            </i>
+            HID
+          </a>
+        </li>
+
+      </ul>
+
+      <ul class="navbar-nav ">
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">
+            <fa-icon [icon]="faSignOutAlt"></fa-icon> 
+            Logout
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+
+</header>
+
+<br *ngIf="error"/>
+<ngb-alert *ngIf="error" type="danger" (close)="error=null">{{ error.message }}</ngb-alert>

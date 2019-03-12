@@ -1,0 +1,37 @@
+<div class="table-responsive">
+  <ngb-alert *ngIf="hosts.length == 0" type="primary">
+    No LAN hosts discovered so far.
+  </ngb-alert>
+
+  <table *ngIf="hosts.length > 0" class="table table-dark">
+    <thead>
+      <tr>
+        <th>IP</th>
+        <th>MAC</th>
+        <th>Name</th>
+        <th>Vendor</th>
+        <th>Last seen</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let host of hosts">
+        <td>{{ host.ipv4 }}</td>
+        <td>{{ host.mac }}</td>
+        <td>{{ host.alias ? host.alias : host.hostname }}</td>
+        <td>{{ host.vendor }}</td>
+        <td>{{ host.last_seen | date: 'HH:mm:ss'}}</td>
+        <td>
+          <span style="cursor:pointer" class="badge badge-pill badge-primary" (click)="visibleMeta[host.mac] = !visibleMeta[host.mac]" *ngIf="(host.meta.values | json) != '{}'">
+            <fa-icon [icon]="faInfoCircle"></fa-icon>
+          </span>
+          <ul *ngIf="visibleMeta[host.mac]">
+            <li *ngFor="let item of host.meta.values | keyvalue">
+              <strong>{{ item.key }}</strong>: {{ item.value }}
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

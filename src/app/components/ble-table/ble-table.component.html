@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <ngb-alert *ngIf="devices.length == 0" type="primary">
+    No BLE devices discovered so far.
+  </ngb-alert>
+
+  <table *ngIf="devices.length > 0" class="table table-dark">
+    <thead>
+      <tr>
+        <th>RSSI</th>
+        <th>MAC</th>
+        <th>Name</th>
+        <th>Vendor</th>
+        <th>Flags</th>
+        <th>Connectable</th>
+        <th>Last seen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let device of devices">
+        <td>
+          <hydra-signal-indicator [signalstrength]="device.rssi"></hydra-signal-indicator>
+        </td>
+        <td>{{ device.mac }}</td>
+        <td>{{ device.name }}</td>
+        <td>{{ device.vendor }}</td>
+        <td>{{ device.flags }}</td>
+        <td align="center">
+          <fa-icon *ngIf="device.connectable" [icon]="faCheckCircle" style="color:green"></fa-icon>
+          <fa-icon *ngIf="!device.connectable" [icon]="faTimes" style="color:red"></fa-icon>
+        </td>
+        <td>{{ device.last_seen | date: 'HH:mm:ss' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

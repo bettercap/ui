@@ -1,31 +1,45 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {SessionService} from './core/services/session.service';
-import {SessionStoreService} from './core/services/session-store.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from "@angular/router";
+import { ApiService } from './services/api.service';
+import { Session } from './models/session';
+
+const POLLING_INTERVAL = 1000;
 
 @Component({
-  selector: 'hydra-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'hydra-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
+export class AppComponent implements OnInit, OnDestroy {
+    session: Session;
 
-export class AppComponent {
-  @Output() logoutEvent: EventEmitter<any> = new EventEmitter();
+    constructor(public api: ApiService, private router: Router) {
+        this.api.onLoggedIn.subscribe(() => {
+            console.log("logged in");
+            this.session = this.api.session;
+            this.api.polling().subscribe(
+                (session) => { 
+                    console.log("session update:", session); 
+                    this.session = session; 
+                }
+            );
+        });
 
-  terminalStatus: boolean;
+        this.api.onLoggedOut.subscribe(error => {
+            console.log("logged out");
+            this.session = null;
+            this.router.navigateByUrl("/login");
+        });
+    }
 
-  constructor(
-      public actions: SessionService,
-      public store: SessionStoreService
-  ) {
-    this.terminalStatus = false;
-  }
+    ngOnInit() {
+        if( !this.session ) {
+            this.api.loadCreds();
+        }
+    }
 
-  changeTerminalStatus() {
-    this.terminalStatus = !this.terminalStatus;
-  }
-
-  logout() {
-    this.logoutEvent.emit('logout');
-    console.log(`[LOGOUT] Emitted from AppComponent`);
-  }
+    ngOnDestroy() {
+        // this.api.onLoggedIn.unsubscribe();
+        // this.api.onLoggedOut.unsubscribe();
+    }
 }

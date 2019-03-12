@@ -1,0 +1,25 @@
+<div class="table-responsive">
+  <ngb-alert *ngIf="devices.length == 0" type="primary">
+    No HID devices discovered so far.
+  </ngb-alert>
+
+  <table *ngIf="devices.length > 0" class="table table-dark">
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>Type</th>
+        <th>Channels</th>
+        <th>Last seen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let device of devices">
+        <td>{{ device.address }}</td>
+        <td>{{ device.type }}</td>
+        <td>{{ device.channels }}</td>
+        <td>{{ device.last_seen | date: 'HH:mm:ss' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

@@ -5,11 +5,12 @@ body{
   font-size:$fontSize;
   font-weight: $fontWeightNormal;
   line-height:$lineHeight;
+  background-color: $mainBackground;
 }
 html, body{
   width:100%;
   height:100%;
-  overflow:hidden;
+  overflow: auto;
 }
 ol, ul{
   padding:0;
@@ -40,6 +41,7 @@ ol, ul{
   height: auto;
   margin: 0 auto;
 }
-p{
-  margin-bottom: .5rem;
+
+.badge {
+    font-size: 90%;
 }
