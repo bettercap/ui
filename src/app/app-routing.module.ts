@@ -5,6 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 
 import { LoginComponent } from './components/login/login.component';
 
+import { EventsTableComponent } from './components/events-table/events-table.component';
 import { LanTableComponent } from './components/lan-table/lan-table.component';
 import { WifiTableComponent } from './components/wifi-table/wifi-table.component';
 import { BleTableComponent } from './components/ble-table/ble-table.component';
@@ -14,12 +15,13 @@ import { ModuleOptionsComponent } from './components/module-options/module-optio
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
 
+  { path: 'events', component: EventsTableComponent, canActivate: [AuthGuard]},
   { path: 'lan', component: LanTableComponent, canActivate: [AuthGuard]},
   { path: 'ble', component: BleTableComponent, canActivate: [AuthGuard]},
   { path: 'wifi', component: WifiTableComponent,  canActivate: [AuthGuard]},
   { path: 'hid', component: HidTableComponent,  canActivate: [AuthGuard]},
 
-  { path: '**', redirectTo: 'lan' }
+    { path: '**', redirectTo: 'events' }
 ];
 
 @NgModule({

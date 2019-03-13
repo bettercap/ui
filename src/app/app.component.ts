@@ -17,10 +17,15 @@ export class AppComponent implements OnInit, OnDestroy {
         this.api.onLoggedIn.subscribe(() => {
             console.log("logged in");
             this.session = this.api.session;
-            this.api.polling().subscribe(
+            this.api.pollSession().subscribe(
                 (session) => { 
-                    console.log("session update:", session); 
+                    // console.log("session update:", session); 
                     this.session = session; 
+                }
+            );
+            this.api.pollEvents().subscribe(
+                (events) => { 
+                    // console.log("events update:", events); 
                 }
             );
         });
@@ -39,7 +44,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        // this.api.onLoggedIn.unsubscribe();
-        // this.api.onLoggedOut.unsubscribe();
+
     }
 }

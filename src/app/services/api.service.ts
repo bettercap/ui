@@ -9,9 +9,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 import {Session} from '../models/session';
+import {Event} from '../models/event';
 import {Command, CommandResponse} from '../models/command';
 
 const POLLING_INTERVAL = 1000;
+const NUM_EVENTS       = 50;
 
 const API_SCHEMA = 'http';
 const API_HOST   = document.location.hostname;
@@ -22,23 +24,34 @@ const API_URL    = API_SCHEMA + '://' + API_HOST + ':' + API_PORT + '/api';
     providedIn: 'root'
 })
 export class ApiService {
+    public isLogged: boolean = false;
+    public error: Response | any;
     private user: string;
     private pass: string;
     private headers: HttpHeaders;
 
     public session: Session;
-    public isLogged: boolean = false;
-    public error: Response | any;
+    public events: Event[] = [];
 
     public onNewData: EventEmitter<Session> = new EventEmitter();
+    public onNewEvents: EventEmitter<Event[]> = new EventEmitter();
     public onLoggedOut: EventEmitter<any> = new EventEmitter();
     public onLoggedIn: EventEmitter<any> = new EventEmitter();
     public onError: EventEmitter<any> = new EventEmitter();
 
     constructor(private http:HttpClient) {}
 
-    public polling() {
-        console.log("api.polling() started");
+    public pollEvents() {
+        console.log("api.pollEvents() started");
+        return interval(POLLING_INTERVAL)
+            .pipe(
+                startWith(0),
+                switchMap(() => this.getEvents())
+            );
+    }
+
+    public pollSession() {
+        console.log("api.pollSession() started");
         return interval(POLLING_INTERVAL)
             .pipe(
                 startWith(0),
@@ -79,7 +92,7 @@ export class ApiService {
     }
 
     private saveCreds() {
-        console.log("api.saveCreds()");
+        // console.log("api.saveCreds()");
         localStorage.setItem('auth', JSON.stringify({
             username: this.user,
             password: this.pass,
@@ -95,6 +108,35 @@ export class ApiService {
         } else {
             console.log("api.logout() but isLogged=false");
         }
+    }
+
+    public getEvents() : Observable<Event[]> {
+        return this.http
+        .get<Event[]>( API_URL + '/events', 
+        {
+            headers: this.headers,
+            params: {'n': String(NUM_EVENTS)}
+        })
+        .map(response => {
+            this.events = response;
+            this.onNewEvents.emit(response);
+            return response;
+        })
+        .catch(error => {
+            return throwError(error);
+        });
+    }
+
+    public clearEvents() {
+        console.log("clearing events");
+        this.http
+        .delete( API_URL + '/events', {headers: this.headers})
+        .subscribe(response => {
+            this.events = [];
+            this.onNewEvents.emit([]);
+        }, error => {
+            return throwError(error);
+        });
     }
 
     public getSession() : Observable<Session> {
@@ -129,7 +171,7 @@ export class ApiService {
         });
     }
 
-    // TODO
+    // TODO 
     public run(cmd: string) {
         console.log("cmd: " + cmd);
         return this.http.post<CommandResponse>(API_URL + '/session', {cmd: cmd})
