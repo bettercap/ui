@@ -1,4 +1,5 @@
 import {Component, Output, EventEmitter, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import { ApiService } from '../../services/api.service';
 
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
@@ -20,7 +21,7 @@ export class MainHeaderComponent implements OnInit {
 
     error: any;
 
-    constructor(private api: ApiService) { 
+    constructor(private api: ApiService, private router: Router) { 
         this.update(this.api.session);
     }
 
@@ -43,5 +44,6 @@ export class MainHeaderComponent implements OnInit {
 
     logout() {
         this.api.logout();
+        this.router.navigateByUrl("/login");
     }
 }

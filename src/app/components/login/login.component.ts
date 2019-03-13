@@ -13,7 +13,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     submitted: boolean = false;
     error: any;
 
-    constructor(private api: ApiService, private formBuilder: FormBuilder, private router: Router) {}
+    constructor(private api: ApiService, private formBuilder: FormBuilder, private router: Router) {
+        if( this.api.isLogged ) {
+            console.log("user already logged in");
+            this.router.navigateByUrl("/");
+        }
+    }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -27,7 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() { 
-        this.api.onLoggedIn.unsubscribe();
+        // this.api.onLoggedIn.unsubscribe();
     }
 
     get form() { 
