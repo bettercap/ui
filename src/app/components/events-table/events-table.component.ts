@@ -12,9 +12,10 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     events: Event[];
     sort: ColumnSortedEvent;
     sortSub: any;
+    query: string = '';
 
     constructor(private api: ApiService, private sortService: SortService) { 
-        this.sort = {field: 'time', direction: 'desc', type:''};
+        this.sort = {field: 'time', direction: 'asc', type:''};
         this.update(this.api.events);
     }
 

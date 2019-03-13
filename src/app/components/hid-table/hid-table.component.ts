@@ -14,6 +14,7 @@ export class HidTableComponent implements OnInit, OnDestroy {
     devices: HIDDevice[];
     sort: ColumnSortedEvent;
     sortSub: any;
+    query: string = '';
 
     faCheckCircle = faCheckCircle;
     faTimes = faTimes;
@@ -36,6 +37,11 @@ export class HidTableComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.sortSub.unsubscribe();
+    }
+
+    clear() {
+        this.api.cmd("hid.clear");
+        this.devices = [];
     }
 
     private update(devices) {

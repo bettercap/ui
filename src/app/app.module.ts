@@ -8,7 +8,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { SortableColumnComponent } from './components/sortable-column/sortable-column.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainHeaderComponent } from './components/main-header/main-header.component';
 // import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -21,10 +20,11 @@ import { WifiTableComponent } from './components/wifi-table/wifi-table.component
 import { SignalIndicatorComponent } from './components/signal-indicator/signal-indicator.component';
 // import { TerminalComponent } from './components/terminal/terminal.component';
 
+import { SortableColumnComponent } from './components/sortable-column/sortable-column.component';
+import { SearchPipe } from './components/search.pipe';
 @NgModule({
     declarations: [
         AppComponent,
-        SortableColumnComponent,
         LoginComponent,
         MainHeaderComponent,
         // SidebarComponent,
@@ -36,6 +36,9 @@ import { SignalIndicatorComponent } from './components/signal-indicator/signal-i
         // ModuleOptionsComponent,
         SignalIndicatorComponent,
         // TerminalComponent
+        
+        SortableColumnComponent,
+        SearchPipe
     ],
     imports: [
         BrowserModule,

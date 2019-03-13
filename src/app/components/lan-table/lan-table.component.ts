@@ -16,6 +16,7 @@ export class LanTableComponent implements OnInit, OnDestroy {
     gateway: Host;
     sort: ColumnSortedEvent;
     sortSub: any;
+    query: string = '';
 
     visibleMeta = {};
 
@@ -46,5 +47,10 @@ export class LanTableComponent implements OnInit, OnDestroy {
         this.gateway = session.gateway;
         this.hosts = session.lan['hosts']; 
         this.sortService.sort(this.hosts, this.sort)
+    }
+
+    clear() {
+        this.api.cmd("net.clear");
+        this.hosts = [];
     }
 }
