@@ -28,10 +28,36 @@ npm run build
 This will generate the `/path/to/hydra/dist/ngHydra` folder, then you can use `bettercap` (make sure it's updated) for both the REST API and to serve the web ui itself via the `http.server` module:
 
 ```sh
-sudo bettercap -iface wlan1 -eval "wifi.recon on; ble.recon on; hid.recon on; set api.rest.username user; set api.rest.password pass; api.rest on; set http.server.path /path/to/hydra/dist/ngHydra; http.server on"
+sudo bettercap
 ```
 
-And login with `user` and `pass`.
+Then from bettercap's interactive session, enable a few modules:
+
+```
+wifi.recon on 
+ble.recon on
+hid.recon on
+```
+
+Setup the `api.rest` module (change these default credentials!):
+
+```
+set api.rest.username changeme 
+set api.rest.password changeme 
+api.rest on
+```
+
+And start serving the UI (by default on port 80 of the IP address of the interface):
+
+```
+set http.server.address 127.0.0.1
+set http.server.path /path/to/hydra/dist/ngHydra 
+http.server on
+```
+
+The UI will be available at `http://127.0.0.1/`, you can login with the credentials provided to `api.rest`.
+
+For further information, [refer to bettercap's documentation](https://www.bettercap.org/).
 
 ## License
 
