@@ -18,14 +18,15 @@ What things you need to install the software and how to install them
 
 ## Getting Started
 
-In order to run the web ui, first build the project:
+In order to run the web ui, first clone the repo somewhere and build the source:
 
 ```sh
-cd /path/to/hydra
+git clone https://github.com/guizzo/hydra.git ~/hydra
+cd ~/hydra
 npm run build
 ```
 
-This will generate the `/path/to/hydra/dist/ngHydra` folder, then you can use `bettercap` (make sure it's updated) for both the REST API and to serve the web ui itself via the `http.server` module:
+This shoud generate the `~/dist/hydra` folder, then you can use `bettercap` (make sure it's updated) for both the REST API and to serve the web ui itself via the `http.server` module:
 
 ```sh
 sudo bettercap
@@ -51,7 +52,7 @@ And start serving the UI (by default on port 80 of the IP address of the interfa
 
 ```
 set http.server.address 127.0.0.1
-set http.server.path /path/to/hydra/dist/ngHydra 
+set http.server.path /path/to/hydra/dist/hydra 
 http.server on
 ```
 
