@@ -16,6 +16,7 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     visibleClients = {};
     sort: ColumnSortedEvent;
     sortSub: any;
+    query: string = '';
 
     faUnlock = faUnlock;
 
@@ -37,6 +38,11 @@ export class WifiTableComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.sortSub.unsubscribe();
+    }
+
+    clear() {
+        this.api.cmd("wifi.clear");
+        this.aps = [];
     }
 
     private update(aps) {

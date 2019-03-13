@@ -29,7 +29,7 @@ export class SidebarComponent implements OnInit {
 
     toggleModule(module: any): void {
         console.log("toggling module " + module.name);
-        this.api.run(module.name + " " + (module.running ? 'off' : 'on'));
+        this.api.cmd(module.name + " " + (module.running ? 'off' : 'on'));
     }
 
     ngOnInit() {

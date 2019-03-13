@@ -171,20 +171,15 @@ export class ApiService {
         });
     }
 
-    // TODO 
-    public run(cmd: string) {
+    public cmd(cmd: string) {
         console.log("cmd: " + cmd);
-        return this.http.post<CommandResponse>(API_URL + '/session', {cmd: cmd})
-        .subscribe(
-        (val) => {
-            console.log("POST call successful value returned in body", 
-                        val);
-        },
-        response => {
-            console.log("POST call in error", response);
-        },
-        () => {
-            console.log("The POST observable is now completed.");
-        }); 
+        return this.http.post<CommandResponse>(
+            API_URL + '/session', 
+            {cmd: cmd},
+            {headers: this.headers})
+            .subscribe(
+                (val) => {},
+                response => {},
+                () => {}); 
     }
 }

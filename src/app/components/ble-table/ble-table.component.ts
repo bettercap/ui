@@ -14,6 +14,7 @@ export class BleTableComponent implements OnInit, OnDestroy {
     devices: Device[];
     sort: ColumnSortedEvent;
     sortSub: any;
+    query: string = '';
 
     faCheckCircle = faCheckCircle;
     faTimes = faTimes;
@@ -36,6 +37,11 @@ export class BleTableComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.sortSub.unsubscribe();
+    }
+
+    clear() {
+        this.api.cmd("ble.clear");
+        this.devices = [];
     }
 
     private update(devices) {
