@@ -1,9 +1,5 @@
 <div class="table-responsive">
-  <ngb-alert *ngIf="devices.length == 0" type="primary">
-    No HID devices discovered so far.
-  </ngb-alert>
-
-  <table *ngIf="devices.length > 0" class="table table-dark">
+  <table class="table table-dark">
     <thead>
       <tr>
         <th>Address</th>
@@ -13,6 +9,13 @@
       </tr>
     </thead>
     <tbody>
+
+      <tr *ngIf="devices.length == 0">
+        <td colspan="4" align="center">
+          <i>empty</i>
+        </td>
+      </tr>
+
       <tr *ngFor="let device of devices">
         <td>{{ device.address }}</td>
         <td>{{ device.type }}</td>

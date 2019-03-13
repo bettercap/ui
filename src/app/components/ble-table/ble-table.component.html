@@ -1,9 +1,5 @@
 <div class="table-responsive">
-  <ngb-alert *ngIf="devices.length == 0" type="primary">
-    No BLE devices discovered so far.
-  </ngb-alert>
-
-  <table *ngIf="devices.length > 0" class="table table-dark">
+  <table class="table table-dark">
     <thead>
       <tr>
         <th>RSSI</th>
@@ -16,6 +12,13 @@
       </tr>
     </thead>
     <tbody>
+
+      <tr *ngIf="devices.length == 0">
+        <td colspan="7" align="center">
+          <i>empty</i>
+        </td>
+      </tr>
+
       <tr *ngFor="let device of devices">
         <td>
           <hydra-signal-indicator [signalstrength]="device.rssi"></hydra-signal-indicator>

@@ -1,9 +1,5 @@
 <div class="table-responsive">
-  <ngb-alert *ngIf="hosts.length == 0" type="primary">
-    No LAN hosts discovered so far.
-  </ngb-alert>
-
-  <table *ngIf="hosts.length > 0" class="table table-dark">
+  <table class="table table-dark">
     <thead>
       <tr>
         <th>IP</th>
@@ -15,6 +11,38 @@
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td>{{ iface.ipv4 }}</td>
+        <td>{{ iface.mac }}</td>
+        <td>{{ iface.alias ? iface.alias : iface.hostname }}</td>
+        <td>{{ iface.vendor }}</td>
+        <td>{{ iface.last_seen | date: 'HH:mm:ss'}}</td>
+        <td><strong>interface</strong></td>
+      </tr> 
+      <tr>
+        <td>{{ gateway.ipv4 }}</td>
+        <td>{{ gateway.mac }}</td>
+        <td>{{ gateway.alias ? gateway.alias : gateway.hostname }}</td>
+        <td>{{ gateway.vendor }}</td>
+        <td>{{ gateway.last_seen | date: 'HH:mm:ss'}}</td>
+        <td><strong>gateway</strong></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr *ngIf="hosts.length == 0">
+        <td colspan="6" align="center">
+          <i>empty</i>
+        </td>
+      </tr>
+
       <tr *ngFor="let host of hosts">
         <td>{{ host.ipv4 }}</td>
         <td>{{ host.mac }}</td>
