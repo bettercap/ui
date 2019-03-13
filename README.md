@@ -7,7 +7,16 @@
 
 # Hydra
 
-**This project is still work in progress**. 
+Hydra is a UI crafted on top of [bettercap](https://www.bettercap.org/), **this project is still work in progress**. 
+
+## Prerequisites
+
+What things you need to install the software and how to install them
+
+- Node
+- NPM (come with Node installer)
+
+## Getting Started
 
 In order to run the web ui, first build the project:
 
@@ -24,26 +33,6 @@ sudo bettercap -iface wlan1 -eval "wifi.recon on; ble.recon on; hid.recon on; se
 
 And login with `user` and `pass`.
 
-## Development server
+## License
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Hydra is made with ♥  by [the dev team](https://github.com/guizzo/hydra/graphs/contributors) and it's released under the GPL 3 license.
