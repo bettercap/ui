@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import { Event } from '../../models/event';
 
 @Component({
@@ -7,10 +8,13 @@ import { Event } from '../../models/event';
     templateUrl: './events-table.component.html',
     styleUrls: ['./events-table.component.scss']
 })
-export class EventsTableComponent implements OnInit {
+export class EventsTableComponent implements OnInit, OnDestroy {
     events: Event[];
+    sort: ColumnSortedEvent;
+    sortSub: any;
 
-    constructor(private api: ApiService) { 
+    constructor(private api: ApiService, private sortService: SortService) { 
+        this.sort = {field: 'time', direction: 'desc', type:''};
         this.update(this.api.events);
     }
 
@@ -18,11 +22,20 @@ export class EventsTableComponent implements OnInit {
         this.api.onNewEvents.subscribe(events => {
             this.update(events);
         });
+
+        this.sortSub = this.sortService.onSort.subscribe(event => {
+            this.sort = event;
+            this.sortService.sort(this.events, event);
+        });
+    }
+
+    ngOnDestroy() {
+        this.sortSub.unsubscribe();
     }
 
     private update(events) {
         this.events = events; 
-        this.events.sort((a,b) => (a.time < b.time) ? 1 : (a.time > b.time) ? -1 : 0);
+        this.sortService.sort(this.events, this.sort)
     }
 
     clear() {

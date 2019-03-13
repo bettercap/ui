@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
+import { SortableColumnComponent } from './components/sortable-column/sortable-column.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainHeaderComponent } from './components/main-header/main-header.component';
 // import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -23,6 +24,7 @@ import { SignalIndicatorComponent } from './components/signal-indicator/signal-i
 @NgModule({
     declarations: [
         AppComponent,
+        SortableColumnComponent,
         LoginComponent,
         MainHeaderComponent,
         // SidebarComponent,
