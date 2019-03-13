@@ -5,9 +5,24 @@
   </p>
 </p>
 
-# NgHydra
+# Hydra
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+**This project is still work in progress**. 
+
+In order to run the web ui, first build the project:
+
+```sh
+cd /path/to/hydra
+npm run build
+```
+
+This will generate the `/path/to/hydra/dist/ngHydra` folder, then you can use `bettercap` (make sure it's updated) for both the REST API and to serve the web ui itself via the `http.server` module:
+
+```sh
+sudo bettercap -iface wlan1 -eval "wifi.recon on; ble.recon on; hid.recon on; set api.rest.username user; set api.rest.password pass; api.rest on; set http.server.path /path/to/hydra/dist/ngHydra; http.server on"
+```
+
+And login with `user` and `pass`.
 
 ## Development server
 
