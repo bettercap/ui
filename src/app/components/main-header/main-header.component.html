@@ -71,5 +71,9 @@
 
 </header>
 
-<br *ngIf="error"/>
-<ngb-alert *ngIf="error" type="danger" (close)="error=null">{{ error.message }}</ngb-alert>
+<div *ngIf="error" id="error" class="alert alert-danger" role="alert">
+  <h5 class="alert-heading">ERROR</h5>
+  <p class="mb-0">
+    {{ error.message }}
+  </p>
+</div>

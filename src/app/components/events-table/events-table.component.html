@@ -17,6 +17,13 @@
       </tr>
     </thead>
     <tbody>
+
+      <tr *ngIf="events.length == 0">
+        <td colspan="3" align="center">
+          <i>empty</i>
+        </td>
+      </tr>
+
       <tr *ngFor="let event of events">
         <td>{{ event.time | date: 'HH:mm:ss' }}</td>
         <td [ngSwitch]="event.tag.split('.')[0]">

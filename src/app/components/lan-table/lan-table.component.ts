@@ -23,22 +23,27 @@ function ipCmp( a, b ) {
 })
 export class LanTableComponent implements OnInit {
     hosts: Host[];
+    iface: Host;
+    gateway: Host;
+
     visibleMeta = {};
 
     faInfoCircle = faInfoCircle;
 
     constructor(private api: ApiService) { 
-        this.update(this.api.session.lan['hosts']);
+        this.update(this.api.session);
     }
 
     ngOnInit() {
         this.api.onNewData.subscribe(session => {
-            this.update(session.lan['hosts']);
+            this.update(session);
         });
     }
 
-    private update(hosts) {
-        this.hosts = hosts; 
+    private update(session) {
+        this.iface = session.interface;
+        this.gateway = session.gateway;
+        this.hosts = session.lan['hosts']; 
         this.hosts.sort(ipCmp);
     }
 }
