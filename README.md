@@ -14,7 +14,7 @@ Hydra is a UI crafted on top of [bettercap](https://www.bettercap.org/), **this 
 What things you need to install the software and how to install them
 
 - Node
-- NPM (come with Node installer)
+- NPM
 
 ## Getting Started
 
