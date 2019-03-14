@@ -1,7 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import { ApiService } from '../../services/api.service';
 import { Host } from '../../models/host';
+import { OmnibarComponent } from '../omnibar/omnibar.component';
 
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 
@@ -11,12 +12,13 @@ import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
     styleUrls: ['./lan-table.component.scss']
 })
 export class LanTableComponent implements OnInit, OnDestroy {
+    @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
+
     hosts: Host[];
     iface: Host;
     gateway: Host;
     sort: ColumnSortedEvent;
     sortSub: any;
-    query: string = '';
 
     visibleMeta = {};
 
@@ -45,12 +47,35 @@ export class LanTableComponent implements OnInit, OnDestroy {
     private update(session) {
         this.iface = session.interface;
         this.gateway = session.gateway;
-        this.hosts = session.lan['hosts']; 
+        this.hosts = [];
+
+        // if we `this.hosts` = session.lan['hosts'], pushing
+        // to this.hosts will also push to the session object
+        // duplicating the iface and gateway.
+        for( var i = 0; i < session.lan['hosts'].length; i++ ){
+            this.hosts.push(session.lan['hosts'][i]); 
+        }
+        this.hosts.push(this.iface);
+        this.hosts.push(this.gateway);
+
         this.sortService.sort(this.hosts, this.sort)
     }
 
-    clear() {
-        this.api.cmd("net.clear");
-        this.hosts = [];
+    groupMetas(metas) {
+        let grouped = {};
+        for( let name in metas ) {
+            let parts = name.split(':'),
+                group = parts[0].toUpperCase(),
+                sub = parts[1];
+
+            if( group in grouped ) {
+                grouped[group][sub] = metas[name];
+            } else {
+                grouped[group] = {};
+                grouped[group][sub] = metas[name];
+            }
+        }
+        // console.log("grouped", grouped);
+        return grouped;
     }
 }

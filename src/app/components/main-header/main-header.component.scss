@@ -3,6 +3,10 @@
 @import "variables";
 @import "buttons";
 
+.navbar {
+    padding: .5rem 0;
+}
+
 .navbar-icon-top .navbar-nav .nav-link > *[class^='fa'] {
     position: relative;
     width: 36px;
@@ -18,7 +22,7 @@
 
 .navbar-icon-top .navbar-nav .nav-link > *[class^='fa'] {
     top: 3px;
-    line-height: 12px;
+    // line-height: 12px;
 }
 
 .navbar-icon-top .navbar-nav .nav-link > *[class^='fa'] > .badge {
@@ -29,7 +33,7 @@
     .navbar-icon-top.navbar-expand-sm .navbar-nav .nav-link {
         text-align: center;
         display: table-cell;
-        height: 70px;
+        // height: 70px;
         vertical-align: middle;
         padding-top: 0;
         padding-bottom: 0;
@@ -40,7 +44,7 @@
         width: 48px;
         margin: 2px auto 4px auto;
         top: 0;
-        line-height: 24px;
+        // line-height: 24px;
     }
 
     .navbar-icon-top.navbar-expand-sm .navbar-nav .nav-link > *[class^='fa'] > .badge {
@@ -52,7 +56,7 @@
     .navbar-icon-top.navbar-expand-md .navbar-nav .nav-link {
         text-align: center;
         display: table-cell;
-        height: 70px;
+        // height: 70px;
         vertical-align: middle;
         padding-top: 0;
         padding-bottom: 0;
@@ -63,7 +67,7 @@
         width: 48px;
         margin: 2px auto 4px auto;
         top: 0;
-        line-height: 24px;
+        // line-height: 24px;
     }
 
     .navbar-icon-top.navbar-expand-md .navbar-nav .nav-link > *[class^='fa'] > .badge {
@@ -75,7 +79,7 @@
     .navbar-icon-top.navbar-expand-lg .navbar-nav .nav-link {
         text-align: center;
         display: table-cell;
-        height: 70px;
+        // height: 70px;
         vertical-align: middle;
         padding-top: 0;
         padding-bottom: 0;
@@ -86,7 +90,7 @@
         width: 48px;
         margin: 2px auto 4px auto;
         top: 0;
-        line-height: 24px;
+        // line-height: 24px;
     }
 
     .navbar-icon-top.navbar-expand-lg .navbar-nav .nav-link > *[class^='fa'] > .badge {
@@ -98,7 +102,7 @@
     .navbar-icon-top.navbar-expand-xl .navbar-nav .nav-link {
         text-align: center;
         display: table-cell;
-        height: 70px;
+        // height: 70px;
         vertical-align: middle;
         padding-top: 0;
         padding-bottom: 0;
@@ -109,7 +113,7 @@
         width: 48px;
         margin: 2px auto 4px auto;
         top: 0;
-        line-height: 24px;
+        // // line-height: 24px;
     }
 
     .navbar-icon-top.navbar-expand-xl .navbar-nav .nav-link > *[class^='fa'] > .badge {

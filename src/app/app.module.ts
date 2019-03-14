@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainHeaderComponent } from './components/main-header/main-header.component';
+import { OmnibarComponent } from './components/omnibar/omnibar.component';
 // import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { EventsTableComponent } from './components/events-table/events-table.component';
 import { LanTableComponent } from './components/lan-table/lan-table.component';
@@ -22,11 +23,14 @@ import { SignalIndicatorComponent } from './components/signal-indicator/signal-i
 
 import { SortableColumnComponent } from './components/sortable-column/sortable-column.component';
 import { SearchPipe } from './components/search.pipe';
+import { AlivePipe } from './components/alive.pipe';
+
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
         MainHeaderComponent,
+        OmnibarComponent,
         // SidebarComponent,
         EventsTableComponent,
         LanTableComponent,
@@ -38,7 +42,8 @@ import { SearchPipe } from './components/search.pipe';
         // TerminalComponent
         
         SortableColumnComponent,
-        SearchPipe
+        SearchPipe,
+        AlivePipe
     ],
     imports: [
         BrowserModule,

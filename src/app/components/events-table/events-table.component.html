@@ -1,20 +1,10 @@
+<omnibar [clearCmd]="'events.clear'"></omnibar>
+
 <div class="table-responsive">
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="input-group input-group-sm">
-      <button type="button" class="btn btn-secondary btn-sm"  id="button-addon2" (click)="clear()">
-        Clear
-      </button>
-      <input [(ngModel)]="query" type="text"  class="form-control" placeholder="Search ..." aria-label="Search"/>
-      </div>
-    </div>
-  </div>
-
   <table class="table table-dark">
     <thead>
       <tr>
-        <th sortable-column="time" sort-direction="asc">Time</th>
+        <th sortable-column="time" sort-type="time" sort-direction="desc">Time</th>
         <th sortable-column="tag">Type</th>
         <th>Data</th>
       </tr>
@@ -27,7 +17,7 @@
         </td>
       </tr>
 
-      <tr *ngFor="let event of events | search: query">
+      <tr *ngFor="let event of events | search: omnibar.query">
         <td>{{ event.time | date: 'HH:mm:ss' }}</td>
         <td [ngSwitch]="event.tag.split('.')[0]">
           <span *ngSwitchCase="'wifi'" class="badge badge-pill badge-success">{{ event.tag }}</span>

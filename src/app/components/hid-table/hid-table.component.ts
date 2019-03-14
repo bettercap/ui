@@ -1,7 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import {ApiService} from '../../services/api.service';
 import {HIDDevice} from '../../models/hid.device';
+import { OmnibarComponent } from '../omnibar/omnibar.component';
 
 import {faCheckCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
 
@@ -11,10 +12,11 @@ import {faCheckCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
     styleUrls: ['./hid-table.component.scss']
 })
 export class HidTableComponent implements OnInit, OnDestroy {
+    @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
+
     devices: HIDDevice[];
     sort: ColumnSortedEvent;
     sortSub: any;
-    query: string = '';
 
     faCheckCircle = faCheckCircle;
     faTimes = faTimes;
@@ -37,11 +39,6 @@ export class HidTableComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.sortSub.unsubscribe();
-    }
-
-    clear() {
-        this.api.cmd("hid.clear");
-        this.devices = [];
     }
 
     private update(devices) {
