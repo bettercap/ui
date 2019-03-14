@@ -1,0 +1,31 @@
+*.nav-link {
+    cursor: pointer;
+}
+
+.nav-pills .nav-link {
+    border-radius: none;
+    color: #fff;
+    font-size: 15px;
+    background-color: #32383e;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    border-radius: 0;
+    color: #aaa;
+    background-color: #212529;
+}
+
+.mod-nav {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+p.mod-description {
+    font-size: 1rem;
+}
+
+div.mod-content {
+    padding-top: 12px;
+    background-color: #212529;
+    color: #fff;
+}

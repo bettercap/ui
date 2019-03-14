@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-2 mod-nav">
+    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+      <a 
+         *ngFor="let mod of modules" 
+         (click)="curMod = mod"
+         class="nav-link" [class.active]="curMod.name == mod.name">
+        {{ mod.name }}</a>
+
+    </div>
+  </div>
+  <div class="col-10 mod-content">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <p class="mod-description">
+            {{ curMod.description }}
+          </p>
+          <hr/>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <p *ngIf="(curMod.parameters | json) == '{}'">No parameters available for this module.</p>
+
+          <div *ngFor="let p of curMod.parameters | keyvalue" class="form-group">
+            <label for="{{ p.key }}">
+              {{p.key}}
+            </label>
+            <p class="form-text text-muted">{{ p.value.description }}</p>
+
+            <input 
+               ([ngModel])="paramValue(p.value)" 
+               type="text" 
+               class="form-control form-control-sm" 
+               name="{{p.key}}" 
+               id="{{p.key}}" 
+               [(ngModel)]="p.value.current_value" />
+
+          </div> 
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
