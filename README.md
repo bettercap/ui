@@ -23,6 +23,7 @@ In order to run the web ui, first clone the repo somewhere and build the source:
 ```sh
 git clone https://github.com/guizzo/hydra.git ~/hydra
 cd ~/hydra
+npm install --save
 npm run build
 ```
 
@@ -62,4 +63,4 @@ For further information, [refer to bettercap's documentation](https://www.better
 
 ## License
 
-Hydra is made with ♥  by [the dev team](https://github.com/guizzo/hydra/graphs/contributors) and it's released under the GPL 3 license.
+Hydra is made with ♥  by [the dev team](https://github.com/bettercap/hydra/graphs/contributors) and it's released under the GPL 3 license.
