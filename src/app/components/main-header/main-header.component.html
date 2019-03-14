@@ -11,7 +11,7 @@
 
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/events">
-            <i class="fa fa-cogs">
+            <i class="fas fa-align-justify">
               <span *ngIf="numEvents > 0" class="badge badge-danger">{{ numEvents }}</span>
             </i>
             Events
@@ -54,6 +54,14 @@
           </a>
         </li>
 
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/advanced">
+            <i class="fa fa-cogs">
+            </i>
+            Advanced
+          </a>
+        </li>
+
       </ul>
 
       <ul class="navbar-nav">
@@ -71,11 +79,13 @@
 
 </header>
 
-<div *ngIf="error" id="error" class="alert alert-danger" role="alert">
-  <h5 class="alert-heading">ERROR</h5>
-  <p class="mb-0">
-    {{ error.message }}
-  </p>
+<div *ngIf="error" id="error">
+  <div class="alert alert-danger" role="alert">
+    <h5 class="alert-heading">ERROR</h5>
+    <p class="mb-0">
+      {{ error.message }}
+    </p>
+  </div>
 </div>
 
 
