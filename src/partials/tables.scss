@@ -1,3 +1,10 @@
 .table .table {
     background-color: initial;
 }
+
+tr.alive {
+    background-color: #313539;
+    td.time {
+       font-weight: bold; 
+    }
+}

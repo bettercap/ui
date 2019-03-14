@@ -139,6 +139,17 @@ export class ApiService {
         });
     }
 
+    public isModuleEnabled(name: string) : boolean {
+        if(this.session && this.session.modules) {
+            for( let i = 0; i < this.session.modules.length; i++ ) {
+                let mod = this.session.modules[i];
+                if( mod.name == name )
+                    return mod.running;
+            }
+        }
+        return false;
+    }
+
     public getSession() : Observable<Session> {
         return this.http
         .get<Session>( API_URL + '/session', {headers: this.headers})

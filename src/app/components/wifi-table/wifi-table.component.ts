@@ -1,7 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import {ApiService} from '../../services/api.service';
 import {Ap} from '../../models/ap';
+import { OmnibarComponent } from '../omnibar/omnibar.component';
 
 import {faUnlock} from '@fortawesome/free-solid-svg-icons';
 
@@ -11,12 +12,13 @@ import {faUnlock} from '@fortawesome/free-solid-svg-icons';
     styleUrls: ['./wifi-table.component.scss']
 })
 export class WifiTableComponent implements OnInit, OnDestroy {
+    @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
+
     aps: Ap[];
     visibleWPS = {};
     visibleClients = {};
     sort: ColumnSortedEvent;
     sortSub: any;
-    query: string = '';
 
     faUnlock = faUnlock;
 
@@ -38,11 +40,6 @@ export class WifiTableComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.sortSub.unsubscribe();
-    }
-
-    clear() {
-        this.api.cmd("wifi.clear");
-        this.aps = [];
     }
 
     private update(aps) {

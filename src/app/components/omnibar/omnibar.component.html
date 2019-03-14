@@ -1,0 +1,18 @@
+<div class="row omnibar">
+  <div class="col-md-12">
+    <div class="input-group input-group-sm">
+
+      <button type="button" class="btn btn-dark btn-sm" (click)="onClearClicked()">
+        <i class="fas fa-trash-alt" ngTooltip="Clear the current view from records."></i>
+      </button>
+
+      <button *ngIf="modName" type="button" class="btn btn-dark btn-sm" (click)="onModuleToggleClicked()">
+        <i *ngIf="modEnabled" class="fas fa-stop" style="color:red" ngTooltip="Stop the module."></i>
+        <i *ngIf="!modEnabled" class="fas fa-play" style="color:green" ngTooltip="Start the module."></i>
+      </button>
+
+      <input [(ngModel)]="query" type="text" class="form-control" placeholder="Search ..." aria-label="Search"/>
+
+    </div>
+  </div>
+</div>
