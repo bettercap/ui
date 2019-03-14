@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Hydra" src="https://github.com/guizzo/hydra/blob/master/src/assets/images/logo.png" height="140" />
+  <img alt="Hydra" src="https://github.com/bettercap/hydra/blob/master/src/assets/images/logo.png" height="140" />
   <p align="center">
     <a href="https://github.com/bettercap/bettercap/blob/master/LICENSE.md"><img alt="Software License" src="https://img.shields.io/badge/license-GPL3-brightgreen.svg?style=flat-square"></a>
   </p>
@@ -21,7 +21,7 @@ What things you need to install the software and how to install them
 In order to run the web ui, first clone the repo somewhere and build the source:
 
 ```sh
-git clone https://github.com/guizzo/hydra.git ~/hydra
+git clone https://github.com/bettercap/hydra.git ~/hydra
 cd ~/hydra
 npm install --save
 npm run build
