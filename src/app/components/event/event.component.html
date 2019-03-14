@@ -1,0 +1,72 @@
+<span [ngSwitch]="event.tag" class="event-data">
+  <span *ngSwitchCase="'endpoint.new'">
+    Detected <strong>{{ data.ipv4 }}</strong> {{ data.mac }} ({{data.vendor}})
+  </span>
+  <span *ngSwitchCase="'endpoint.lost'">
+    Lost <strong>{{ data.ipv4 }}</strong> {{ data.mac }} ({{data.vendor}})
+  </span>
+
+  <span *ngSwitchCase="'wifi.client.probe'">
+    Station <strong>{{ data.mac }}</strong> 
+    ({{data.vendor}}) 
+    <span *ngIf="data.alias" class="badge badge-pill badge-secondary">{{ data.alias }}</span>
+    is probing for <strong>{{ data.essid }}</strong>
+  </span>
+  <span *ngSwitchCase="'wifi.client.handshake'">
+    Captured handshake for station <strong>{{ data.station }}</strong> 
+    connecting to AP <strong>{{ data.ap }}</strong>
+  </span>
+  <span *ngSwitchCase="'wifi.client.new'">
+    Detected client 
+    <strong>{{ data.Client.mac }}</strong> ({{data.Client.vendor}}) 
+    <span *ngIf="data.Client.alias" class="badge badge-pill badge-secondary">{{ data.Client.alias }}</span>
+    for AP <strong>{{ data.AP.mac }}</strong>
+  </span>
+  <span *ngSwitchCase="'wifi.client.lost'">
+    Lost client 
+    <strong>{{ data.Client.mac }}</strong> ({{data.Client.vendor}}) 
+    <span *ngIf="data.Client.alias" class="badge badge-pill badge-secondary">{{ data.Client.alias }}</span>
+    for AP <strong>{{ data.AP.mac }}</strong>
+  </span>
+  <span *ngSwitchCase="'wifi.ap.new'">
+    Detected <strong>{{ data.hostname }}</strong> 
+    [{{data.mac}}]
+    ({{data.vendor}}) with <strong>{{ data.encryption }}</strong> encryption and {{ data.clients.length }} clients
+  </span>
+  <span *ngSwitchCase="'wifi.ap.lost'">
+    Lost <strong>{{ data.hostname }}</strong> 
+    [{{data.mac}}]
+    ({{data.vendor}})
+  </span>
+
+  <span *ngSwitchCase="'ble.device.new'">
+    Detected <strong>{{ data.mac }}</strong> ({{data.vendor}}): 
+    <strong>flags</strong>: {{data.flags}},
+    <strong>connectable</strong>: {{data.connectable}}
+  </span>
+  <span *ngSwitchCase="'ble.device.lost'">
+    Lost <strong>{{ data.mac }}</strong> ({{data.vendor}}): 
+    <strong>flags</strong>: {{data.flags}},
+    <strong>connectable</strong>: {{data.connectable}}
+  </span>
+
+  <span *ngSwitchCase="'hid.device.new'">
+    Detected {{data.type}} HID device <strong>{{ data.address }}</strong>
+  </span>
+  <span *ngSwitchCase="'hid.device.lost'">
+    Lost {{data.type}} HID device <strong>{{ data.address }}</strong>
+  </span>
+
+  <span *ngSwitchCase="'sys.log'">
+    <strong>{{ logLevel(data.Level) }}</strong>: {{ cleanBash(data.Message) }}
+  </span>
+
+  <span *ngSwitchDefault>
+    <span *ngFor="let item of data | keyvalue" style="margin-left:2px">
+      <span *ngIf="(item.value | json) != '{}'">
+        <strong>{{ item.key }}</strong>: {{ item.value }}
+      </span>
+    </span>
+  </span>
+
+</span>

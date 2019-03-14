@@ -13,6 +13,7 @@ import { MainHeaderComponent } from './components/main-header/main-header.compon
 import { OmnibarComponent } from './components/omnibar/omnibar.component';
 // import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { EventsTableComponent } from './components/events-table/events-table.component';
+import { EventComponent } from './components/event/event.component';
 import { LanTableComponent } from './components/lan-table/lan-table.component';
 import { BleTableComponent } from './components/ble-table/ble-table.component';
 import { HidTableComponent } from './components/hid-table/hid-table.component';
@@ -33,6 +34,7 @@ import { AlivePipe } from './components/alive.pipe';
         OmnibarComponent,
         // SidebarComponent,
         EventsTableComponent,
+        EventComponent,
         LanTableComponent,
         BleTableComponent,
         HidTableComponent,

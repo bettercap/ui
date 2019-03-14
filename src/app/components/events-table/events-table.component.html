@@ -28,11 +28,14 @@
           <span *ngSwitchDefault class="badge badge-pill badge-dark">{{ event.tag }}</span>
         </td>
         <td>
+          <event-data [event]="event"></event-data>
+          <!--
           <span *ngFor="let item of event.data | keyvalue" style="margin-left:2px">
             <span *ngIf="(item.value | json) != '{}'">
               <strong>{{ item.key }}</strong>: {{ item.value }}
             </span>
           </span>
+          -->
         </td>
       </tr>
     </tbody>
