@@ -61,6 +61,10 @@
     <strong>{{ logLevel(data.Level) }}</strong>: {{ data.Message | unbash }}
   </span>
 
+  <span *ngSwitchCase="event.tag.indexOf('mod.') == 0">
+    {{ data }}
+  </span>
+
   <span *ngSwitchCase="event.tag.indexOf('net.sniff.') == 0">
     {{ data.message | unbash }}
   </span>
