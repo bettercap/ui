@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { SortService } from '../../services/sort.service';
 import { Module } from '../../models/module';
+import { Session } from '../../models/session';
 
 @Component({
     selector: 'hydra-advanced',
@@ -10,19 +11,19 @@ import { Module } from '../../models/module';
 })
 export class AdvancedComponent implements OnInit, OnDestroy {
     modules: Module[];
+    session: Session;
 
     successMessage: string = '';
     curTab: number = 0;
     curMod: Module = null;
 
     constructor(private api: ApiService, private sortService: SortService) { 
-        this.curMod = this.api.session.modules[0];
-        this.update(this.api.session.modules);
+        this.update(this.api.session);
     }
 
     ngOnInit() {
         this.api.onNewData.subscribe(session => {
-            this.update(session.modules);
+            this.update(session);
         });
     }
 
@@ -55,13 +56,14 @@ export class AdvancedComponent implements OnInit, OnDestroy {
         this.successMessage = "Parameter " + param.name + " successfully updated.";
     }
 
-    private update(modules) {
-        this.sortService.sort(modules, {
+    private update(session) {
+        this.sortService.sort(session.modules, {
             field: 'name',
             direction: 'desc',
             type: ''
         }); 
-        this.modules = modules; 
+        this.session = session;
+        this.modules = session.modules; 
     }
 }
 

@@ -8,6 +8,8 @@
         <th sortable-column="mac">MAC</th>
         <th sortable-column="hostname">Hostname / Alias</th>
         <th sortable-column="vendor">Vendor</th>
+        <th sortable-column="sent">Sent</th>
+        <th sortable-column="received">Received</th>
         <th sortable-column="last_seen">Last seen</th>
         <th>Info</th>
       </tr>
@@ -29,6 +31,8 @@
           <span *ngIf="host.alias" class="badge badge-pill badge-secondary">{{ host.alias }}</span>
         </td>
         <td>{{ host.vendor }}</td>
+        <td>{{ host.sent | size }}</td>
+        <td>{{ host.received | size }}</td>
         <td class="time">{{ host.last_seen | date: 'HH:mm:ss'}}</td>
         <td class="metas">
           <span *ngIf="host == iface" class="badge badge-pill badge-secondary">IFACE</span>

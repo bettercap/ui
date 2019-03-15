@@ -53,7 +53,19 @@ export class LanTableComponent implements OnInit, OnDestroy {
         // to this.hosts will also push to the session object
         // duplicating the iface and gateway.
         for( var i = 0; i < session.lan['hosts'].length; i++ ){
-            this.hosts.push(session.lan['hosts'][i]); 
+            let host = session.lan['hosts'][i];
+            // get traffic details for this host
+            let sent = 0, received = 0;
+            if( host.ipv4 in session.packets.Traffic ) {
+                let traffic = session.packets.Traffic[host.ipv4];
+                sent = traffic.Sent;
+                received = traffic.Received;
+            }
+
+            host.sent = sent;
+            host.received = received;
+
+            this.hosts.push(host); 
         }
         this.hosts.push(this.iface);
         this.hosts.push(this.gateway);

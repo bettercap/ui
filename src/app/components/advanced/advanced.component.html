@@ -1,11 +1,16 @@
 <div class="row">
   <div class="col-2 mod-nav">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <a 
+         (click)="curMod = null; successMessage = '';"
+         class="nav-link" [class.active]="curMod == null">
+        <i class="fas fa-cog"></i>
+        Main</a>
 
       <a 
          *ngFor="let mod of modules" 
          (click)="curMod = mod; successMessage = '';"
-         class="nav-link" [class.active]="curMod.name == mod.name">
+         class="nav-link" [class.active]="curMod && curMod.name == mod.name">
         <i *ngIf="mod.running" class="fas fa-toggle-on"></i>
         <i *ngIf="!mod.running" class="fas fa-toggle-off"></i>
         {{ mod.name }}</a>
@@ -14,7 +19,45 @@
   </div>
   <div class="col-10 mod-content">
 
-    <div class="container-fluid">
+    <div *ngIf="!curMod" class="container-fluid">
+
+       <div class="row">
+        <div class="col-12">
+          <p class="mod-description">
+            Arguments
+          </p>
+
+          <table class="table table-dark">
+            <tbody>
+              <tr *ngFor="let arg of session.options | keyvalue">
+                <th>{{ arg.key }}</th>
+                <td>{{ arg.value }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+       <div class="row">
+        <div class="col-12">
+          <p class="mod-description">
+            Environment
+          </p>
+          <table class="table table-dark">
+            <tbody>
+              <tr *ngFor="let val of session.env.data | keyvalue">
+                <th>{{ val.key }}</th>
+                <td>{{ val.value }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="curMod" class="container-fluid">
       <div class="row">
         <div class="col-12">
           <p class="mod-description">
