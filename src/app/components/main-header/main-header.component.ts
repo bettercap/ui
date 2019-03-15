@@ -4,6 +4,8 @@ import { ApiService } from '../../services/api.service';
 
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 
+declare var $: any;
+
 @Component({
     selector: 'hydra-main-header',
     templateUrl: './main-header.component.html',
