@@ -1,7 +1,12 @@
-import {Component, Output, EventEmitter, OnInit} from '@angular/core';
+import {
+    Component, 
+    EventEmitter, 
+    OnInit, 
+} from '@angular/core';
 import {Router} from '@angular/router';
 import { ToastrService } from 'ngx-toastr';  
 import { ApiService } from '../../services/api.service';
+import { EventComponent } from '../event/event.component';
 
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 

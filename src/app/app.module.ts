@@ -64,6 +64,7 @@ import { SizePipe } from './components/size.pipe';
             preventDuplicates: true
         })
     ],
+    entryComponents:[EventComponent],
     providers: [],
     bootstrap: [AppComponent]
 })
