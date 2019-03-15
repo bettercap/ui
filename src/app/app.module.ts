@@ -24,6 +24,7 @@ import { OmnibarComponent } from './components/omnibar/omnibar.component';
 
 import { SearchPipe } from './components/search.pipe';
 import { AlivePipe } from './components/alive.pipe';
+import { UnbashPipe } from './components/unbash.pipe';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import { AlivePipe } from './components/alive.pipe';
         SignalIndicatorComponent,
         SortableColumnComponent,
         SearchPipe,
-        AlivePipe
+        AlivePipe,
+        UnbashPipe
     ],
     imports: [
         BrowserModule,

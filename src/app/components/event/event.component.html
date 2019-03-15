@@ -58,7 +58,7 @@
   </span>
 
   <span *ngSwitchCase="'sys.log'">
-    <strong>{{ logLevel(data.Level) }}</strong>: {{ cleanBash(data.Message) }}
+    <strong>{{ logLevel(data.Level) }}</strong>: {{ data.Message | unbash }}
   </span>
 
   <span *ngSwitchDefault>

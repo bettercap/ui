@@ -37,7 +37,9 @@ export class ApiService {
     public onNewEvents: EventEmitter<Event[]> = new EventEmitter();
     public onLoggedOut: EventEmitter<any> = new EventEmitter();
     public onLoggedIn: EventEmitter<any> = new EventEmitter();
-    public onError: EventEmitter<any> = new EventEmitter();
+
+    public onSessionError: EventEmitter<any> = new EventEmitter();
+    public onCommandError: EventEmitter<any> = new EventEmitter();
 
     constructor(private http:HttpClient) {}
 
@@ -176,7 +178,7 @@ export class ApiService {
                 this.onLoggedOut.emit(error);
             } else {
                 console.log("error.emit");
-                this.onError.emit(error);
+                this.onSessionError.emit(error);
             }
             return throwError(error);
         });
@@ -191,10 +193,15 @@ export class ApiService {
     }
 
     public cmd(cmd: string) {
-        return this.cmdResponse(cmd)
-            .subscribe(
+        console.log("cmd: " + cmd);
+        return this.http.post<CommandResponse>(
+            API_URL + '/session', 
+            {cmd: cmd},
+            {headers: this.headers}).subscribe(
                 (val) => {},
-                response => {},
-                () => {}); 
+                error => {
+                    this.onCommandError.emit(error);
+                },
+                () => {});
     }
 }
