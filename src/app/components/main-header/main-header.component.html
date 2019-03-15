@@ -79,13 +79,29 @@
 
 </header>
 
-<div *ngIf="error" id="error">
+<div *ngIf="sessionError" id="sessionError">
   <div class="alert alert-danger" role="alert">
     <h5 class="alert-heading">ERROR</h5>
     <p class="mb-0">
-      {{ error.message }}
+      {{ sessionError.message }}
     </p>
   </div>
 </div>
 
-
+<div id="commandError" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="commandErrorTitle">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header error-header">
+        <div class="modal-title error-title" id="commandErrorTitle">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body error-body" *ngIf="commandError">
+        {{ commandError.error | unbash }}
+      </div>
+    </div>
+  </div>
+</div>

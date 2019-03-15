@@ -32,13 +32,21 @@
             </label>
             <p class="form-text text-muted">{{ p.value.description }}</p>
 
-            <input 
-               ([ngModel])="paramValue(p.value)" 
-               type="text" 
-               class="form-control form-control-sm" 
-               name="{{p.key}}" 
-               id="{{p.key}}" 
-               [(ngModel)]="p.value.current_value" />
+            <div class="input-group">
+              <input 
+                 ([ngModel])="paramValue(p.value)" 
+                 type="text" 
+                 class="form-control form-control-sm param-input" 
+                 name="{{p.key}}" 
+                 id="{{p.key}}" 
+                 [(ngModel)]="p.value.current_value" />
+              
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-dark" type="button">
+                  <i class="far fa-save"></i>
+                </button>
+              </div>
+            </div>
 
           </div> 
         </div>

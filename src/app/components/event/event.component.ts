@@ -27,9 +27,4 @@ export class EventComponent {
     logLevel(level : number) : string {
         return this.logLevels[level];
     }
-
-    // https://stackoverflow.com/questions/25245716/remove-all-ansi-colors-styles-from-strings
-    cleanBash(message : string) : string {
-        return message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '') ;
-    }
 }

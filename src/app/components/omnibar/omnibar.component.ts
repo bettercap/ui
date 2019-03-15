@@ -15,7 +15,6 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     modEnabled: boolean = false;
     query: string = '';
     cmd: string = '';
-    cmdError: any = null;
 
     constructor(private api: ApiService) { 
         
@@ -55,23 +54,11 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         }
     }
 
-    // https://stackoverflow.com/questions/25245716/remove-all-ansi-colors-styles-from-strings
-    cleanBash(message : string) : string {
-        return message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '') ;
-    }
-
     onCmd() {
-        this.cmdError = null;
-
         let cmd = this.cmd.trim();
         if( cmd.length > 0 ) {
             this.cmd = '';
-            this.api.cmdResponse(cmd).subscribe(
-                (response) => {},
-                error => {
-                    this.cmdError = this.cleanBash(error.error);
-                },
-                () => {});
+            this.api.cmd(cmd);
         }
     }
 }

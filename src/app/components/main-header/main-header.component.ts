@@ -18,7 +18,8 @@ export class MainHeaderComponent implements OnInit {
     numBLE = 0;
     numHID = 0;
 
-    error: any;
+    sessionError: any;
+    commandError: any;
 
     constructor(private api: ApiService, private router: Router) { 
         this.updateSession(this.api.session);
@@ -34,8 +35,15 @@ export class MainHeaderComponent implements OnInit {
             this.updateEvents(events);
         });
 
-        this.api.onError.subscribe(error => {
-            this.error = error;
+        this.api.onSessionError.subscribe(error => {
+            console.error("session error", error);
+            this.sessionError = error;
+        });
+
+        this.api.onCommandError.subscribe(error => {
+            console.error("command error", error);
+            this.commandError = error;
+            $('#commandError').modal('show');
         });
     }
 

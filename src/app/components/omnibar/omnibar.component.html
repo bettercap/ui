@@ -27,7 +27,6 @@
         </div>
         <input *ngIf="withCmd" [(ngModel)]="cmd" (keyup.enter)="onCmd()" type="text" class="form-control" placeholder="Command bar ..." aria-label="Command bar ..."/>
       </div>
-      <ngb-alert *ngIf="cmdError" type="danger" (close)="cmdError=null" style="margin-top:15px">{{ cmdError }}</ngb-alert>
     </div>
   </div>
 </div>
