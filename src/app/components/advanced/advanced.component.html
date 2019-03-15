@@ -30,15 +30,9 @@
               <tr *ngFor="let proto of session.packets.Protos | keyvalue">
                 <th width="10%">{{ proto.key }}</th>
                 <td>
-                  <div class="progress">
-                    <div class="progress-bar" 
-                         role="progressbar" 
-                         attr.aria-valuenow="{{ proto.value }}" 
-                         attr.aria-valuemin="{{ pktMin }}" 
-                         attr.aria-valuemax="{{ pktMax }}">
-                      {{ proto.value }}
-                    </div>
-                  </div> 
+                  <ngb-progressbar type="info" [value]="proto.value" [max]="pktTot">
+                    {{ proto.value }}
+                  </ngb-progressbar>
                 </td>
               </tr>
             </tbody>

@@ -17,8 +17,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
     curTab: number = 0;
     curMod: Module = null;
 
-    pktMin: number = 10000;
-    pktMax: number = 0;
+    pktTot: number = 0;
 
     constructor(private api: ApiService, private sortService: SortService) { 
         this.update(this.api.session);
@@ -66,13 +65,9 @@ export class AdvancedComponent implements OnInit, OnDestroy {
             type: ''
         }); 
 
+        this.pktTot = 0;
         for( let proto in session.packets.Protos ) {
-            let pkts = session.packets.Protos[proto];
-            if( pkts < this.pktMin ) {
-                this.pktMin = pkts;
-            } else if( pkts > this.pktMax ) {
-                this.pktMax = pkts;
-            }
+            this.pktTot += session.packets.Protos[proto];
         }
 
         this.session = session;
