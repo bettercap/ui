@@ -182,12 +182,16 @@ export class ApiService {
         });
     }
 
-    public cmd(cmd: string) {
+    public cmdResponse(cmd : string) {
         console.log("cmd: " + cmd);
         return this.http.post<CommandResponse>(
             API_URL + '/session', 
             {cmd: cmd},
-            {headers: this.headers})
+            {headers: this.headers});
+    }
+
+    public cmd(cmd: string) {
+        return this.cmdResponse(cmd)
             .subscribe(
                 (val) => {},
                 response => {},

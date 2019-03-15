@@ -1,18 +1,33 @@
-<div class="row omnibar">
-  <div class="col-md-12">
-    <div class="input-group input-group-sm">
+<div class="omnibar">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="input-group input-group-sm">
+        <button type="button" class="btn btn-dark btn-sm" (click)="onClearClicked()">
+          <i class="fas fa-trash-alt" ngTooltip="Clear the current view from records."></i>
+        </button>
 
-      <button type="button" class="btn btn-dark btn-sm" (click)="onClearClicked()">
-        <i class="fas fa-trash-alt" ngTooltip="Clear the current view from records."></i>
-      </button>
+        <button *ngIf="modName" type="button" class="btn btn-dark btn-sm" (click)="onModuleToggleClicked()">
+          <i *ngIf="modEnabled" class="fas fa-stop" style="color:red" ngTooltip="Stop the module."></i>
+          <i *ngIf="!modEnabled" class="fas fa-play" style="color:green" ngTooltip="Start the module."></i>
+        </button>
 
-      <button *ngIf="modName" type="button" class="btn btn-dark btn-sm" (click)="onModuleToggleClicked()">
-        <i *ngIf="modEnabled" class="fas fa-stop" style="color:red" ngTooltip="Stop the module."></i>
-        <i *ngIf="!modEnabled" class="fas fa-play" style="color:green" ngTooltip="Start the module."></i>
-      </button>
+        <input [(ngModel)]="query" type="text" class="form-control" placeholder="Search ..." aria-label="Search"/>
 
-      <input [(ngModel)]="query" type="text" class="form-control" placeholder="Search ..." aria-label="Search"/>
+      </div>
+    </div>
+  </div>
 
+  <div *ngIf="withCmd" class="row" style="margin-top: 5px">
+    <div class="col-md-12">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fas fa-terminal"></i>
+          </span>
+        </div>
+        <input *ngIf="withCmd" [(ngModel)]="cmd" (keyup.enter)="onCmd()" type="text" class="form-control" placeholder="Command bar ..." aria-label="Command bar ..."/>
+      </div>
+      <ngb-alert *ngIf="cmdError" type="danger" (close)="cmdError=null" style="margin-top:15px">{{ cmdError }}</ngb-alert>
     </div>
   </div>
 </div>

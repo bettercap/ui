@@ -1,4 +1,4 @@
-<omnibar [clearCmd]="'events.clear'"></omnibar>
+<omnibar [clearCmd]="'events.clear'" [withCmd]="true"></omnibar>
 
 <div class="table-responsive">
   <table class="table table-dark">
@@ -29,13 +29,6 @@
         </td>
         <td>
           <event-data [event]="event"></event-data>
-          <!--
-          <span *ngFor="let item of event.data | keyvalue" style="margin-left:2px">
-            <span *ngIf="(item.value | json) != '{}'">
-              <strong>{{ item.key }}</strong>: {{ item.value }}
-            </span>
-          </span>
-          -->
         </td>
       </tr>
     </tbody>
