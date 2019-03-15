@@ -21,11 +21,34 @@
 
     <div *ngIf="!curMod" class="container-fluid">
 
-       <div class="row">
+      <div class="row">
         <div class="col-12">
-          <p class="mod-description">
-            Arguments
-          </p>
+          <h5>Packets per Protocol</h5>
+
+          <table class="table table-dark">
+            <tbody>
+              <tr *ngFor="let proto of session.packets.Protos | keyvalue">
+                <th width="10%">{{ proto.key }}</th>
+                <td>
+                  <div class="progress">
+                    <div class="progress-bar" 
+                         role="progressbar" 
+                         attr.aria-valuenow="{{ proto.value }}" 
+                         attr.aria-valuemin="{{ pktMin }}" 
+                         attr.aria-valuemax="{{ pktMax }}">
+                      {{ proto.value }}
+                    </div>
+                  </div> 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <h5>Arguments</h5>
 
           <table class="table table-dark">
             <tbody>
@@ -35,15 +58,13 @@
               </tr>
             </tbody>
           </table>
-
         </div>
       </div>
 
-       <div class="row">
+      <div class="row">
         <div class="col-12">
-          <p class="mod-description">
-            Environment
-          </p>
+          <h5>Environment</h5>
+
           <table class="table table-dark">
             <tbody>
               <tr *ngFor="let val of session.env.data | keyvalue">
