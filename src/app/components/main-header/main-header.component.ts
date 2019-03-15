@@ -47,7 +47,7 @@ export class MainHeaderComponent implements OnInit {
 
         this.api.onCommandError.subscribe(error => {
             console.error("command error", error);
-            if( error.error.indexOf('already running') == -1 ) {
+            if( error.error.indexOf('already running') == -1 && error.error.indexOf('is not running') == -1 ) {
                 this.commandError = error;
                 $('#commandError').modal('show');
             }
