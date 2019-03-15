@@ -1,4 +1,4 @@
-div.omnibar {
+.omnibar {
     padding: 5px;
     padding-top: 0;
     background-color: #343a40;
@@ -14,5 +14,11 @@ div.omnibar {
         background-color:#333; 
         border: 1px solid #353535; 
         color: #aaa;
+    }
+
+    .input-group-text {
+        border: 1px solid #353535; 
+        background-color:#333; 
+        color: #999;
     }
 }
