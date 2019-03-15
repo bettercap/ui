@@ -1,64 +1,68 @@
-<span [ngSwitch]="event.tag" class="event-data">
-  <span *ngSwitchCase="'endpoint.new'">
+<span [ngSwitch]="true" class="event-data">
+  <span *ngSwitchCase="event.tag == 'endpoint.new'">
     Detected <strong>{{ data.ipv4 }}</strong> {{ data.mac }} ({{data.vendor}})
   </span>
-  <span *ngSwitchCase="'endpoint.lost'">
+  <span *ngSwitchCase="event.tag == 'endpoint.lost'">
     Lost <strong>{{ data.ipv4 }}</strong> {{ data.mac }} ({{data.vendor}})
   </span>
 
-  <span *ngSwitchCase="'wifi.client.probe'">
+  <span *ngSwitchCase="event.tag == 'wifi.client.probe'">
     Station <strong>{{ data.mac }}</strong> 
     ({{data.vendor}}) 
     <span *ngIf="data.alias" class="badge badge-pill badge-secondary">{{ data.alias }}</span>
     is probing for <strong>{{ data.essid }}</strong>
   </span>
-  <span *ngSwitchCase="'wifi.client.handshake'">
+  <span *ngSwitchCase="event.tag == 'wifi.client.handshake'">
     Captured handshake for station <strong>{{ data.station }}</strong> 
     connecting to AP <strong>{{ data.ap }}</strong>
   </span>
-  <span *ngSwitchCase="'wifi.client.new'">
+  <span *ngSwitchCase="event.tag == 'wifi.client.new'">
     Detected client 
     <strong>{{ data.Client.mac }}</strong> ({{data.Client.vendor}}) 
     <span *ngIf="data.Client.alias" class="badge badge-pill badge-secondary">{{ data.Client.alias }}</span>
     for AP <strong>{{ data.AP.mac }}</strong>
   </span>
-  <span *ngSwitchCase="'wifi.client.lost'">
+  <span *ngSwitchCase="event.tag == 'wifi.client.lost'">
     Lost client 
     <strong>{{ data.Client.mac }}</strong> ({{data.Client.vendor}}) 
     <span *ngIf="data.Client.alias" class="badge badge-pill badge-secondary">{{ data.Client.alias }}</span>
     for AP <strong>{{ data.AP.mac }}</strong>
   </span>
-  <span *ngSwitchCase="'wifi.ap.new'">
+  <span *ngSwitchCase="event.tag == 'wifi.ap.new'">
     Detected <strong>{{ data.hostname }}</strong> 
     [{{data.mac}}]
     ({{data.vendor}}) with <strong>{{ data.encryption }}</strong> encryption and {{ data.clients.length }} clients
   </span>
-  <span *ngSwitchCase="'wifi.ap.lost'">
+  <span *ngSwitchCase="event.tag == 'wifi.ap.lost'">
     Lost <strong>{{ data.hostname }}</strong> 
     [{{data.mac}}]
     ({{data.vendor}})
   </span>
 
-  <span *ngSwitchCase="'ble.device.new'">
+  <span *ngSwitchCase="event.tag == 'ble.device.new'">
     Detected <strong>{{ data.mac }}</strong> ({{data.vendor}}): 
     <strong>flags</strong>: {{data.flags}},
     <strong>connectable</strong>: {{data.connectable}}
   </span>
-  <span *ngSwitchCase="'ble.device.lost'">
+  <span *ngSwitchCase="event.tag == 'ble.device.lost'">
     Lost <strong>{{ data.mac }}</strong> ({{data.vendor}}): 
     <strong>flags</strong>: {{data.flags}},
     <strong>connectable</strong>: {{data.connectable}}
   </span>
 
-  <span *ngSwitchCase="'hid.device.new'">
+  <span *ngSwitchCase="event.tag == 'hid.device.new'">
     Detected {{data.type}} HID device <strong>{{ data.address }}</strong>
   </span>
-  <span *ngSwitchCase="'hid.device.lost'">
+  <span *ngSwitchCase="event.tag == 'hid.device.lost'">
     Lost {{data.type}} HID device <strong>{{ data.address }}</strong>
   </span>
 
-  <span *ngSwitchCase="'sys.log'">
+  <span *ngSwitchCase="event.tag == 'sys.log'">
     <strong>{{ logLevel(data.Level) }}</strong>: {{ data.Message | unbash }}
+  </span>
+
+  <span *ngSwitchCase="event.tag.indexOf('net.sniff.') == 0">
+    {{ data.message | unbash }}
   </span>
 
   <span *ngSwitchDefault>
