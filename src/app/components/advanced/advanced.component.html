@@ -4,8 +4,10 @@
 
       <a 
          *ngFor="let mod of modules" 
-         (click)="curMod = mod"
+         (click)="curMod = mod; successMessage = '';"
          class="nav-link" [class.active]="curMod.name == mod.name">
+        <i *ngIf="mod.running" class="fas fa-toggle-on"></i>
+        <i *ngIf="!mod.running" class="fas fa-toggle-off"></i>
         {{ mod.name }}</a>
 
     </div>
@@ -18,7 +20,24 @@
           <p class="mod-description">
             {{ curMod.description }}
           </p>
+          <span *ngIf="curMod.running" class="badge badge-pill badge-success">
+            Running
+          </span> 
+          <span *ngIf="!curMod.running" class="badge badge-pill badge-danger">
+            Not running
+          </span> 
           <hr/>
+        </div>
+      </div>
+
+      <div *ngIf="successMessage" class="row">
+        <div class="col-12">
+          <div class="alert alert-dismissable fade show alert-success" role="alert">
+            {{ successMessage }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -34,15 +53,15 @@
 
             <div class="input-group">
               <input 
-                 ([ngModel])="paramValue(p.value)" 
                  type="text" 
                  class="form-control form-control-sm param-input" 
                  name="{{p.key}}" 
                  id="{{p.key}}" 
+                 (keyup.enter)="saveParam(p.value)"
                  [(ngModel)]="p.value.current_value" />
               
               <div class="input-group-append">
-                <button class="btn btn-sm btn-dark" type="button">
+                <button class="btn btn-sm btn-dark" type="button" (click)="saveParam(p.value)">
                   <i class="far fa-save"></i>
                 </button>
               </div>

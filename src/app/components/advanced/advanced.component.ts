@@ -11,6 +11,7 @@ import { Module } from '../../models/module';
 export class AdvancedComponent implements OnInit, OnDestroy {
     modules: Module[];
 
+    successMessage: string = '';
     curTab: number = 0;
     curMod: Module = null;
 
@@ -29,9 +30,29 @@ export class AdvancedComponent implements OnInit, OnDestroy {
 
     }
 
-    paramValue(param : any) : string {
-        console.log("paramValue", param);
-        return "OK" + param.default_value;
+    saveParam(param : any) {
+        this.successMessage = '';
+
+        let val = param.current_value;
+
+        if( param.validator != "" ) {
+            let validator = new RegExp(param.validator);
+            if( validator.test(val) == false ) {
+                this.api.onCommandError.emit({
+                    error: "Value " + val + 
+                    " is not valid for parameter '" + param.name + 
+                    "' (validator: '" + param.validator + "')"
+                });
+                return;
+            }
+        }
+
+        if( val == "" ) {
+            val = '""';
+        }
+
+        this.api.cmd("set " + param.name + " " + val);
+        this.successMessage = "Parameter " + param.name + " successfully updated.";
     }
 
     private update(modules) {
