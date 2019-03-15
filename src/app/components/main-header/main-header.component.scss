@@ -143,3 +143,12 @@ div.error-body {
     color: #fff;
     font-size: .9rem;
 }
+
+// https://stackoverflow.com/questions/53989445/ngx-toastr-toast-not-showing-in-angular-7
+.toast-bootstrap-compatibility-fix {
+  opacity:1;
+}
+
+div.toast-message {
+    font-size: 10rem !important;
+}

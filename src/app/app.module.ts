@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';  
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -56,7 +58,11 @@ import { SizePipe } from './components/size.pipe';
         HttpClientModule,
         AppRoutingModule,
         FontAwesomeModule,
-        NgbModule
+        NgbModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+            preventDuplicates: true
+        })
     ],
     providers: [],
     bootstrap: [AppComponent]

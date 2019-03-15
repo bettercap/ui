@@ -1,5 +1,6 @@
 import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import { ToastrService } from 'ngx-toastr';  
 import { ApiService } from '../../services/api.service';
 
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
@@ -20,12 +21,14 @@ export class MainHeaderComponent implements OnInit {
     numBLE = 0;
     numHID = 0;
 
+    modNotificationCache = {};
+
     sessionError: any;
     commandError: any;
 
-    constructor(private api: ApiService, private router: Router) { 
+    constructor(private api: ApiService, private router: Router, private toastr: ToastrService) { 
         this.updateSession(this.api.session);
-        this.updateEvents(this.api.events);
+        this.updateEvents(this.api.events, true);
     }
 
     ngOnInit() {
@@ -58,8 +61,29 @@ export class MainHeaderComponent implements OnInit {
         this.numHID = session.hid['devices'].length; 
     }
 
-    private updateEvents(events) {
-        this.numEvents = events.length
+    private onModuleEvent(event, firstUpdate: boolean) {
+        let modName = event.data;
+        let evKey = event.tag + "::" + modName + "::" + event.time;
+        if( evKey in this.modNotificationCache === false ) {
+            this.modNotificationCache[evKey] = true;
+            if( firstUpdate == false ) {
+                if( event.tag == 'mod.started' ) {
+                    this.toastr.success(modName + " module started.");
+                } else {
+                    this.toastr.warning(modName + " module stopped.");
+                }
+            }
+        }
+    }
+
+    private updateEvents(events, firstUpdate: boolean = false) {
+        this.numEvents = events.length;
+        for( let i = 0; i < this.numEvents; i++ ) {
+            let event = events[i];
+            if( event.tag.indexOf('mod.') == 0 ) {
+                this.onModuleEvent(event, firstUpdate);
+            }
+        }
     }
 
     logout() {
