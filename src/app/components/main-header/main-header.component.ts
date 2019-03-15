@@ -44,8 +44,10 @@ export class MainHeaderComponent implements OnInit {
 
         this.api.onCommandError.subscribe(error => {
             console.error("command error", error);
-            this.commandError = error;
-            $('#commandError').modal('show');
+            if( error.error.indexOf('already running') == -1 ) {
+                this.commandError = error;
+                $('#commandError').modal('show');
+            }
         });
     }
 

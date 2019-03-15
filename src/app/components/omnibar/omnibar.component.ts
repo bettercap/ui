@@ -50,7 +50,8 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         this.modEnabled = !this.modEnabled;
 
         for( let i = 0; i < mods.length; i++ ) {
-            this.api.cmd(mods[i].trim() + ' ' + toggle);
+            let modName = mods[i].trim();
+            this.api.cmd(modName + ' ' + toggle);
         }
     }
 
