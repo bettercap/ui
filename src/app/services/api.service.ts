@@ -2,7 +2,7 @@ import {Injectable, EventEmitter} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {interval} from "rxjs/internal/observable/interval";
 import {startWith, switchMap} from "rxjs/operators";
-import {throwError} from 'rxjs';
+import {from} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
@@ -31,7 +31,9 @@ export class ApiService {
     private headers: HttpHeaders;
 
     public session: Session;
-    public events: Event[] = [];
+    private cachedSession: Observable<Session>;
+    public events: Event[] = new Array();
+    private cachedEvents: Observable<Event[]>;
 
     public onNewData: EventEmitter<Session> = new EventEmitter();
     public onNewEvents: EventEmitter<Event[]> = new EventEmitter();
@@ -41,7 +43,17 @@ export class ApiService {
     public onSessionError: EventEmitter<any> = new EventEmitter();
     public onCommandError: EventEmitter<any> = new EventEmitter();
 
-    constructor(private http:HttpClient) {}
+    constructor(private http:HttpClient) {
+        this.cachedSession = new Observable((observer) => {
+            observer.next(this.session);
+            observer.complete();
+        });
+
+        this.cachedEvents = new Observable((observer) => {
+            observer.next(this.events);
+            observer.complete();
+        });
+    }
 
     public pollEvents() {
         console.log("api.pollEvents() started");
@@ -125,31 +137,8 @@ export class ApiService {
             return response;
         })
         .catch(error => {
-            return throwError(error);
+            return this.cachedEvents;
         });
-    }
-
-    public clearEvents() {
-        console.log("clearing events");
-        this.http
-        .delete( API_URL + '/events', {headers: this.headers})
-        .subscribe(response => {
-            this.events = [];
-            this.onNewEvents.emit([]);
-        }, error => {
-            return throwError(error);
-        });
-    }
-
-    public isModuleEnabled(name: string) : boolean {
-        if(this.session && this.session.modules) {
-            for( let i = 0; i < this.session.modules.length; i++ ) {
-                let mod = this.session.modules[i];
-                if( mod.name == name )
-                    return mod.running;
-            }
-        }
-        return false;
     }
 
     public getSession() : Observable<Session> {
@@ -180,8 +169,33 @@ export class ApiService {
                 console.log("error.emit");
                 this.onSessionError.emit(error);
             }
-            return throwError(error);
+            return this.cachedSession;
         });
+    }
+
+
+
+    public clearEvents() {
+        console.log("clearing events");
+        this.http
+        .delete( API_URL + '/events', {headers: this.headers})
+        .subscribe(response => {
+            this.events = [];
+            this.onNewEvents.emit([]);
+        }, error => {
+            // return throwError(error);
+        });
+    }
+
+    public isModuleEnabled(name: string) : boolean {
+        if(this.session && this.session.modules) {
+            for( let i = 0; i < this.session.modules.length; i++ ) {
+                let mod = this.session.modules[i];
+                if( mod.name == name )
+                    return mod.running;
+            }
+        }
+        return false;
     }
 
     public cmdResponse(cmd : string) {

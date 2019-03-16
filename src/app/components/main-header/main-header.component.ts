@@ -69,6 +69,7 @@ export class MainHeaderComponent implements OnInit {
     }
 
     private updateSession(session) {
+        this.sessionError = null;
         this.numHosts = session.lan['hosts'].length; 
         this.numAps = session.wifi['aps'].length; 
         this.numBLE = session.ble['devices'].length; 
@@ -148,6 +149,7 @@ export class MainHeaderComponent implements OnInit {
     }
 
     private updateEvents(events, firstUpdate: boolean = false) {
+        this.sessionError = null;
         this.numEvents = events.length;
         if( this.numEvents == 0 ){
             this.toastr.clear();
