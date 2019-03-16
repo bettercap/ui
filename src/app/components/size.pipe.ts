@@ -17,7 +17,7 @@ export class SizePipe implements PipeTransform {
         if( isNaN(parseFloat(sbytes)) || !isFinite(bytes) )
             return sbytes;
         else if( bytes == 0 )
-            return "";
+            return '0';
 
         let unit = 0;
         while ( bytes >= 1024 ) {

@@ -30,17 +30,18 @@
           <hydra-signal-indicator [signalstrength]="ap.rssi"></hydra-signal-indicator>
         </td>
         <td>{{ ap.mac }}</td>
-        <td [class.hidden]="ap.hostname === '<hidden>'">{{ ap.hostname }}</td>
-        <td>{{ ap.vendor }}</td>
+        <td [class.empty]="ap.hostname === '<hidden>'">{{ ap.hostname }}</td>
+        <td [class.empty]="!ap.vendor">{{ ap.vendor ? ap.vendor : 'unknown' }}</td>
         <td>
           <fa-icon *ngIf="ap.encryption === 'OPEN'" [icon]="faUnlock" [style.color]="'green'" placement="top"></fa-icon>
           <span *ngIf="ap.encryption !== 'OPEN'">{{ ap.encryption }} ({{ ap.cipher }}, {{ ap.authentication }})</span>
         </td>
         <td>{{ ap.channel }}</td>
 
-        <td>
+        <td [class.empty]="ap.clients.length == 0">
+          <span *ngIf="ap.clients.length == 0">0</span>
           <span *ngIf="ap.clients.length > 0">
-            <span style="cursor:pointer;" class="badge badge-pill badge-info" (click)="visibleClients[ap.mac] = !visibleClients[ap.mac]">
+            <span style="cursor:pointer;" class="badge badge-pill badge-danger" (click)="visibleClients[ap.mac] = !visibleClients[ap.mac]">
               {{ ap.clients.length }}
             </span>
 
@@ -57,8 +58,8 @@
           </span>
         </td>
 
-        <td>{{ ap.sent | size }}</td>
-        <td>{{ ap.received | size }}</td>
+        <td [class.empty]="!ap.sent">{{ ap.sent | size }}</td>
+        <td [class.empty]="!ap.received">{{ ap.received | size }}</td>
         <td class="time">{{ ap.last_seen | date: 'HH:mm:ss' }}</td>
 
         <td>
