@@ -1,8 +1,9 @@
 <div class="omnibar">
-  <div class="row">
+
+  <div *ngIf="withCmd" class="row" style="margin-top: 5px">
     <div class="col-md-12">
       <div class="input-group input-group-sm">
-        <button type="button" class="btn btn-dark btn-sm" (click)="onClearClicked()">
+  <button type="button" class="btn btn-dark btn-sm" (click)="onClearClicked()">
           <i class="fas fa-trash-alt" ngTooltip="Clear the current view from records."></i>
         </button>
 
@@ -11,15 +12,6 @@
           <i *ngIf="!modEnabled" class="fas fa-play" style="color:green" ngTooltip="Start the module."></i>
         </button>
 
-        <input [(ngModel)]="query" type="text" class="form-control" placeholder="Search ..." aria-label="Search"/>
-
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="withCmd" class="row" style="margin-top: 5px">
-    <div class="col-md-12">
-      <div class="input-group input-group-sm">
         <div class="input-group-prepend">
           <span class="input-group-text">
             <i class="fas fa-terminal"></i>
@@ -29,4 +21,15 @@
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="input-group input-group-sm">
+      
+        <input [(ngModel)]="query" type="text" class="form-control" placeholder="Search ..." aria-label="Search"/>
+
+      </div>
+    </div>
+  </div>
+
 </div>
