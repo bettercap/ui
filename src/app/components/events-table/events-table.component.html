@@ -20,12 +20,12 @@
       <tr *ngFor="let event of events | search: omnibar.query">
         <td>{{ event.time | date: 'HH:mm:ss' }}</td>
         <td [ngSwitch]="event.tag.split('.')[0]">
-          <span *ngSwitchCase="'wifi'" class="badge badge-pill badge-success">{{ event.tag }}</span>
-          <span *ngSwitchCase="'endpoint'" class="badge badge-pill badge-secondary">{{ event.tag }}</span>
-          <span *ngSwitchCase="'ble'" class="badge badge-pill badge-primary">{{ event.tag }}</span>
-          <span *ngSwitchCase="'hid'" class="badge badge-pill badge-warning">{{ event.tag }}</span>
+          <span *ngSwitchCase="'wifi'" class="badge badge-success">{{ event.tag }}</span>
+          <span *ngSwitchCase="'endpoint'" class="badge badge-secondary">{{ event.tag }}</span>
+          <span *ngSwitchCase="'ble'" class="badge badge-primary">{{ event.tag }}</span>
+          <span *ngSwitchCase="'hid'" class="badge badge-warning">{{ event.tag }}</span>
 
-          <span *ngSwitchDefault class="badge badge-pill badge-dark">{{ event.tag }}</span>
+          <span *ngSwitchDefault class="badge badge-dark">{{ event.tag }}</span>
         </td>
         <td>
           <event-data [event]="event"></event-data>

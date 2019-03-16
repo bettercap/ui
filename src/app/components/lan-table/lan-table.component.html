@@ -35,11 +35,11 @@
         <td [class.empty]="!host.received">{{ host.received | size }}</td>
         <td class="time">{{ host.last_seen | date: 'HH:mm:ss'}}</td>
         <td class="metas">
-          <span *ngIf="host == iface" class="badge badge-pill badge-secondary">IFACE</span>
-          <span *ngIf="host == gateway" class="badge badge-pill badge-secondary">GW</span>
+          <span *ngIf="host == iface" class="badge badge-secondary">interface</span>
+          <span *ngIf="host == gateway" class="badge badge-secondary">gateway</span>
 
           <span *ngFor="let group of groupMetas(host.meta.values) | keyvalue">
-            <span style="cursor:pointer" class="badge badge-pill badge-warning" (click)="visibleMeta[host.mac+group.key] = !visibleMeta[host.mac+group.key]" *ngIf="(group.value | json) != '{}'">
+            <span style="cursor:pointer" class="badge badge-warning" (click)="visibleMeta[host.mac+group.key] = !visibleMeta[host.mac+group.key]" *ngIf="(group.value | json) != '{}'">
               {{ group.key }}
               <i *ngIf="!visibleMeta[host.mac+group.key]" class="fas fa-angle-right"></i>
               <i *ngIf="visibleMeta[host.mac+group.key]" class="fas fa-angle-down"></i>

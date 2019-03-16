@@ -34,7 +34,7 @@
           <td [class.empty]="ap.hostname === '<hidden>'">{{ ap.hostname }}</td>
           <td [class.empty]="!ap.vendor">{{ ap.vendor ? ap.vendor : 'unknown' }}</td>
           <td>
-            <fa-icon *ngIf="ap.encryption === 'OPEN'" [icon]="faUnlock" [style.color]="'green'" placement="top"></fa-icon>
+            <fa-icon *ngIf="ap.encryption === 'OPEN'" [icon]="faUnlock" [style.color]="'green'" placement="top" ngbTooltip="Open network"></fa-icon>
             <span *ngIf="ap.encryption !== 'OPEN'">{{ ap.encryption }} ({{ ap.cipher }}, {{ ap.authentication }})</span>
           </td>
           <td>{{ ap.channel }}</td>
@@ -42,7 +42,7 @@
           <td [class.empty]="ap.clients.length == 0">
             <span *ngIf="ap.clients.length == 0">0</span>
             <span *ngIf="ap.clients.length > 0">
-              <span style="cursor:pointer;" class="badge badge-pill badge-danger" (click)="currAP = (currAP ? null : ap)">
+              <span style="cursor:pointer;" class="badge badge-danger" (click)="currAP = (currAP ? null : ap)">
                 {{ ap.clients.length }}
                 <i *ngIf="!currAP" class="fas fa-angle-right"></i>
                 <i *ngIf="currAP && currAP.mac == ap.mac" class="fas fa-angle-down"></i>
@@ -55,7 +55,10 @@
           <td class="time">{{ ap.last_seen | date: 'HH:mm:ss' }}</td>
 
           <td>
-            <span style="cursor:pointer; margin-left:10px;" class="badge badge-pill badge-warning" (click)="visibleWPS[ap.mac] = !visibleWPS[ap.mac]" *ngIf="(ap.wps | json) != '{}'">
+            <span *ngIf="ap.handshake" class="badge badge-danger" ngbTooltip="WPA key material captured!">
+              <i class="fas fa-key"></i>
+            </span>
+            <span style="cursor:pointer" class="badge badge-warning" (click)="visibleWPS[ap.mac] = !visibleWPS[ap.mac]" *ngIf="(ap.wps | json) != '{}'">
               WPS {{ ap.wps.Version }}
               <i *ngIf="!visibleWPS[ap.mac]" class="fas fa-angle-right"></i>
               <i *ngIf="visibleWPS[ap.mac]" class="fas fa-angle-down"></i>
