@@ -23,7 +23,18 @@
 
       <tr *ngFor="let host of hosts | search: omnibar.query" [class.alive]="host | alive:1000">
         <td>
-          {{ host.ipv4 }}
+          <div ngbDropdown [open]="visibleMenu == host.mac">
+            <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == host.mac ? null : host.mac)">
+              {{ host.ipv4 }}
+            </button>
+            <div ngbDropdownMenu class="menu-dropdown">
+              <ul>
+                <li>
+                  <a (click)="setAlias(host)">Set Alias</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </td>
         <td>{{ host.mac | uppercase }}</td>
         <td [class.empty]="!host.hostname && !host.alias">

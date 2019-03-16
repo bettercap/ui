@@ -30,7 +30,26 @@
           <td>
             <hydra-signal-indicator [signalstrength]="ap.rssi"></hydra-signal-indicator>
           </td>
-          <td>{{ ap.mac | uppercase }}</td>
+          <td>
+          <div ngbDropdown [open]="visibleMenu == ap.mac">
+            <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == ap.mac ? null : ap.mac)">
+              {{ ap.mac | uppercase }}
+            </button>
+            <div ngbDropdownMenu class="menu-dropdown">
+              <ul>
+                <li>
+                  <a (click)="api.cmd('wifi.assoc ' + ap.mac); visibleMenu = null;">Associate</a>
+                </li>
+                <li *ngIf="ap.clients.length > 0">
+                  <a (click)="api.cmd('wifi.deauth ' + ap.mac); visibleMenu = null;">Deauthenticate Clients</a>
+                </li>
+                <li>
+                  <a (click)="api.cmd('wifi.recon.channel ' + ap.channel); visibleMenu = null;">Stay on ch. {{ ap.channel }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          </td>
           <td [class.empty]="ap.hostname === '<hidden>'">{{ ap.hostname }}</td>
           <td [class.empty]="!ap.vendor">{{ ap.vendor ? ap.vendor : 'unknown' }}</td>
           <td>
@@ -55,7 +74,7 @@
           <td class="time">{{ ap.last_seen | date: 'HH:mm:ss' }}</td>
 
           <td>
-            <span *ngIf="ap.handshake" class="badge badge-danger" ngbTooltip="WPA key material captured!">
+            <span *ngIf="ap.handshake" style="margin-right:10px" class="badge badge-danger" ngbTooltip="WPA key material captured!">
               <i class="fas fa-key"></i>
             </span>
             <span style="cursor:pointer" class="badge badge-warning" (click)="visibleWPS[ap.mac] = !visibleWPS[ap.mac]" *ngIf="(ap.wps | json) != '{}'">
@@ -86,7 +105,7 @@
     <thead>
       <tr>
         <th style="width:1%">RSSI</th>
-        <th style="width:1%">MAC</th>
+        <th>MAC</th>
         <th>Vendor</th>
         <th>Alias</th>
         <th>First seen</th>
@@ -104,7 +123,23 @@
         <td>
           <hydra-signal-indicator [signalstrength]="client.rssi"></hydra-signal-indicator>
         </td>
-        <td>{{ client.mac | uppercase }}</td>
+        <td>
+          <div ngbDropdown [open]="visibleClientMenu == client.mac">
+            <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleClientMenu = (visibleClientMenu == client.mac ? null : client.mac)">
+              {{ client.mac | uppercase }}
+            </button>
+            <div ngbDropdownMenu class="menu-dropdown">
+              <ul>
+                <li>
+                  <a (click)="setAlias(client)">Set Alias</a>
+                </li>
+                <li>
+                  <a (click)="api.cmd('wifi.deauth ' + client.mac); visibleClientMenu = null;">Deauthenticate</a>
+                </li>
+              </ul>
+            </div>
+          </div>  
+        </td>
         <td [class.empty]="!client.vendor">
           {{ client.vendor ? client.vendor : 'unknown' }}
         </td>
@@ -120,6 +155,5 @@
       </tr>
     </tbody>
   </table>
-
 </div>
 

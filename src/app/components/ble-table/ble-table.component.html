@@ -9,7 +9,8 @@
         <th sortable-column="name">Name</th>
         <th sortable-column="vendor">Vendor</th>
         <th sortable-column="flags">Flags</th>
-        <th sortable-column="connectable">Connectable</th>
+        <th style="width:1%" sortable-column="connectable">Connectable</th>
+        <th sortable-column="services">Services</th>
         <th sortable-column="last_seen">Last seen</th>
       </tr>
     </thead>
@@ -21,21 +22,107 @@
         </td>
       </tr>
 
-      <tr *ngFor="let device of devices | search: omnibar.query" [class.alive]="device | alive:500">
-        <td>
-          <hydra-signal-indicator [signalstrength]="device.rssi"></hydra-signal-indicator>
-        </td>
-        <td>{{ device.mac | uppercase }}</td>
-        <td [class.empty]="!device.name">{{ device.name ? device.name : 'none' }}</td>
-        <td [class.empty]="!device.vendor">{{ device.vendor ? device.vendor : 'unknown' }}</td>
-        <td [class.empty]="!device.flags">{{ device.flags ? device.flags : 'none' }}</td>
-        <td align="center">
-          <fa-icon *ngIf="device.connectable" [icon]="faCheckCircle" style="color:green"></fa-icon>
-          <fa-icon *ngIf="!device.connectable" [icon]="faTimes" style="color:red"></fa-icon>
-        </td>
-        <td class="time">{{ device.last_seen | date: 'HH:mm:ss' }}</td>
-      </tr>
+      <ng-container *ngFor="let device of devices | search: omnibar.query">
+        <tr *ngIf="!currDev || currDev.mac == device.mac" [class.alive]="device | alive:500">
+          <td>
+            <hydra-signal-indicator [signalstrength]="device.rssi"></hydra-signal-indicator>
+          </td>
+          <td>{{ device.mac | uppercase }}</td>
+          <td [class.empty]="!device.name">{{ device.name ? device.name : 'none' }}</td>
+          <td [class.empty]="!device.vendor">{{ device.vendor ? device.vendor : 'unknown' }}</td>
+          <td [class.empty]="!device.flags">{{ device.flags ? device.flags : 'none' }}</td>
+          <td align="center">
+            <fa-icon *ngIf="device.connectable" [icon]="faCheckCircle" style="color:green"></fa-icon>
+            <fa-icon *ngIf="!device.connectable" [icon]="faTimes" style="color:red"></fa-icon>
+          </td>
+          <td>
+            <span *ngIf="currScan && device.services.length == 0" class="badge badge-warning">
+              <span *ngIf="currScan.mac == device.mac">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                scanning ...
+              </span>
+              <span *ngIf="currScan.mac != device.mac">
+                scan
+              </span>
+            </span>
+            <span *ngIf="!currScan && device.services.length == 0" style="cursor:pointer" class="badge badge-warning" (click)="enumServices(device)">
+              scan
+            </span>
+
+            <span *ngIf="device.services.length > 0">
+              <span style="cursor:pointer;" class="badge badge-danger" (click)="currDev = (currDev ? null : device)">
+                {{ device.services.length }}
+                <i *ngIf="!currDev" class="fas fa-angle-right"></i>
+                <i *ngIf="currDev && currDev.mac == device.mac" class="fas fa-angle-down"></i>
+              </span>
+            </span>
+          </td>
+          <td class="time">{{ device.last_seen | date: 'HH:mm:ss' }}</td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
 </div>
 
+<div *ngIf="currDev" class="table-responsive">
+  <table class="table table-sm table-dark">
+    <thead>
+      <tr>
+        <th>Handles</th>
+        <th>
+          <span class="badge badge-primary" style="margin-right: 10px">
+          Service
+          </span>
+          &gt; 
+          <span class="badge badge-secondary" style="margin-left: 10px">
+          Characteristics
+          </span>
+        </th>
+        <th>Properties</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let svc of currDev.services">
+      <tr>
+        <td>
+          {{ svc.handle }} -&gt; {{ svc.end_handle }}
+        </td>
+        <td>
+          <span *ngIf="svc.name">
+            <span class="badge badge-primary" style="margin-right: 10px">
+              {{ svc.name }}
+            </span>
+            <span class="text-muted">{{ svc.uuid }}</span>
+          </span>
+          <span *ngIf="!svc.name" class="badge badge-primary">
+            {{ svc.uuid }}
+          </span>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr *ngFor="let ch of svc.characteristics">
+        <td>{{ ch.handle }}</td>
+        <td style="padding-left:50px"> 
+          <span *ngIf="ch.name">
+            <span class="badge badge-secondary" style="margin-right: 10px">
+              {{ ch.name }}
+            </span>
+            <span class="text-muted">{{ ch.uuid }}</span>
+          </span>
+          <span *ngIf="!ch.name" class="badge badge-secondary">
+            {{ ch.uuid }}
+          </span>
+        </td>
+        <td>
+          {{ ch.properties.join(', ') | unbash | lowercase }}
+        </td>
+        <td>
+          {{ ch.data | unbash }}
+        </td>
+      </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

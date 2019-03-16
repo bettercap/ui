@@ -10,6 +10,41 @@ div.table-dropdown {
     border: 1px solid #212529;
     border-radius: 3px;
     background-color: #313539;
+    display: table;
+    font-size: .8rem;
+}
+
+div.menu-dropdown {
+    z-index: 99999;
+    padding: 5px;
+    border: 1px solid #212529;
+    border-radius: 3px;
+    background-color: #313539;
+    font-size: .8rem;
+
+    ul {
+        li {
+            padding: 5px;
+            cursor: pointer;
+            &:hover {
+                background-color: #414549;
+            }
+            a {
+                color: white !important;
+                width: 100% !important;
+                display: block;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+.drop-left {
+    right: auto;
+    left: 0;
 }
 
 tr.alive {

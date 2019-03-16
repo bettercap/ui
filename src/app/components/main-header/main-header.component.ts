@@ -44,6 +44,15 @@ export class MainHeaderComponent implements OnInit {
         this.updateEvents(this.api.events, true);
     }
 
+    private skipError(error) {
+        error = String(error);
+        return error.indexOf('module') != -1 &&
+            ( 
+                error.indexOf('already running') != -1 ||
+                error.indexOf('is not running') != -1
+            );
+    }
+
     ngOnInit() {
         this.api.onNewData.subscribe(session => {
             this.updateSession(session);
@@ -56,12 +65,13 @@ export class MainHeaderComponent implements OnInit {
 
         this.api.onSessionError.subscribe(error => {
             console.error("session error", error);
+            this.apiFirstUpdate = true;
             this.sessionError = error;
         });
 
         this.api.onCommandError.subscribe(error => {
             console.error("command error", error);
-            if( error.error.indexOf('already running') == -1 && error.error.indexOf('is not running') == -1 ) {
+            if( !this.skipError(error.error) ) {
                 this.commandError = error;
                 $('#commandError').modal('show');
             }
@@ -103,8 +113,8 @@ export class MainHeaderComponent implements OnInit {
         if( event.tag.indexOf('mod.') == 0 )
             return true;
         // some recon module got a new target
-        if( event.tag.indexOf('.new') != -1 )
-            return true;
+        // if( event.tag.indexOf('.new') != -1 && event.tag != 'wifi.client.new' )
+        // return true;
         // wifi l00t
         if( event.tag == 'wifi.client.handshake' )
             return true;

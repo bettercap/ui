@@ -6,6 +6,8 @@ import { OmnibarComponent } from '../omnibar/omnibar.component';
 
 import {faUnlock} from '@fortawesome/free-solid-svg-icons';
 
+declare var $: any;
+
 @Component({
     selector: 'hydra-wifi-table',
     templateUrl: './wifi-table.component.html',
@@ -15,9 +17,11 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
     aps: Ap[];
+    sort: ColumnSortedEvent;
     visibleWPS = {};
     visibleClients = {};
-    sort: ColumnSortedEvent;
+    visibleMenu = null;
+    visibleClientMenu = null;
     sortSub: any;
     currAP: Ap = null;
 
@@ -43,7 +47,18 @@ export class WifiTableComponent implements OnInit, OnDestroy {
         this.sortSub.unsubscribe();
     }
 
+    setAlias(client) {
+        let alias = prompt("Set an alias for this client:", client.alias);
+        if( alias.trim() == "" )
+            alias = '""';
+
+        this.api.cmd("alias " + client.mac + " " + alias);
+    }
+
     private update(aps) {
+        if( $('.menu-dropdown').is(':visible') )
+            return;
+
         if( aps.length == 0 )
             this.currAP = null;
 

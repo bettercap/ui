@@ -6,6 +6,8 @@ import { OmnibarComponent } from '../omnibar/omnibar.component';
 
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 
+declare var $: any;
+
 @Component({
     selector: 'hydra-lan-table',
     templateUrl: './lan-table.component.html',
@@ -21,6 +23,7 @@ export class LanTableComponent implements OnInit, OnDestroy {
     sortSub: any;
 
     visibleMeta = {};
+    visibleMenu = null;
 
     faInfoCircle = faInfoCircle;
 
@@ -45,6 +48,9 @@ export class LanTableComponent implements OnInit, OnDestroy {
     }
 
     private update(session) {
+        if( $('.menu-dropdown').is(':visible') )
+            return;
+
         this.iface = session.interface;
         this.gateway = session.gateway;
         this.hosts = [];
@@ -71,6 +77,14 @@ export class LanTableComponent implements OnInit, OnDestroy {
         this.hosts.push(this.gateway);
 
         this.sortService.sort(this.hosts, this.sort)
+    }
+
+    setAlias(host) {
+        let alias = prompt("Set an alias for this host:", host.alias);
+        if( alias.trim() == "" )
+            alias = '""';
+
+        this.api.cmd("alias " + host.mac + " " + alias);
     }
 
     groupMetas(metas) {
