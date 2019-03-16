@@ -4,15 +4,22 @@
       <a 
          (click)="curMod = null; successMessage = '';"
          class="nav-link" [class.active]="curMod == null">
-        <i class="fas fa-cog"></i>
-        Main</a>
+        <h5>
+          <i class="fas fa-cog"></i>
+          Main
+        </h5>
+      </a>
 
       <a 
          *ngFor="let mod of modules" 
          (click)="curMod = mod; successMessage = '';"
          class="nav-link" [class.active]="curMod && curMod.name == mod.name">
-        <i *ngIf="mod.running" class="fas fa-toggle-on"></i>
-        <i *ngIf="!mod.running" class="fas fa-toggle-off"></i>
+        <span *ngIf="mod.running" class="badge badge-success">
+          <i class="fas fa-check"></i>
+        </span>
+        <span *ngIf="!mod.running" class="badge badge-danger">
+          <i class="fas fa-times"></i>
+        </span>
         {{ mod.name }}</a>
 
     </div>
@@ -78,10 +85,10 @@
           <p class="mod-description">
             {{ curMod.description }}
           </p>
-          <span *ngIf="curMod.running" class="badge badge-pill badge-success">
+          <span *ngIf="curMod.running" class="badge badge-success">
             Running
           </span> 
-          <span *ngIf="!curMod.running" class="badge badge-pill badge-danger">
+          <span *ngIf="!curMod.running" class="badge badge-danger">
             Not running
           </span> 
           <hr/>

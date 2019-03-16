@@ -1,14 +1,16 @@
 <span [ngSwitch]="true" class="event-data">
   <span *ngSwitchCase="event.tag == 'endpoint.new'">
-    Detected <strong>{{ data.ipv4 }}</strong> {{ data.mac }} ({{data.vendor}})
+    Detected <strong>{{ data.ipv4 }}</strong> {{ data.mac }} 
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>
   </span>
   <span *ngSwitchCase="event.tag == 'endpoint.lost'">
-    Lost <strong>{{ data.ipv4 }}</strong> {{ data.mac }} ({{data.vendor}})
+    Lost <strong>{{ data.ipv4 }}</strong> {{ data.mac }} 
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>
   </span>
 
   <span *ngSwitchCase="event.tag == 'wifi.client.probe'">
     Station <strong>{{ data.mac }}</strong> 
-    ({{data.vendor}}) 
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span> 
     <span *ngIf="data.alias" class="badge badge-pill badge-secondary">{{ data.alias }}</span>
     is probing for <strong>{{ data.essid }}</strong>
   </span>
@@ -18,34 +20,39 @@
   </span>
   <span *ngSwitchCase="event.tag == 'wifi.client.new'">
     Detected client 
-    <strong>{{ data.Client.mac }}</strong> ({{data.Client.vendor}}) 
+    <strong>{{ data.Client.mac }}</strong>
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.Client.vendor }}</span> 
     <span *ngIf="data.Client.alias" class="badge badge-pill badge-secondary">{{ data.Client.alias }}</span>
     for AP <strong>{{ data.AP.mac }}</strong>
   </span>
   <span *ngSwitchCase="event.tag == 'wifi.client.lost'">
     Lost client 
-    <strong>{{ data.Client.mac }}</strong> ({{data.Client.vendor}}) 
+    <strong>{{ data.Client.mac }}</strong>
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.Client.vendor }}</span> 
     <span *ngIf="data.Client.alias" class="badge badge-pill badge-secondary">{{ data.Client.alias }}</span>
     for AP <strong>{{ data.AP.mac }}</strong>
   </span>
   <span *ngSwitchCase="event.tag == 'wifi.ap.new'">
     Detected <strong>{{ data.hostname }}</strong> 
     [{{data.mac}}]
-    ({{data.vendor}}) with <strong>{{ data.encryption }}</strong> encryption and {{ data.clients.length }} clients
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span> 
+    with <strong>{{ data.encryption }}</strong> encryption and {{ data.clients.length }} clients
   </span>
   <span *ngSwitchCase="event.tag == 'wifi.ap.lost'">
     Lost <strong>{{ data.hostname }}</strong> 
     [{{data.mac}}]
-    ({{data.vendor}})
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>
   </span>
 
   <span *ngSwitchCase="event.tag == 'ble.device.new'">
-    Detected <strong>{{ data.mac }}</strong> ({{data.vendor}}): 
+    Detected <strong>{{ data.mac }}</strong> 
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>: 
     <strong>flags</strong>: {{data.flags}},
     <strong>connectable</strong>: {{data.connectable}}
   </span>
   <span *ngSwitchCase="event.tag == 'ble.device.lost'">
-    Lost <strong>{{ data.mac }}</strong> ({{data.vendor}}): 
+    Lost <strong>{{ data.mac }}</strong> 
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>: 
     <strong>flags</strong>: {{data.flags}},
     <strong>connectable</strong>: {{data.connectable}}
   </span>
