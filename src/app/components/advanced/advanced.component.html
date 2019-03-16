@@ -17,8 +17,8 @@
         <span *ngIf="mod.running" class="badge badge-success">
           <i class="fas fa-check"></i>
         </span>
-        <span *ngIf="!mod.running" class="badge badge-danger">
-          <i class="fas fa-times"></i>
+        <span  class="badge badge-danger">
+          <i *ngIf="!mod.running" class="fas fa-times"></i>
         </span>
         {{ mod.name }}</a>
 

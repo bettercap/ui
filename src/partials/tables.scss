@@ -1,5 +1,15 @@
 .table .table {
-    background-color: initial;
+    background-color: #313539;
+}
+
+div.table-dropdown {
+    z-index: 1000;
+    position: absolute;
+    right: 0;
+    padding: 5px;
+    border: 1px solid #212529;
+    border-radius: 3px;
+    background-color: #313539;
 }
 
 tr.alive {

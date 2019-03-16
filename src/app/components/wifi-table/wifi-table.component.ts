@@ -19,6 +19,7 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     visibleClients = {};
     sort: ColumnSortedEvent;
     sortSub: any;
+    currAP: Ap = null;
 
     faUnlock = faUnlock;
 
@@ -43,7 +44,22 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     }
 
     private update(aps) {
+        if( aps.length == 0 )
+            this.currAP = null;
+
         this.aps = aps; 
-        this.sortService.sort(this.aps, this.sort)
+        this.sortService.sort(this.aps, this.sort);
+
+        if( this.currAP != null ) {
+            for( let i = 0; i < this.aps.length; i++ ) {
+                let ap = this.aps[i];
+                if( ap.mac == this.currAP.mac ) {
+                    this.currAP = ap;
+                    break;
+                }
+            }
+
+            this.sortService.sort(this.currAP.clients, this.sort);
+        }
     }
 }

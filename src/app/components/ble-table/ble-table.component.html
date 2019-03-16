@@ -25,7 +25,7 @@
         <td>
           <hydra-signal-indicator [signalstrength]="device.rssi"></hydra-signal-indicator>
         </td>
-        <td>{{ device.mac }}</td>
+        <td>{{ device.mac | uppercase }}</td>
         <td [class.empty]="!device.name">{{ device.name ? device.name : 'none' }}</td>
         <td [class.empty]="!device.vendor">{{ device.vendor ? device.vendor : 'unknown' }}</td>
         <td [class.empty]="!device.flags">{{ device.flags ? device.flags : 'none' }}</td>

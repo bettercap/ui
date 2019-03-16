@@ -25,7 +25,7 @@
         <td>
           {{ host.ipv4 }}
         </td>
-        <td>{{ host.mac }}</td>
+        <td>{{ host.mac | uppercase }}</td>
         <td [class.empty]="!host.hostname && !host.alias">
           {{ host.hostname }}
           <span *ngIf="host.alias" class="badge badge-pill badge-secondary">{{ host.alias }}</span>
@@ -41,16 +41,20 @@
           <span *ngFor="let group of groupMetas(host.meta.values) | keyvalue">
             <span style="cursor:pointer" class="badge badge-pill badge-warning" (click)="visibleMeta[host.mac+group.key] = !visibleMeta[host.mac+group.key]" *ngIf="(group.value | json) != '{}'">
               {{ group.key }}
+              <i *ngIf="!visibleMeta[host.mac+group.key]" class="fas fa-angle-right"></i>
+              <i *ngIf="visibleMeta[host.mac+group.key]" class="fas fa-angle-down"></i>
             </span>
 
-            <table *ngIf="visibleMeta[host.mac+group.key]" class="table table-sm table-dark">
-              <tbody>
-              <tr *ngFor="let item of group.value | keyvalue">
-                <td>{{ item.key == undefined || item.key === 'undefined' ? '' : item.key }}</td>
-                <td>{{ item.value }}</td>
-              </tr>
-              </tbody>
-            </table>
+            <div *ngIf="visibleMeta[host.mac+group.key]" class="table-dropdown">
+              <table class="table table-sm table-dark">
+                <tbody>
+                <tr *ngFor="let item of group.value | keyvalue">
+                  <th>{{ item.key == undefined || item.key === 'undefined' ? '' : item.key }}</th>
+                  <td>{{ item.value }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
 
           </span>
 

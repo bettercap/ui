@@ -19,7 +19,7 @@
       </tr>
 
       <tr *ngFor="let device of devices | search: omnibar.query" [class.alive]="device | alive:5000">
-        <td>{{ device.address }}</td>
+        <td>{{ device.address | uppercase }}</td>
         <td [class.empty]="!device.type">{{ device.type ? device.type : 'unknown'}}</td>
         <td>{{ device.channels }}</td>
         <td class="time">{{ device.last_seen | date: 'HH:mm:ss' }}</td>
