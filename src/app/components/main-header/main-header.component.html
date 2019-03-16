@@ -12,7 +12,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/events">
             <i class="fas fa-terminal">
-              <span *ngIf="numEvents > 0" class="badge badge-success">{{ numEvents }}</span>
+              <span *ngIf="numEvents > 0" class="badge badge-danger">{{ numEvents }}</span>
             </i>
             Events
           </a>
@@ -21,7 +21,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/lan">
             <i class="fa fa-network-wired">
-              <span *ngIf="numHosts > 0" class="badge badge-success">{{ numHosts }}</span>
+              <span *ngIf="numHosts > 0" class="badge badge-danger">{{ numHosts }}</span>
               <span *ngIf="!api.isModuleEnabled('net.recon')" class="badge badge-danger">
                 <i class="fas fa-times"></i>
               </span>
@@ -33,7 +33,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/wifi">
             <i class="fa fa-wifi">
-              <span *ngIf="numAps > 0" class="badge badge-success">{{ numAps }}</span>
+              <span *ngIf="numAps > 0" class="badge badge-danger">{{ numAps }}</span>
               <span *ngIf="!api.isModuleEnabled('wifi')" class="badge badge-danger">
                 <i class="fas fa-times"></i>
               </span>
@@ -45,7 +45,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/ble">
             <i class="fab fa-bluetooth-b">
-              <span *ngIf="numBLE > 0" class="badge badge-success">{{ numBLE }}</span>
+              <span *ngIf="numBLE > 0" class="badge badge-danger">{{ numBLE }}</span>
               <span *ngIf="!api.isModuleEnabled('ble.recon')" class="badge badge-danger">
                 <i class="fas fa-times"></i>
               </span>
@@ -57,7 +57,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/hid">
             <i class="fa fa-keyboard">
-              <span *ngIf="numHID > 0" class="badge badge-success">{{ numHID }}</span>
+              <span *ngIf="numHID > 0" class="badge badge-danger">{{ numHID }}</span>
               <span *ngIf="!api.isModuleEnabled('hid')" class="badge badge-danger">
                 <i class="fas fa-times"></i>
               </span>
