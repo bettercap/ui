@@ -28,7 +28,7 @@
             <hydra-signal-indicator [signalstrength]="device.rssi"></hydra-signal-indicator>
           </td>
           <td>{{ device.mac | uppercase }}</td>
-          <td [class.empty]="!device.name">{{ device.name ? device.name : 'none' }}</td>
+          <td [class.empty]="!device.name">{{ (device.name ? device.name : 'none') | unbash }}</td>
           <td [class.empty]="!device.vendor">{{ device.vendor ? device.vendor : 'unknown' }}</td>
           <td [class.empty]="!device.flags">{{ device.flags ? device.flags : 'none' }}</td>
           <td align="center">
@@ -71,7 +71,7 @@
           <span class="badge badge-primary" style="margin-right: 10px">
           Service
           </span>
-          &gt; 
+          <i class="fas fa-chevron-right"></i>
           <span class="badge badge-secondary" style="margin-left: 10px">
           Characteristics
           </span>
@@ -84,7 +84,9 @@
       <ng-container *ngFor="let svc of currDev.services">
       <tr>
         <td>
-          {{ svc.handle }} -&gt; {{ svc.end_handle }}
+          {{ svc.handle }}
+          <i class="fas fa-chevron-right"></i>
+          {{ svc.end_handle }}
         </td>
         <td>
           <span *ngIf="svc.name">
@@ -101,7 +103,9 @@
         <td></td>
       </tr>
       <tr *ngFor="let ch of svc.characteristics">
-        <td>{{ ch.handle }}</td>
+        <td style="padding-left:50px">
+          <span class="text-muted">{{ ch.handle }}</span>
+        </td>
         <td style="padding-left:50px"> 
           <span *ngIf="ch.name">
             <span class="badge badge-secondary" style="margin-right: 10px">
@@ -114,10 +118,12 @@
           </span>
         </td>
         <td>
-          {{ ch.properties.join(', ') | unbash | lowercase }}
+          {{ ch.properties.join(', ') | unbash }}
         </td>
         <td>
-          {{ ch.data | unbash }}
+          <span class="text-muted">
+            {{ ch.data | unbash }}
+          </span>
         </td>
       </tr>
       </ng-container>

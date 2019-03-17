@@ -34,7 +34,7 @@
 
           <table class="table table-dark">
             <tbody>
-              <tr *ngFor="let proto of session.packets.Protos | keyvalue">
+              <tr *ngFor="let proto of session.packets.protos | keyvalue">
                 <th width="10%">{{ proto.key }}</th>
                 <td>
                   <ngb-progressbar type="info" [value]="proto.value" [max]="pktTot">

@@ -56,6 +56,18 @@
     <strong>flags</strong>: {{data.flags}},
     <strong>connectable</strong>: {{data.connectable}}
   </span>
+  <span *ngSwitchCase="event.tag == 'ble.device.disconnected'">
+    Disconnected from <strong>{{ data.mac }}</strong> 
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>: 
+    <strong>flags</strong>: {{data.flags}},
+    <strong>connectable</strong>: {{data.connectable}}
+  </span>
+  <span *ngSwitchCase="event.tag == 'ble.connection.timeout'">
+    Timeout while connecting to <strong>{{ data.mac }}</strong> 
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>: 
+    <strong>flags</strong>: {{data.flags}},
+    <strong>connectable</strong>: {{data.connectable}}
+  </span>
 
   <span *ngSwitchCase="event.tag == 'hid.device.new'">
     Detected {{data.type}} HID device <strong>{{ data.address }}</strong>

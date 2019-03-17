@@ -59,7 +59,7 @@ export class BleTableComponent implements OnInit, OnDestroy {
 
         for( let i = 0; i < events.length; i++ ) {
             let e = events[i];
-            if( (e.tag == 'ble.connection.timeout' || e.tag == 'ble.device.disconnected') && e.data && e.data.mac == this.currScan.mac ) {
+            if( e.tag == 'ble.connection.timeout' || e.tag == 'ble.device.disconnected' ) {
                 this.currScan = null;
                 break;
             }

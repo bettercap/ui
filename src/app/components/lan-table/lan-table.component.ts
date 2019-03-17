@@ -62,10 +62,10 @@ export class LanTableComponent implements OnInit, OnDestroy {
             let host = session.lan['hosts'][i];
             // get traffic details for this host
             let sent = 0, received = 0;
-            if( host.ipv4 in session.packets.Traffic ) {
-                let traffic = session.packets.Traffic[host.ipv4];
-                sent = traffic.Sent;
-                received = traffic.Received;
+            if( host.ipv4 in session.packets.traffic ) {
+                let traffic = session.packets.traffic[host.ipv4];
+                sent = traffic.sent;
+                received = traffic.received;
             }
 
             host.sent = sent;
