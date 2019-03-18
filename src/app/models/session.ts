@@ -22,5 +22,5 @@ export interface Session {
   started_at: string;
   active: boolean;
   gps: Gps;
-  modules: any;
+  modules: Module[];
 }
