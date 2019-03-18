@@ -25,13 +25,13 @@ export class BleTableComponent implements OnInit, OnDestroy {
 
     constructor(private api: ApiService, private sortService: SortService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};
-        this.update(this.api.session.ble['devices']);
+        this.update(this.api.session);
         this.checkEvents(this.api.events);
     }
 
     ngOnInit() {
         this.api.onNewData.subscribe(session => {
-            this.update(session.ble['devices']);
+            this.update(session);
         });
 
         this.api.onNewEvents.subscribe(events => {
@@ -66,7 +66,18 @@ export class BleTableComponent implements OnInit, OnDestroy {
         }
     }
 
-    private update(devices) {
+    private update(session) {
+        let devices = session.ble['devices'];
+        let modules = session.modules;
+
+        for( let i = 0; i < modules.length; i++ ){
+            let mod = modules[i];
+            if( mod.name == 'ble.recon' ) {
+                this.currScan = mod.state.scanning;
+                break;
+            }
+        }
+
         if( devices.length == 0 )
             this.currDev = null;
 

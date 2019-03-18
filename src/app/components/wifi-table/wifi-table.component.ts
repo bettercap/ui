@@ -26,6 +26,7 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     visibleClientMenu = null;
     sortSub: any;
     currAP: Ap = null;
+    hopping: boolean = true;
 
     faUnlock = faUnlock;
 
@@ -64,6 +65,10 @@ export class WifiTableComponent implements OnInit, OnDestroy {
                 this.wifi = mod;
                 break;
             }
+        }
+        
+        if( this.wifi && this.wifi.state && this.wifi.state.channels ) {
+            this.hopping = this.wifi.state.channels.length > 1;
         }
 
         if( $('.menu-dropdown').is(':visible') )

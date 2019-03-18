@@ -1,11 +1,5 @@
 <omnibar [modName]="'wifi'" [toggleCmd]="'wifi.recon'" [clearCmd]="'wifi.clear'" [withCmd]="true"></omnibar>
 
-<div *ngIf="wifi && wifi.state.channels && wifi.state.channels.length == 1" style="margin:5px">
-  <button type="button" class="btn btn-dark btn-sm" (click)="api.cmd('wifi.recon.channel clear')" placement="right" ngbTooltip="Restore channel hopping.">
-    <i class="fas fa-broadcast-tower"></i>
-  </button>
-</div>
-
 <div class="table-responsive">
   <table class="table table-dark">
     <thead>
@@ -15,7 +9,14 @@
         <th sortable-column="hostname">ESSID</th>
         <th sortable-column="vendor">Vendor</th>
         <th sortable-column="encryption">Encryption</th>
-        <th sortable-column="channel">Ch</th>
+
+        <th *ngIf="hopping" sortable-column="channel">Ch</th>
+        <th *ngIf="!hopping">
+          <button type="button" class="btn btn-dark btn-sm" (click)="api.cmd('wifi.recon.channel clear')" placement="right" ngbTooltip="Restore channel hopping.">
+            <i class="fas fa-broadcast-tower"></i>
+          </button>
+        </th>
+
         <th sortable-column="clients">Clients</th>
         <th sortable-column="sent">Sent</th>
         <th sortable-column="received">Received</th>
@@ -49,9 +50,6 @@
                 <li *ngIf="ap.clients.length > 0">
                   <a (click)="api.cmd('wifi.deauth ' + ap.mac); visibleMenu = null;">Deauthenticate Clients</a>
                 </li>
-                <li>
-                  <a (click)="api.cmd('wifi.recon.channel ' + ap.channel); visibleMenu = null;">Stay on ch. {{ ap.channel }}</a>
-                </li>
               </ul>
             </div>
           </div>
@@ -62,7 +60,17 @@
             <fa-icon *ngIf="ap.encryption === 'OPEN'" [icon]="faUnlock" [style.color]="'green'" placement="top" ngbTooltip="Open network"></fa-icon>
             <span *ngIf="ap.encryption !== 'OPEN'">{{ ap.encryption }} ({{ ap.cipher }}, {{ ap.authentication }})</span>
           </td>
-          <td>{{ ap.channel }}</td>
+          
+          <td *ngIf="hopping">
+            <button type="button" class="btn btn-dark btn-sm" (click)="api.cmd('wifi.recon.channel ' + ap.channel)" ngbTooltip="Stay on channel {{ ap.channel }}.">
+              {{ ap.channel }}
+            </button>
+
+          </td>
+
+          <td *ngIf="!hopping">
+            {{ ap.channel }}
+          </td>
 
           <td [class.empty]="ap.clients.length == 0">
             <span *ngIf="ap.clients.length == 0">0</span>
