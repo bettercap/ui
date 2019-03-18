@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import {ApiService} from '../../services/api.service';
 import {Ap} from '../../models/ap';
+import {Module} from '../../models/module';
 import { OmnibarComponent } from '../omnibar/omnibar.component';
 
 import {faUnlock} from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +18,7 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
     aps: Ap[];
+    wifi: Module;
     sort: ColumnSortedEvent;
     visibleWPS = {};
     visibleClients = {};
@@ -29,12 +31,12 @@ export class WifiTableComponent implements OnInit, OnDestroy {
 
     constructor(private api: ApiService, private sortService: SortService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};
-        this.update(this.api.session.wifi['aps']);
+        this.update(this.api.session);
     }
 
     ngOnInit() {
         this.api.onNewData.subscribe(session => {
-            this.update(session.wifi['aps']);
+            this.update(session);
         });
 
         this.sortSub = this.sortService.onSort.subscribe(event => {
@@ -55,9 +57,19 @@ export class WifiTableComponent implements OnInit, OnDestroy {
         this.api.cmd("alias " + client.mac + " " + alias);
     }
 
-    private update(aps) {
+    private update(session) {
+        for( let i = 0; i < session.modules.length; i++ ) {
+            let mod = session.modules[i];
+            if( mod.name == "wifi" ){
+                this.wifi = mod;
+                break;
+            }
+        }
+
         if( $('.menu-dropdown').is(':visible') )
             return;
+
+        let aps = session.wifi['aps'];
 
         if( aps.length == 0 )
             this.currAP = null;

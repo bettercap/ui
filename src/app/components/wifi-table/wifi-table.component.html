@@ -1,5 +1,11 @@
 <omnibar [modName]="'wifi'" [toggleCmd]="'wifi.recon'" [clearCmd]="'wifi.clear'" [withCmd]="true"></omnibar>
 
+<div *ngIf="wifi && wifi.state.channels && wifi.state.channels.length == 1" style="margin:5px">
+  <button type="button" class="btn btn-dark btn-sm" (click)="api.cmd('wifi.recon.channel clear')" placement="right" ngbTooltip="Restore channel hopping.">
+    <i class="fas fa-broadcast-tower"></i>
+  </button>
+</div>
+
 <div class="table-responsive">
   <table class="table table-dark">
     <thead>
@@ -26,7 +32,7 @@
       </tr>
 
       <ng-container *ngFor="let ap of aps | search: omnibar.query">
-        <tr *ngIf="!currAP || currAP.mac == ap.mac" [class.alive]="ap | alive:3000">
+        <tr *ngIf="(!currAP || currAP.mac == ap.mac) && (!wifi || wifi.state.channels.includes(ap.channel))" [class.alive]="ap | alive:3000">
           <td>
             <hydra-signal-indicator [signalstrength]="ap.rssi"></hydra-signal-indicator>
           </td>
