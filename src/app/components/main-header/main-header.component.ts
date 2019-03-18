@@ -112,8 +112,8 @@ export class MainHeaderComponent implements OnInit {
         // modules start and stop events
         if( event.tag.indexOf('mod.') == 0 )
             return true;
-        // generic logs
-        if( event.tag == 'sys.log' )
+        // generic logs (but not the syn.scan progress)
+        if( event.tag == 'sys.log' && event.data.Message.indexOf('syn.scan') == -1 )
             return true;
         // some recon module got a new target
         // if( event.tag.indexOf('.new') != -1 && event.tag != 'wifi.client.new' )

@@ -14,7 +14,7 @@ import {faCheckCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
 export class HidTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
-    devices: HIDDevice[];
+    devices: HIDDevice[] = [];
     sort: ColumnSortedEvent;
     sortSub: any;
 

@@ -6,6 +6,8 @@ import { OmnibarComponent } from '../omnibar/omnibar.component';
 
 import {faCheckCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
 
+declare var $: any;
+
 @Component({
     selector: 'hydra-ble-table',
     templateUrl: './ble-table.component.html',
@@ -14,7 +16,7 @@ import {faCheckCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
 export class BleTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
-    devices: Device[];
+    devices: Device[] = [];
     sort: ColumnSortedEvent;
     sortSub: any;
     currDev: Device = null;
@@ -26,16 +28,11 @@ export class BleTableComponent implements OnInit, OnDestroy {
     constructor(private api: ApiService, private sortService: SortService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};
         this.update(this.api.session);
-        this.checkEvents(this.api.events);
     }
 
     ngOnInit() {
         this.api.onNewData.subscribe(session => {
             this.update(session);
-        });
-
-        this.api.onNewEvents.subscribe(events => {
-            this.checkEvents(events);
         });
 
         this.sortSub = this.sortService.onSort.subscribe(event => {
@@ -53,17 +50,19 @@ export class BleTableComponent implements OnInit, OnDestroy {
         this.api.cmd('ble.enum ' + dev.mac);
     }
 
-    private checkEvents(events) {
-        if( !this.currScan ) 
-            return;
+    showWriteModal(dev, ch) {
+        $('#writeMAC').val(dev.mac);
+        $('#writeUUID').val(ch.uuid);
+        $('#writeData').val("FFFFFF");
+        $('#writeModal').modal('show');
+    }
 
-        for( let i = 0; i < events.length; i++ ) {
-            let e = events[i];
-            if( e.tag == 'ble.connection.timeout' || e.tag == 'ble.device.disconnected' ) {
-                this.currScan = null;
-                break;
-            }
-        }
+    doWrite() {
+        let mac = $('#writeMAC').val();
+        let uuid = $('#writeUUID').val();
+        let data = $('#writeData').val();
+        $('#writeModal').modal('hide');
+        this.api.cmd("ble.write " + mac + " " + uuid + " " + data);
     }
 
     private update(session) {
@@ -81,8 +80,8 @@ export class BleTableComponent implements OnInit, OnDestroy {
         if( devices.length == 0 )
             this.currDev = null;
 
-        this.devices = devices; 
         this.sortService.sort(this.devices, this.sort)
+        this.devices = devices; 
 
         if( this.currDev != null ) {
             for( let i = 0; i < this.devices.length; i++ ) {

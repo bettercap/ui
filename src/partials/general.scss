@@ -55,3 +55,34 @@ ol, ul{
 .empty {
     color: #555;
 }
+
+div.modal-body {
+    background-color: #343a40;
+    color: #fff;
+    font-size: .9rem;
+
+    button {
+        background-color:#333; 
+        color: #999;
+    }
+
+    input {
+        background-color:#333; 
+        border: 1px solid #353535; 
+        color: #aaa;
+    }
+
+    .input-group-text {
+        border: 1px solid #353535; 
+        background-color:#333; 
+        color: #999;
+    }
+}
+
+div.modal-header {
+    font-size: 10px; 
+    color: white;
+    background-color: #212529;
+    border-radius: 0;
+    border-bottom: 1px solid black;
+}

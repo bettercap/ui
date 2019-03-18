@@ -17,7 +17,7 @@ declare var $: any;
 export class WifiTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
-    aps: Ap[];
+    aps: Ap[] = [];
     wifi: Module;
     sort: ColumnSortedEvent;
     visibleWPS = {};

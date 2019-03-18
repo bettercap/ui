@@ -16,7 +16,7 @@ declare var $: any;
 export class LanTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
-    hosts: Host[];
+    hosts: Host[] = [];
     iface: Host;
     gateway: Host;
     sort: ColumnSortedEvent;
@@ -85,6 +85,22 @@ export class LanTableComponent implements OnInit, OnDestroy {
             alias = '""';
 
         this.api.cmd("alias " + host.mac + " " + alias);
+    }
+
+    showScannerModal(host) {
+        $('#scanIP').val(host.ipv4);
+        $('#startPort').val('1');
+        $('#endPort').val('10000');
+        $('#scannerModal').modal('show');
+    }
+
+    doPortScan() {
+        let ip = $('#scanIP').val();
+        let startPort = $('#startPort').val();
+        let endPort = $('#endPort').val();
+        $('#scannerModal').modal('hide');
+
+        this.api.cmd("syn.scan " + ip +" " + startPort + " " + endPort);
     }
 
     groupMetas(metas) {

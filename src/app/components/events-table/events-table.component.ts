@@ -12,7 +12,7 @@ import { OmnibarComponent } from '../omnibar/omnibar.component';
 export class EventsTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
-    events: Event[];
+    events: Event[] = [];
     modEnabled: boolean = false;
     sort: ColumnSortedEvent;
     sortSub: any;

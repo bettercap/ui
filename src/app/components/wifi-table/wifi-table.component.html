@@ -4,20 +4,20 @@
   <table class="table table-dark">
     <thead>
       <tr>
-        <th sortable-column="rssi" sort-direction="asc">RSSI</th>
+        <th width="1%" sortable-column="rssi" sort-direction="asc">RSSI</th>
         <th sortable-column="mac">BSSID</th>
         <th sortable-column="hostname">ESSID</th>
         <th sortable-column="vendor">Vendor</th>
         <th sortable-column="encryption">Encryption</th>
 
-        <th *ngIf="hopping" sortable-column="channel">Ch</th>
-        <th *ngIf="!hopping">
+        <th width="1%" *ngIf="hopping" sortable-column="channel">Ch</th>
+        <th width="1%" *ngIf="!hopping">
           <button type="button" class="btn btn-dark btn-sm" (click)="api.cmd('wifi.recon.channel clear')" placement="right" ngbTooltip="Restore channel hopping.">
             <i class="fas fa-broadcast-tower"></i>
           </button>
         </th>
 
-        <th sortable-column="clients">Clients</th>
+        <th width="1%" sortable-column="clients">Clients</th>
         <th sortable-column="sent">Sent</th>
         <th sortable-column="received">Received</th>
         <th sortable-column="last_seen">Last seen</th>
@@ -62,7 +62,7 @@
           </td>
           
           <td *ngIf="hopping">
-            <button type="button" class="btn btn-dark btn-sm" (click)="api.cmd('wifi.recon.channel ' + ap.channel)" ngbTooltip="Stay on channel {{ ap.channel }}.">
+            <button type="button" class="btn btn-dark btn-sm btn-action" (click)="api.cmd('wifi.recon.channel ' + ap.channel)" ngbTooltip="Stay on channel {{ ap.channel }}.">
               {{ ap.channel }}
             </button>
 

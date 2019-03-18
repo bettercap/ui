@@ -10,7 +10,7 @@ import { Session } from '../../models/session';
     styleUrls: ['./advanced.component.scss']
 })
 export class AdvancedComponent implements OnInit, OnDestroy {
-    modules: Module[];
+    modules: Module[] = [];
     session: Session;
 
     successMessage: string = '';
