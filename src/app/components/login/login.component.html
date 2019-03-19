@@ -1,7 +1,7 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-signin shadow-lg p-3 mb-5 bg-white rounded">
   <img [src]="'./assets/images/logo.png'" width="200px" alt="Hydra - Logo" class="img-responsive">
   <br/>
-  <ngb-alert *ngIf="error && error.status != 0 && submitted" type="danger" (close)="error = submitted = false">
+  <ngb-alert *ngIf="error && error.status !== 0 && submitted" type="danger" (close)="error = submitted = false">
     <span *ngIf="error.status != 0">
       {{error.status}} {{error.statusText}}: wrong credentials.
     </span>
@@ -27,7 +27,7 @@
   <div class="form-group">
     <label for="url">API URL</label>
     <input type="text" formControlName="url" id="url" class="form-control" required>
-    <ngb-alert *ngIf="submitted && error && error.status == 0" type="danger" (close)="error = submitted = false">
+    <ngb-alert *ngIf="submitted && error && error.status === 0" type="danger" (close)="error = submitted = false">
       Can't connect to {{ api.URL() }}
     </ngb-alert>
   </div>
