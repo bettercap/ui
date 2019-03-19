@@ -24,7 +24,7 @@ In order to run the web ui, first clone the repo somewhere and build the source:
 git clone https://github.com/bettercap/hydra.git ~/hydra
 cd ~/hydra
 npm install --save
-npm run build
+ng build --prod 
 ```
 
 This shoud generate the `~/hydra/dist/hydra` folder, then you can use `bettercap` (make sure it's updated) for both the REST API and to serve the web ui itself via the `http.server` module:
