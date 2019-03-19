@@ -36,7 +36,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     commandError: any;
 
     constructor(
-        private api: ApiService, 
+        public api: ApiService, 
         private router: Router, 
         private toastr: ToastrService,
         private resolver: ComponentFactoryResolver, 
