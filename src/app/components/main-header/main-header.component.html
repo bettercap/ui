@@ -19,48 +19,36 @@
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/lan">
+          <a class="nav-link" [class.text-muted]="!api.isModuleEnabled('net.recon')" routerLink="/lan">
             <i class="fa fa-network-wired">
               <span *ngIf="numHosts > 0" class="badge badge-pill badge-danger">{{ numHosts }}</span>
-              <span *ngIf="!api.isModuleEnabled('net.recon')" class="badge badge-pill badge-danger">
-                <i class="fas fa-times"></i>
-              </span>
             </i>
             LAN
           </a>
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/wifi">
+          <a class="nav-link" [class.text-muted]="!api.isModuleEnabled('wifi')" routerLink="/wifi">
             <i class="fa fa-wifi">
               <span *ngIf="numAps > 0" class="badge badge-pill badge-danger">{{ numAps }}</span>
-              <span *ngIf="!api.isModuleEnabled('wifi')" class="badge badge-pill badge-danger">
-                <i class="fas fa-times"></i>
-              </span>
             </i>
             WiFi
           </a>
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/ble">
+          <a class="nav-link" [class.text-muted]="!api.isModuleEnabled('ble.recon')" routerLink="/ble">
             <i class="fab fa-bluetooth-b">
               <span *ngIf="numBLE > 0" class="badge badge-pill badge-danger">{{ numBLE }}</span>
-              <span *ngIf="!api.isModuleEnabled('ble.recon')" class="badge badge-pill badge-danger">
-                <i class="fas fa-times"></i>
-              </span>
             </i>
             BLE
           </a>
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/hid">
+          <a class="nav-link" [class.text-muted]="!api.isModuleEnabled('hid')" routerLink="/hid">
             <i class="fa fa-keyboard">
               <span *ngIf="numHID > 0" class="badge badge-pill badge-danger">{{ numHID }}</span>
-              <span *ngIf="!api.isModuleEnabled('hid')" class="badge badge-pill badge-danger">
-                <i class="fas fa-times"></i>
-              </span>
             </i>
             HID
           </a>

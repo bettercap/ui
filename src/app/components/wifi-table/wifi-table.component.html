@@ -58,7 +58,7 @@
           <td [class.empty]="!ap.vendor">{{ ap.vendor ? ap.vendor : 'unknown' }}</td>
 
           <td align="center">
-            <fa-icon *ngIf="ap.encryption === 'OPEN'" [icon]="faUnlock" [style.color]="'green'" placement="top" ngbTooltip="Open network"></fa-icon>
+            <fa-icon *ngIf="ap.encryption === 'OPEN'" [icon]="faUnlock" [style.color]="'green'" placement="top" ngbTooltip="Open Network"></fa-icon>
             <span *ngIf="ap.encryption !== 'OPEN'">{{ ap.encryption }} <small class="text-muted">{{ ap.cipher }}, {{ ap.authentication }}</small></span>
           </td>
           

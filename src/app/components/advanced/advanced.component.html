@@ -15,9 +15,8 @@
       <a 
          *ngFor="let mod of modules | search: omnibar.query" 
          (click)="curMod = mod; successMessage = '';"
-         class="nav-link" [class.active]="curMod && curMod.name == mod.name">
+         class="nav-link" [class.active]="curMod && curMod.name == mod.name" [class.text-muted]="!mod.running">
         {{ mod.name }}
-        <small class="text-muted" *ngIf="mod.running">(<span style="color:green">running</span>)</small>
       </a>
 
     </div>
@@ -200,12 +199,15 @@
       </div>
       <div class="modal-body">
         <form (ngSubmit)="doRunCommand()">
+          <p class="form-text text-muted">
+            {{ curCmd.description }}
+          </p>
           <div *ngFor="let token of curCmd.tokens" class="form-group">
             <label for="tok{{ token.id }}">{{ token.label }}</label>
             <input type="text" id="tok{{ token.id }}" class="form-control param-input" value="">
           </div>
           <div class="text-right">
-            <button type="submit" class="btn btn-warning">
+            <button type="submit" class="btn btn-sm btn-warning">
               <i class="fas fa-play"></i> Run
             </button> 
           </div>
