@@ -119,7 +119,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
             for( let i = 0; i < session.modules.length; i++ ) {
                 let mod = session.modules[i];
                 if( this.curMod.name == mod.name ) {
-                    this.curMod = mod;
+                    this.curMod.running = mod.running;
                     break;
                 }
             }
