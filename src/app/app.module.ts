@@ -61,7 +61,9 @@ import { SizePipe } from './components/size.pipe';
         NgbModule,
         BrowserAnimationsModule,
         ToastrModule.forRoot({
-            preventDuplicates: true
+            preventDuplicates: true,
+            maxOpened: 5,
+            countDuplicates: true
         })
     ],
     entryComponents:[EventComponent],
