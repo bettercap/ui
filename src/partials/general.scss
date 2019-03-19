@@ -56,6 +56,12 @@ ol, ul{
     color: #555;
 }
 
+input.param-input {
+    background-color:#333; 
+    border: 1px solid #353535; 
+    color: #aaa;
+}
+
 div.modal-body {
     background-color: #343a40;
     color: #fff;
@@ -85,4 +91,8 @@ div.modal-header {
     background-color: #212529;
     border-radius: 0;
     border-bottom: 1px solid black;
+}
+
+.toast {
+    font-size: .8rem;    
 }

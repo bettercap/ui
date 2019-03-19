@@ -1,13 +1,36 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-signin">
-  <img [src]="'./assets/images/logo.png'" alt="Hydra - Logo" class="img-responsive">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-signin shadow-lg p-3 mb-5 bg-white rounded">
+  <img [src]="'./assets/images/logo.png'" width="200px" alt="Hydra - Logo" class="img-responsive">
   <br/>
-  <ngb-alert *ngIf="error" type="danger" (close)="error=null">{{ error.statusText }}</ngb-alert>
+  <ngb-alert *ngIf="error && error.status != 0 && submitted" type="danger" (close)="error = submitted = false">
+    <span *ngIf="error.status != 0">
+      {{error.status}} {{error.statusText}}: wrong credentials.
+    </span>
+  </ngb-alert>
+  <br/>
 
-  <input type="text" formControlName="username" class="form-control" placeholder="username" required autofocus>
-  <ngb-alert *ngIf="submitted && form.username.errors && form.username.errors.required" type="danger">username is required</ngb-alert>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" formControlName="username" id="username" class="form-control" required autofocus>
+    <ngb-alert *ngIf="submitted && form.username.errors && form.username.errors.required" type="danger">
+      Username required.
+    </ngb-alert>
+  </div>
   
-  <input type="password" formControlName="password" class="form-control" placeholder="password" required>
-  <ngb-alert *ngIf="submitted && form.password.errors && form.password.errors.required" type="danger">password is required</ngb-alert>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" formControlName="password" id="password" class="form-control" required>
+    <ngb-alert *ngIf="submitted && form.password.errors && form.password.errors.required" type="danger">
+      Password required.
+    </ngb-alert>
+  </div>
 
-  <button class="btn btn-primary btn-lg btn-block">Login</button>
+  <div class="form-group">
+    <label for="url">API URL</label>
+    <input type="text" formControlName="url" id="url" class="form-control" required>
+    <ngb-alert *ngIf="submitted && error && error.status == 0" type="danger" (close)="error = submitted = false">
+      Can't connect to {{ api.URL() }}
+    </ngb-alert>
+  </div>
+
+  <button class="btn btn-dark btn-lg btn-block">Login</button>
 </form>

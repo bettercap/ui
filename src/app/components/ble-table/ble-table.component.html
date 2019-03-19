@@ -10,7 +10,7 @@
         <th sortable-column="vendor">Vendor</th>
         <th sortable-column="flags">Flags</th>
         <th style="width:1%" sortable-column="connectable">Connectable</th>
-        <th sortable-column="services">Services</th>
+        <th style="width:1%" sortable-column="services">Services</th>
         <th sortable-column="last_seen">Last seen</th>
       </tr>
     </thead>
@@ -35,7 +35,7 @@
             <fa-icon *ngIf="device.connectable" [icon]="faCheckCircle" style="color:green"></fa-icon>
             <fa-icon *ngIf="!device.connectable" [icon]="faTimes" style="color:red"></fa-icon>
           </td>
-          <td>
+          <td align="center">
             <span *ngIf="currScan && device.services.length == 0" class="badge badge-warning">
               <span *ngIf="currScan.mac == device.mac" ngbTooltip="Scanning ...">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -44,9 +44,6 @@
                 <i class="fas fa-eye"></i>
               </span>
             </span>
-            <span *ngIf="!currScan && device.services.length == 0" style="cursor:pointer" class="badge badge-warning" (click)="enumServices(device)" ngbTooltip="Scan">
-                <i class="fas fa-eye"></i>
-            </span>
 
             <span *ngIf="device.services.length > 0">
               <span style="cursor:pointer;" class="badge badge-danger" (click)="currDev = (currDev ? null : device)">
@@ -54,6 +51,11 @@
                 <i *ngIf="!currDev" class="fas fa-angle-right"></i>
                 <i *ngIf="currDev && currDev.mac == device.mac" class="fas fa-angle-down"></i>
               </span>
+            </span>
+
+            <span *ngIf="!currScan" style="cursor:pointer; margin-left:5px" class="badge badge-warning" (click)="enumServices(device)">
+              <i *ngIf="device.services.length == 0" ngbTooltip="Scan" class="fas fa-eye"></i>
+              <i *ngIf="device.services.length > 0" ngbTooltip="Refresh" class="fas fa-sync-alt"></i>
             </span>
           </td>
           <td class="time">{{ device.last_seen | date: 'HH:mm:ss' }}</td>

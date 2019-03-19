@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+    production: true,
+    name: 'hydra',
+    version: '1.0.0 alpa'
 };

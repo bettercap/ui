@@ -4,7 +4,7 @@
     <div class="col-md-12">
       <div class="input-group input-group-sm">
 
-        <button type="button" class="btn btn-dark btn-sm" ngbTooltip="Clear table" (click)="onClearClicked()">
+        <button type="button" *ngIf="clearCmd" class="btn btn-dark btn-sm" placement="right" ngbTooltip="Clear table" (click)="onClearClicked()">
           <i class="fas fa-trash-alt" ngTooltip="Clear the current view from records."></i>
         </button>
 

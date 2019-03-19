@@ -30,9 +30,6 @@
             <div ngbDropdownMenu class="menu-dropdown">
               <ul>
                 <li>
-                  <a (click)="visibleMenu = null; setAlias(host)">Set Alias</a>
-                </li>
-                <li>
                   <a (click)="visibleMenu = null; showScannerModal(host)">Scan Ports</a>
                 </li>
               </ul>
@@ -40,7 +37,18 @@
           </div>
         </td>
         <td>
-          {{ host.mac | uppercase }}
+          <div ngbDropdown [open]="visibleMenu == host.mac + 'mac'">
+            <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == host.mac + 'mac' ? null : host.mac + 'mac')">
+              {{ host.mac | uppercase }}
+            </button>
+            <div ngbDropdownMenu class="menu-dropdown">
+              <ul>
+                <li>
+                  <a (click)="visibleMenu = null; setAlias(host)">Set Alias</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </td>
         <td [class.empty]="!host.hostname && !host.alias">
           {{ host.hostname }}

@@ -1,3 +1,5 @@
+<omnibar [withCmd]="true"></omnibar>
+
 <div class="row">
   <div class="col-2 mod-nav">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -11,16 +13,12 @@
       </a>
 
       <a 
-         *ngFor="let mod of modules" 
+         *ngFor="let mod of modules | search: omnibar.query" 
          (click)="curMod = mod; successMessage = '';"
          class="nav-link" [class.active]="curMod && curMod.name == mod.name">
-        <span *ngIf="mod.running" class="badge badge-success">
-          <i class="fas fa-check"></i>
-        </span>
-        <span  class="badge badge-danger">
-          <i *ngIf="!mod.running" class="fas fa-times"></i>
-        </span>
-        {{ mod.name }}</a>
+        {{ mod.name }}
+        <small class="text-muted" *ngIf="mod.running">(<span style="color:green">running</span>)</small>
+      </a>
 
     </div>
   </div>
@@ -28,13 +26,14 @@
 
     <div *ngIf="!curMod" class="container-fluid">
 
+      <!--
       <div class="row">
         <div class="col-12">
           <h5>Packets per Protocol</h5>
 
           <table class="table table-dark">
             <tbody>
-              <tr *ngFor="let proto of session.packets.protos | keyvalue">
+              <tr *ngFor="let proto of session.packets.protos | keyvalue | search: omnibar.query">
                 <th width="10%">{{ proto.key }}</th>
                 <td>
                   <ngb-progressbar type="info" [value]="proto.value" [max]="pktTot">
@@ -46,16 +45,26 @@
           </table>
         </div>
       </div>
+      -->
 
       <div class="row">
         <div class="col-12">
-          <h5>Arguments</h5>
+          <h5>Options</h5>
 
           <table class="table table-dark">
             <tbody>
-              <tr *ngFor="let arg of session.options | keyvalue">
-                <th>{{ arg.key }}</th>
-                <td>{{ arg.value }}</td>
+              <tr *ngFor="let arg of session.options | keyvalue | search: omnibar.query">
+                <th width="1%">{{ arg.key }}</th>
+                <td> 
+                  <div class="input-group">
+                    <input 
+                       type="text" 
+                       class="form-control form-control-sm param-input" 
+                       name="{{ arg.key }}" 
+                       id="{{ arg.key }}" 
+                       [(ngModel)]="arg.value" readonly/>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -64,13 +73,22 @@
 
       <div class="row">
         <div class="col-12">
-          <h5>Environment</h5>
+          <h5>Variables</h5>
 
           <table class="table table-dark">
             <tbody>
-              <tr *ngFor="let val of session.env.data | keyvalue">
-                <th>{{ val.key }}</th>
-                <td>{{ val.value }}</td>
+              <tr *ngFor="let val of session.env.data | keyvalue | search: omnibar.query">
+                <th width="1%">{{ val.key }}</th>
+                <td> 
+                  <div class="input-group">
+                    <input 
+                       type="text" 
+                       class="form-control form-control-sm param-input" 
+                       name="{{ val.key }}" 
+                       id="{{ val.key }}" 
+                       [(ngModel)]="val.value" readonly/>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -108,9 +126,29 @@
 
       <div class="row">
         <div class="col-12">
+          <h4>Commands</h4>
+
+          <p *ngIf="(curMod.handlers | json) == '{}'">No commands available for this module.</p>
+
+          <div *ngFor="let cmd of curMod.handlers | search: omnibar.query" class="form-group">
+            <label>
+              <button class="btn btn-sm badge badge-pill badge-warning" (click)="showCommandModal(cmd)">
+                <i class="fas fa-play"></i>
+                {{cmd.name}}
+              </button>
+            </label>
+            <p class="form-text text-muted">{{ cmd.description }}</p>
+          </div> 
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <h4>Parameters</h4>
+
           <p *ngIf="(curMod.parameters | json) == '{}'">No parameters available for this module.</p>
 
-          <div *ngFor="let p of curMod.parameters | keyvalue" class="form-group">
+          <div *ngFor="let p of curMod.parameters | keyvalue | search: omnibar.query" class="form-group">
             <label for="{{ p.key }}">
               {{p.key}}
             </label>
@@ -124,7 +162,7 @@
                  id="{{p.key}}" 
                  (keyup.enter)="saveParam(p.value)"
                  [(ngModel)]="p.value.current_value" />
-              
+
               <div class="input-group-append">
                 <button class="btn btn-sm btn-dark" type="button" (click)="saveParam(p.value)">
                   <i class="far fa-save"></i>
@@ -137,5 +175,33 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<div id="commandModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="commandModalTitle" [ngModel]="curCmd" name="fieldName" ngDefaultControl>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="commandModalTitle">
+          <h6>{{ curCmd.name }}</h6>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="doRunCommand()">
+          <div *ngFor="let token of curCmd.tokens" class="form-group">
+            <label for="tok{{ token.id }}">{{ token.label }}</label>
+            <input type="text" id="tok{{ token.id }}" class="form-control param-input" value="">
+          </div>
+          <div class="text-right">
+            <button type="submit" class="btn btn-warning">
+              <i class="fas fa-play"></i> Run
+            </button> 
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>

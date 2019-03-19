@@ -1,5 +1,7 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router";
+import { environment } from '../environments/environment';
 import { ApiService } from './services/api.service';
 import { Session } from './models/session';
 
@@ -13,31 +15,28 @@ const POLLING_INTERVAL = 1000;
 export class AppComponent implements OnInit, OnDestroy {
     session: Session;
 
-    constructor(public api: ApiService, private router: Router) {
+    eventsSubscription: any;
+    sessionSubscription: any;
+
+    constructor(public api: ApiService, private router: Router, private titleService: Title) {
         this.api.onLoggedIn.subscribe(() => {
             console.log("logged in");
             this.session = this.api.session;
-            this.api.pollSession().subscribe(
-                (session) => { 
-                    // console.log("session update:", session); 
-                    this.session = session; 
-                }
-            );
-            this.api.pollEvents().subscribe(
-                (events) => { 
-                    // console.log("events update:", events); 
-                }
-            );
+            this.sessionSubscription = this.api.pollSession().subscribe( (session) => { this.session = session; });
+            this.eventsSubscription = this.api.pollEvents().subscribe((events) => {});
         });
 
         this.api.onLoggedOut.subscribe(error => {
             console.log("logged out");
             this.session = null;
+            this.sessionSubscription.unsubscribe();
+            this.eventsSubscription.unsubscribe();
             this.router.navigateByUrl("/login");
         });
     }
 
     ngOnInit() {
+        this.titleService.setTitle(environment.name + ' ' + environment.version);
         if( !this.session ) {
             this.api.loadCreds();
         }

@@ -1,6 +1,7 @@
 import {
     Component, 
     OnInit, 
+    OnDestroy,
     ComponentFactoryResolver,
     Injector
 } from '@angular/core';
@@ -18,7 +19,7 @@ declare var $: any;
     templateUrl: './main-header.component.html',
     styleUrls: ['./main-header.component.scss']
 })
-export class MainHeaderComponent implements OnInit {
+export class MainHeaderComponent implements OnInit, OnDestroy {
     faSignOutAlt = faSignOutAlt;
 
     apiFirstUpdate: boolean = true;
@@ -28,6 +29,7 @@ export class MainHeaderComponent implements OnInit {
     numBLE = 0;
     numHID = 0;
 
+    subscriptions: any = [];
     modNotificationCache = {};
 
     sessionError: any;
@@ -45,37 +47,36 @@ export class MainHeaderComponent implements OnInit {
     }
 
     private skipError(error) {
-        error = String(error);
-        return error.indexOf('module') != -1 &&
-            ( 
-                error.indexOf('already running') != -1 ||
-                error.indexOf('is not running') != -1
-            );
+        return false;
     }
 
     ngOnInit() {
-        this.api.onNewData.subscribe(session => {
-            this.updateSession(session);
-        });
-
-        this.api.onNewEvents.subscribe(events => {
-            this.updateEvents(events, this.apiFirstUpdate);
-            this.apiFirstUpdate = false;
-        });
-
-        this.api.onSessionError.subscribe(error => {
-            console.error("session error", error);
-            this.apiFirstUpdate = true;
-            this.sessionError = error;
-        });
-
-        this.api.onCommandError.subscribe(error => {
-            console.error("command error", error);
-            if( !this.skipError(error.error) ) {
+        this.subscriptions = [
+            this.api.onNewData.subscribe(session => {
+                this.updateSession(session);
+            }),
+            this.api.onNewEvents.subscribe(events => {
+                this.updateEvents(events, this.apiFirstUpdate);
+                this.apiFirstUpdate = false;
+            }),
+            this.api.onSessionError.subscribe(error => {
+                console.error("session error", error);
+                this.apiFirstUpdate = true;
+                this.sessionError = error;
+            }),
+            this.api.onCommandError.subscribe(error => {
+                console.error("command error", error);
                 this.commandError = error;
                 $('#commandError').modal('show');
-            }
-        });
+            })
+        ];
+    }
+
+    ngOnDestroy() {
+        for( let i = 0; i < this.subscriptions.length; i++ ){
+            this.subscriptions[i].unsubscribe();
+        }
+        this.subscriptions = [];
     }
 
     private updateSession(session) {
@@ -131,6 +132,14 @@ export class MainHeaderComponent implements OnInit {
         
         else if( event.tag == 'mod.stopped' || event.tag == 'wifi.client.handshake' )
             return 'toast-warning';
+
+        else if( event.tag == 'sys.log' ) {
+            if( event.data.Level == 3 /* WARNING */ )
+                return 'toast-warning';
+
+            else if( event.data.Level == 4 /* ERROR */ || event.data.Level == 5 /* FATAL */ )
+                return 'toast-error';
+        }
 
         return 'toast-info';
     }

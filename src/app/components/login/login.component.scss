@@ -1,21 +1,16 @@
 .form-signin {
   width: 100%;
-  max-width: 330px;
+  // max-width: 330px;
+  max-width: 600px;
   padding: 15px;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 150px;
+  background-color: white;
 }
 
-.form-signin .checkbox {
-  font-weight: 400;
-}
 
 .form-signin .form-control {
-  position: relative;
-  box-sizing: border-box;
-  height: auto;
-  padding: 10px;
-  font-size: 16px;
+
 }
 
 .form-signin .form-control:focus {

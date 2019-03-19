@@ -15,8 +15,8 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     events: Event[] = [];
     modEnabled: boolean = false;
     sort: ColumnSortedEvent;
-    sortSub: any;
     query: string = '';
+    subscriptions: any = [];
 
     constructor(private api: ApiService, private sortService: SortService) { 
         this.sort = {field: 'time', direction: 'asc', type:''};
@@ -24,18 +24,22 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.api.onNewEvents.subscribe(events => {
-            this.update(events);
-        });
-
-        this.sortSub = this.sortService.onSort.subscribe(event => {
-            this.sort = event;
-            this.sortService.sort(this.events, event);
-        });
+        this.subscriptions = [
+            this.api.onNewEvents.subscribe(events => {
+                this.update(events);
+            }),
+            this.sortService.onSort.subscribe(event => {
+                this.sort = event;
+                this.sortService.sort(this.events, event);
+            })
+        ];
     }
 
     ngOnDestroy() {
-        this.sortSub.unsubscribe();
+        for( let i = 0; i < this.subscriptions.length; i++ ){
+            this.subscriptions[i].unsubscribe();
+        }
+        this.subscriptions = [];
     }
 
     private update(events) {

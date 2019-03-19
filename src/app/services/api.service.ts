@@ -15,15 +15,15 @@ import {Command, CommandResponse} from '../models/command';
 const POLLING_INTERVAL = 1000;
 const NUM_EVENTS       = 50;
 
-const API_SCHEMA = 'http';
-const API_HOST   = document.location.hostname;
-const API_PORT   = 8081;
-const API_URL    = API_SCHEMA + '://' + API_HOST + ':' + API_PORT + '/api';
-
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
+    public schema: string = 'http:';
+    public host: string   = document.location.hostname;
+    public port: string   = "8081";
+    public path: string   = '/api';
+
     public isLogged: boolean = false;
     public error: Response | any;
     private user: string;
@@ -42,6 +42,10 @@ export class ApiService {
 
     public onSessionError: EventEmitter<any> = new EventEmitter();
     public onCommandError: EventEmitter<any> = new EventEmitter();
+
+    public URL() : string {
+        return this.schema + '//' + this.host + ':' + this.port + this.path;
+    }
 
     constructor(private http:HttpClient) {
         this.cachedSession = new Observable((observer) => {
@@ -126,7 +130,7 @@ export class ApiService {
 
     public getEvents() : Observable<Event[]> {
         return this.http
-        .get<Event[]>( API_URL + '/events', 
+        .get<Event[]>( this.URL() + '/events', 
         {
             headers: this.headers,
             params: {'n': String(NUM_EVENTS)}
@@ -143,7 +147,7 @@ export class ApiService {
 
     public getSession() : Observable<Session> {
         return this.http
-        .get<Session>( API_URL + '/session', {headers: this.headers})
+        .get<Session>( this.URL() + '/session', {headers: this.headers})
         .map(response => {
             let wasLogged = this.isLogged;
 
@@ -178,7 +182,7 @@ export class ApiService {
     public clearEvents() {
         console.log("clearing events");
         this.http
-        .delete( API_URL + '/events', {headers: this.headers})
+        .delete( this.URL() + '/events', {headers: this.headers})
         .subscribe(response => {
             this.events = [];
             this.onNewEvents.emit([]);
@@ -201,7 +205,7 @@ export class ApiService {
     public cmdResponse(cmd : string) {
         console.log("cmd: " + cmd);
         return this.http.post<CommandResponse>(
-            API_URL + '/session', 
+            this.URL() + '/session', 
             {cmd: cmd},
             {headers: this.headers});
     }
@@ -209,7 +213,7 @@ export class ApiService {
     public cmd(cmd: string) {
         console.log("cmd: " + cmd);
         return this.http.post<CommandResponse>(
-            API_URL + '/session', 
+            this.URL() + '/session', 
             {cmd: cmd},
             {headers: this.headers}).subscribe(
                 (val) => {},
