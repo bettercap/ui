@@ -92,22 +92,27 @@
             <span *ngIf="ap.handshake" style="margin-right:10px" class="badge badge-danger" ngbTooltip="WPA key material captured!">
               <i class="fas fa-key"></i>
             </span>
-            <span style="cursor:pointer" class="badge badge-warning" (click)="visibleWPS[ap.mac] = !visibleWPS[ap.mac]" *ngIf="(ap.wps | json) != '{}'">
-              WPS {{ ap.wps.Version }}
-              <i *ngIf="!visibleWPS[ap.mac]" class="fas fa-angle-right"></i>
-              <i *ngIf="visibleWPS[ap.mac]" class="fas fa-angle-down"></i>
-            </span>
 
-            <div *ngIf="visibleWPS[ap.mac]" class="table-dropdown">
-              <table class="table table-sm table-dark">
-                <tbody>
-                <tr *ngFor="let item of ap.wps | keyvalue">
-                  <th>{{ item.key }}</th>
-                  <td>{{ item.value }}</td>
-                </tr>
-                </tbody>
-              </table>
+
+            <div ngbDropdown *ngIf="(ap.wps | json) != '{}'" [open]="visibleWPS == ap.mac" placement="left">
+              <button ngbDropdownToggle 
+                class="btn btn-sm badge badge-warning btn-action drop-small"
+                (click)="visibleWPS = (visibleWPS == ap.mac ? null : ap.mac)">
+                WPS {{ ap.wps.Version }}
+              </button>
+
+              <div ngbDropdownMenu class="menu-dropdown">
+                <table class="table table-sm table-dark">
+                  <tbody>
+                    <tr *ngFor="let item of ap.wps | keyvalue">
+                      <th>{{ item.key }}</th>
+                      <td>{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
+
           </td>
         </tr>
       </ng-container>

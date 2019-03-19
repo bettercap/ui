@@ -23,7 +23,7 @@
 
       <tr *ngFor="let host of hosts | search: omnibar.query" [class.alive]="host | alive:1000">
         <td>
-          <div ngbDropdown [open]="visibleMenu == host.mac">
+          <div *ngIf="!curScan.includes(host.ipv4)" ngbDropdown [open]="visibleMenu == host.mac">
             <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == host.mac ? null : host.mac)">
               {{ host.ipv4 }}
             </button>
@@ -35,6 +35,18 @@
               </ul>
             </div>
           </div>
+
+          <span *ngIf="curScan.includes(host.ipv4)">
+            {{ host.ipv4 }}
+            <span class="badge badge-pill badge-danger" style="margin-left: 5px" ngbTooltip="Scanning {{ scanProgress }}% ...">
+              <span class="spinner-border spinner-border-sm" style="font-size:.7rem" role="status" aria-hidden="true"></span>
+              {{ scanProgress }}%
+              <a style="cursor: pointer" (click)="api.cmd('syn.scan stop')" ngbTooltip="Stop scan">
+                <i class="fas fa-stop"></i> 
+              </a>
+            </span>
+          </span>
+
         </td>
         <td>
           <div ngbDropdown [open]="visibleMenu == host.mac + 'mac'">
@@ -59,25 +71,29 @@
         <td [class.empty]="!host.received">{{ host.received | size }}</td>
         <td class="time">{{ host.last_seen | date: 'HH:mm:ss'}}</td>
         <td class="metas">
+
           <span *ngIf="host == iface" class="badge badge-secondary">interface</span>
           <span *ngIf="host == gateway" class="badge badge-secondary">gateway</span>
 
-          <span *ngFor="let group of groupMetas(host.meta.values) | keyvalue">
-            <span style="cursor:pointer" class="badge badge-warning" (click)="visibleMeta[host.mac+group.key] = !visibleMeta[host.mac+group.key]" *ngIf="(group.value | json) != '{}'">
-              {{ group.key }}
-              <i *ngIf="!visibleMeta[host.mac+group.key]" class="fas fa-angle-right"></i>
-              <i *ngIf="visibleMeta[host.mac+group.key]" class="fas fa-angle-down"></i>
-            </span>
+          <span *ngFor="let group of groupMetas(host.meta.values) | keyvalue" class="btn-group drop-left">
 
-            <div *ngIf="visibleMeta[host.mac+group.key]" class="table-dropdown">
-              <table class="table table-sm table-dark">
-                <tbody>
-                <tr *ngFor="let item of group.value | keyvalue">
-                  <th>{{ item.key == undefined || item.key === 'undefined' ? '' : item.key }}</th>
-                  <td>{{ item.value }}</td>
-                </tr>
-                </tbody>
-              </table>
+            <div ngbDropdown [open]="visibleMeta == host.mac+group.key" placement="left">
+              <button ngbDropdownToggle 
+                class="btn btn-sm badge badge-warning btn-action drop-small"
+                (click)="visibleMeta = (visibleMeta == host.mac+group.key ? null : host.mac+group.key)">
+                {{ group.key }}
+              </button>
+
+              <div ngbDropdownMenu class="menu-dropdown">
+                <table class="table table-sm table-dark">
+                  <tbody>
+                    <tr *ngFor="let item of group.value | keyvalue">
+                      <th>{{ item.key == undefined || item.key === 'undefined' ? '' : item.key }}</th>
+                      <td>{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
           </span>

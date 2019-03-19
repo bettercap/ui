@@ -20,7 +20,7 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     aps: Ap[] = [];
     wifi: Module;
     sort: ColumnSortedEvent;
-    visibleWPS = {};
+    visibleWPS = null;
     visibleClients = {};
     visibleMenu = null;
     visibleClientMenu = null;

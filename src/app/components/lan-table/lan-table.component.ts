@@ -17,12 +17,15 @@ export class LanTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
     hosts: Host[] = [];
+    curScan: Host[] = [];
+    scanProgress: any = 0.0;
+
     iface: Host;
     gateway: Host;
     sort: ColumnSortedEvent;
     sortSub: any;
 
-    visibleMeta = {};
+    visibleMeta = null;
     visibleMenu = null;
 
     faInfoCircle = faInfoCircle;
@@ -48,6 +51,17 @@ export class LanTableComponent implements OnInit, OnDestroy {
     }
 
     private update(session) {
+        let modules = session.modules;
+
+        for( let i = 0; i < modules.length; i++ ){
+            let mod = modules[i];
+            if( mod.name == 'syn.scan' ) {
+                this.curScan = mod.state.scanning;
+                this.scanProgress = parseInt(mod.state.progress);
+                break;
+            }
+        }
+
         if( $('.menu-dropdown').is(':visible') )
             return;
 
@@ -81,6 +95,9 @@ export class LanTableComponent implements OnInit, OnDestroy {
 
     setAlias(host) {
         let alias = prompt("Set an alias for this host:", host.alias);
+        if( alias === null )
+            return;
+
         if( alias.trim() == "" )
             alias = '""';
 
