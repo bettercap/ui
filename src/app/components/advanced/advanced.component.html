@@ -6,10 +6,10 @@
       <a 
          (click)="curMod = null; successMessage = '';"
          class="nav-link" [class.active]="curMod == null">
-        <h5>
+        <strong>
           <i class="fas fa-cog"></i>
           Main
-        </h5>
+        </strong>
       </a>
 
       <a 
@@ -26,6 +26,15 @@
 
     <div *ngIf="!curMod" class="container-fluid">
 
+      <div class="row">
+        <div class="col-12">
+          <p class="mod-description">
+          Session started on <strong>{{ api.session.started_at | date: 'short' }}</strong>, 
+          polling <strong>{{ api.URL() }}</strong> every {{ api.interval }}ms, ping is {{ api.ping() }}ms.
+          </p>
+          <hr/>
+        </div>
+      </div>
       <!--
       <div class="row">
         <div class="col-12">

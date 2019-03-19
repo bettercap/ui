@@ -28,9 +28,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
         this.api.onLoggedOut.subscribe(error => {
             console.log("logged out");
+
             this.session = null;
-            this.sessionSubscription.unsubscribe();
-            this.eventsSubscription.unsubscribe();
+
+            if( this.sessionSubscription ) {
+                this.sessionSubscription.unsubscribe();
+                this.sessionSubscription = null;
+            }
+
+            if( this.eventsSubscription ) {
+                this.eventsSubscription.unsubscribe();
+                this.eventsSubscription = null;
+            }
+
             this.router.navigateByUrl("/login");
         });
     }

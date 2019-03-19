@@ -10,7 +10,7 @@
 
   <div class="form-group">
     <label for="username">Username</label>
-    <input type="text" formControlName="username" id="username" class="form-control" required autofocus>
+    <input type="text" formControlName="username" id="username" class="form-control" autofocus>
     <ngb-alert *ngIf="submitted && form.username.errors && form.username.errors.required" type="danger">
       Username required.
     </ngb-alert>
@@ -18,7 +18,7 @@
   
   <div class="form-group">
     <label for="password">Password</label>
-    <input type="password" formControlName="password" id="password" class="form-control" required>
+    <input type="password" formControlName="password" id="password" class="form-control">
     <ngb-alert *ngIf="submitted && form.password.errors && form.password.errors.required" type="danger">
       Password required.
     </ngb-alert>

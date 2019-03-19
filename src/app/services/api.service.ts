@@ -12,23 +12,25 @@ import {Session} from '../models/session';
 import {Event} from '../models/event';
 import {Command, CommandResponse} from '../models/command';
 
-const POLLING_INTERVAL = 1000;
 const NUM_EVENTS       = 50;
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
-    public schema: string = 'http:';
-    public host: string   = document.location.hostname;
-    public port: string   = "8081";
-    public path: string   = '/api';
+    public schema: string   = 'http:';
+    public host: string     = document.location.hostname;
+    public port: string     = "8081";
+    public path: string     = '/api';
+    public interval: number = 1000;
 
     public isLogged: boolean = false;
     public error: Response | any;
     private user: string;
     private pass: string;
     private headers: HttpHeaders;
+    private start: Date = new Date();
+    private end: Date = new Date();
 
     public session: Session;
     private cachedSession: Observable<Session>;
@@ -61,7 +63,7 @@ export class ApiService {
 
     public pollEvents() {
         console.log("api.pollEvents() started");
-        return interval(POLLING_INTERVAL)
+        return interval(this.interval)
             .pipe(
                 startWith(0),
                 switchMap(() => this.getEvents())
@@ -70,7 +72,7 @@ export class ApiService {
 
     public pollSession() {
         console.log("api.pollSession() started");
-        return interval(POLLING_INTERVAL)
+        return interval(this.interval)
             .pipe(
                 startWith(0),
                 switchMap(() => this.getSession())
@@ -146,9 +148,13 @@ export class ApiService {
     }
 
     public getSession() : Observable<Session> {
+        this.start = new Date();
+
         return this.http
         .get<Session>( this.URL() + '/session', {headers: this.headers})
         .map(response => {
+            this.end = new Date();
+
             let wasLogged = this.isLogged;
 
             this.saveCreds();
@@ -163,6 +169,7 @@ export class ApiService {
             return response;
         })
         .catch(error => {
+            this.end = new Date();
             this.error = error;
 
             if( error.status == 401 ) {
@@ -177,7 +184,9 @@ export class ApiService {
         });
     }
 
-
+    public ping() {
+        return this.end.getTime() - this.start.getTime();
+    }
 
     public clearEvents() {
         console.log("clearing events");

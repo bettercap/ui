@@ -4,6 +4,7 @@
 
 .nav-pills .nav-link {
     border-radius: none;
+    border: none;
     color: #fff;
     font-size: 15px;
     background-color: #32383e;
@@ -11,9 +12,11 @@
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     border-radius: 0;
+    border: none;
     color: #aaa;
     background-color: #212529;
 }
+
 
 .mod-nav {
     margin-right: 0;

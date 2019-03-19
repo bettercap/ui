@@ -27,7 +27,7 @@ npm install --save
 npm run build
 ```
 
-This shoud generate the `~/dist/hydra` folder, then you can use `bettercap` (make sure it's updated) for both the REST API and to serve the web ui itself via the `http.server` module:
+This shoud generate the `~/hydra/dist/hydra` folder, then you can use `bettercap` (make sure it's updated) for both the REST API and to serve the web ui itself via the `http.server` module:
 
 ```sh
 sudo bettercap
