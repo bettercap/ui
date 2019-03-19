@@ -113,8 +113,8 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
         // modules start and stop events
         if( event.tag.indexOf('mod.') == 0 )
             return true;
-        // generic logs (but not the syn.scan progress)
-        if( event.tag == 'sys.log' && event.data.Message.indexOf('syn.scan') == -1 )
+        // generic logs (but not the syn.scan progress or hid payloads)
+        if( event.tag == 'sys.log' && event.data.Message.indexOf('syn.scan') == -1 && event.data.Message.indexOf('payload for') == -1 )
             return true;
         // some recon module got a new target
         // if( event.tag.indexOf('.new') != -1 && event.tag != 'wifi.client.new' )

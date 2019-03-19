@@ -66,17 +66,9 @@ export class BleTableComponent implements OnInit, OnDestroy {
     }
 
     private update(session) {
+        this.currScan = this.api.module('ble.recon').state.scanning;
+
         let devices = session.ble['devices'];
-        let modules = session.modules;
-
-        for( let i = 0; i < modules.length; i++ ){
-            let mod = modules[i];
-            if( mod.name == 'ble.recon' ) {
-                this.currScan = mod.state.scanning;
-                break;
-            }
-        }
-
         if( devices.length == 0 )
             this.currDev = null;
 

@@ -105,9 +105,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
 
         for( let i = 0; i < tokens.length; i++ ) {
             let val = $('#tok'+tokens[i].id).val();
-            if( val == "" )
-                val = '""';
-            compiled += ' ' + val;
+            compiled += ' ' + (val == "" ? '""' : val);
         }
 
         $('#commandModal').modal('hide');

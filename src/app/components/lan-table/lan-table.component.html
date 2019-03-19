@@ -23,7 +23,7 @@
 
       <tr *ngFor="let host of hosts | search: omnibar.query" [class.alive]="host | alive:1000">
         <td>
-          <div *ngIf="!curScan.includes(host.ipv4)" ngbDropdown [open]="visibleMenu == host.mac">
+          <div *ngIf="!scanState.scanning.includes(host.ipv4)" ngbDropdown [open]="visibleMenu == host.mac">
             <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == host.mac ? null : host.mac)">
               {{ host.ipv4 }}
             </button>
@@ -36,11 +36,11 @@
             </div>
           </div>
 
-          <span *ngIf="curScan.includes(host.ipv4)">
+          <span *ngIf="scanState.scanning.includes(host.ipv4)">
             {{ host.ipv4 }}
-            <span class="badge badge-pill badge-danger" style="margin-left: 5px" ngbTooltip="Scanning {{ scanProgress }}% ...">
+            <span class="badge badge-pill badge-warning" style="margin-left: 5px" ngbTooltip="Scanning {{ scanState.progress }}% ...">
               <span class="spinner-border spinner-border-sm" style="font-size:.7rem" role="status" aria-hidden="true"></span>
-              {{ scanProgress }}%
+              {{ scanState.progress | number:'1.0-0' }}%
               <a style="cursor: pointer" (click)="api.cmd('syn.scan stop')" ngbTooltip="Stop scan">
                 <i class="fas fa-stop"></i> 
               </a>
@@ -120,17 +120,17 @@
           <div class="form-group row">
             <label for="scanIP" class="col-sm-1 col-form-label">IP</label>
             <div class="col-sm">
-              <input type="text" class="form-control" id="scanIP" value="">
+              <input type="text" class="form-control param-input" id="scanIP" value="">
             </div>
           </div>
           <div class="form-group row">
             <label for="startPort" class="col-sm-1 col-form-label">Start</label>
             <div class="col-sm">
-              <input type="number" min="1" max="65535" class="form-control" id="startPort" value="1">
+              <input type="number" min="1" max="65535" class="form-control param-input" id="startPort" value="1">
             </div>
             <label for="endPort" class="col-sm-1 col-form-label">End</label>
             <div class="col-sm">
-              <input type="number" min="1" max="65535" class="form-control" id="endPort" value="1000">
+              <input type="number" min="1" max="65535" class="form-control param-input" id="endPort" value="1000">
             </div>
           </div>
           <div class="text-right">

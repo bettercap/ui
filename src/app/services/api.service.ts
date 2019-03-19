@@ -10,7 +10,7 @@ import 'rxjs/add/operator/catch';
 
 import {Session} from '../models/session';
 import {Event} from '../models/event';
-import {Command, CommandResponse} from '../models/command';
+import {Command, Response} from '../models/command';
 
 const NUM_EVENTS       = 50;
 
@@ -189,6 +189,16 @@ export class ApiService {
         });
     }
 
+    public module(name : string) {
+        for( let i = 0; i < this.session.modules.length; i++ ){
+            let mod = this.session.modules[i];
+            if( mod.name == name ) {
+                return mod;
+            }
+        }
+        return null;
+    }
+
     public ping() {
         return this.end.getTime() - this.start.getTime();
     }
@@ -207,18 +217,37 @@ export class ApiService {
 
     public isModuleEnabled(name: string) : boolean {
         if(this.session && this.session.modules) {
-            for( let i = 0; i < this.session.modules.length; i++ ) {
-                let mod = this.session.modules[i];
-                if( mod.name == name )
-                    return mod.running;
-            }
+            let mod = this.module(name);
+            return mod && mod.running ?  true : false;
         }
         return false;
     }
 
+    public readFile(name : string) {
+        console.log("readFile " + name);
+        return this.http.get<Response>(
+            this.URL() + '/file', 
+            {
+                headers: this.headers,
+                responseType: 'text' as 'json',
+                params: {'name': name}
+            });
+    }
+
+    public writeFile(name : string, data : string) {
+        console.log("writeFile " + name + " " + data.length + "b");
+        return this.http.post<Response>(
+            this.URL() + '/file', 
+            new Blob([data]),
+            {
+                headers: this.headers,
+                params: {'name': name}
+            });
+    }
+
     public cmdResponse(cmd : string) {
         console.log("cmd: " + cmd);
-        return this.http.post<CommandResponse>(
+        return this.http.post<Response>(
             this.URL() + '/session', 
             {cmd: cmd},
             {headers: this.headers});
@@ -226,7 +255,7 @@ export class ApiService {
 
     public cmd(cmd: string) {
         console.log("cmd: " + cmd);
-        return this.http.post<CommandResponse>(
+        return this.http.post<Response>(
             this.URL() + '/session', 
             {cmd: cmd},
             {headers: this.headers}).subscribe(

@@ -6,7 +6,8 @@
       <tr>
         <th sortable-column="address" sort-direction="asc">Address</th>
         <th sortable-column="type">Type</th>
-        <th sortable-column="channels">Channels</th>
+        <th sortable-column="payloads">Payloads</th>
+        <th width="1%" sortable-column="channels">Channels</th>
         <th sortable-column="last_seen">Last seen</th>
       </tr>
     </thead>
@@ -19,8 +20,56 @@
       </tr>
 
       <tr *ngFor="let device of devices | search: omnibar.query" [class.alive]="device | alive:5000">
-        <td>{{ device.address | uppercase }}</td>
-        <td [class.empty]="!device.type">{{ device.type ? device.type : 'unknown'}}</td>
+        <td>
+          <span *ngIf="state.sniffing == device.address">
+            {{ device.address | uppercase }}
+            <span class="badge badge-pill badge-warning" style="margin-left: 5px" ngbTooltip="{{ state.injecting ? 'Injecting' : 'Sniffing' }} ...">
+              <span class="spinner-border spinner-border-sm" style="font-size:.7rem" role="status" aria-hidden="true"></span>
+              <span *ngIf="state.injecting">
+                injecting ...
+              </span>
+              <span *ngIf="!state.injecting">
+                sniffing ...
+                <a style="cursor: pointer" (click)="api.cmd('hid.sniff clear')" ngbTooltip="Stop sniffing">
+                  <i class="fas fa-stop"></i> 
+                </a>
+              </span>
+            </span>
+          </span>
+
+          <div *ngIf="state.sniffing != device.address" ngbDropdown [open]="visibleMenu == device.address">
+            <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == device.address ? null : device.address)">
+              {{ device.address | uppercase }}
+            </button>
+            <div ngbDropdownMenu class="menu-dropdown">
+              <ul>
+                <li>
+                  <a (click)="visibleMenu = null; api.cmd('hid.sniff ' + device.address);">Sniff</a>
+                </li>
+                <li>
+                  <a (click)="visibleMenu = null; showInjectModal(device);">Inject Script</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </td>
+        <td [class.empty]="!device.type">
+          {{ device.type ? device.type : 'unknown'}}
+        </td>
+        <td [class.empty]="device.payloads_size == 0">
+          <span *ngIf="device.payloads_size == 0">0</span>
+
+          <div ngbDropdown *ngIf="device.payloads_size > 0">
+            <button  
+             class="btn btn-sm badge badge-warning btn-action drop-small"
+             ngbTooltip="Show payloads for this device."
+             (click)="showPayloadsModal(device)">
+              {{ device.payloads_size | size }}
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+
+        </td>
         <td>{{ device.channels }}</td>
         <td class="time">{{ device.last_seen | date: 'HH:mm:ss' }}</td>
       </tr>
@@ -28,3 +77,69 @@
   </table>
 </div>
 
+<div id="injectModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="injectModalTitle" [ngModel]="injDev" name="fieldName" ngDefaultControl>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="injectModalTitle">
+          <h6>Over-the-Air DuckyScript Injection</h6>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="doInjection()" name="injForm">
+          <div *ngFor="let token of injDev.tokens" class="form-group">
+            <label for="tok{{ token.id }}">
+              {{ token.label }}
+              <a *ngIf="token.id == 'DATA'" ngbTooltip="Open DuckyScript reference documentation." href="https://github.com/hak5darren/USB-Rubber-Ducky/wiki/Duckyscript" target="_blank">
+                <i class="fas fa-question-circle"></i>
+              </a>
+            </label>
+            <ng-container [ngSwitch]="token.id">
+              <select *ngSwitchCase="'LAYOUT'" class="form-control param-input" id="tok{{ token.id }}" name="tok{{ token.id }}">
+                <option *ngFor="let l of state.layouts" value="{{ l }}" [selected]="l == 'US'">{{ l }}</option>
+              </select>
+
+              <textarea 
+                *ngSwitchCase="'DATA'" 
+                rows="10" 
+                id="tok{{ token.id }}" 
+                name="tok{{ token.id }}" 
+                class="form-control param-input" 
+                style="font-size:.8rem" required>{{ token.value }}</textarea>
+
+              <input *ngSwitchDefault type="text" id="tok{{ token.id }}" name="tok{{ token.id }}" class="form-control param-input" value="{{ token.value }}" required>
+            </ng-container>
+          </div>
+          <div class="text-right">
+            <button type="submit" name="injBtn" class="btn btn-sm btn-warning">
+              <i class="fas fa-play"></i> Run
+            </button> 
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="payloadsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="payloadsModalTitle" [ngModel]="curDev" name="fieldName" ngDefaultControl>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="payloadsModalTitle">
+          <h5>Last {{ curDev.payloads.length }} payloads of {{ curDev.payloads_size | size }}</h5>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="max-height:600px; overflow-y: scroll">
+        <span *ngFor="let p of curDev.payloads" class="payload">
+          {{ p.split(' ').splice(1).join(' ') }}<br/>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

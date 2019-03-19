@@ -17,8 +17,10 @@ export class LanTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
     hosts: Host[] = [];
-    curScan: Host[] = [];
-    scanProgress: any = 0.0;
+    scanState: any = {
+        scanning: [],
+        progress: 0.0
+    };
 
     iface: Host;
     gateway: Host;
@@ -51,16 +53,7 @@ export class LanTableComponent implements OnInit, OnDestroy {
     }
 
     private update(session) {
-        let modules = session.modules;
-
-        for( let i = 0; i < modules.length; i++ ){
-            let mod = modules[i];
-            if( mod.name == 'syn.scan' ) {
-                this.curScan = mod.state.scanning;
-                this.scanProgress = parseInt(mod.state.progress);
-                break;
-            }
-        }
+        this.scanState = this.api.module('syn.scan').state;
 
         if( $('.menu-dropdown').is(':visible') )
             return;

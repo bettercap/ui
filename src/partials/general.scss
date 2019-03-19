@@ -56,7 +56,8 @@ ol, ul{
     color: #555;
 }
 
-input.param-input {
+*.param-input,
+*.param-input:focus {
     background-color:#333; 
     border: 1px solid #353535; 
     color: #aaa;

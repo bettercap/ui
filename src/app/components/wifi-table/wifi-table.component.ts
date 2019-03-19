@@ -59,14 +59,7 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     }
 
     private update(session) {
-        for( let i = 0; i < session.modules.length; i++ ) {
-            let mod = session.modules[i];
-            if( mod.name == "wifi" ){
-                this.wifi = mod;
-                break;
-            }
-        }
-        
+        this.wifi = this.api.module('wifi');
         if( this.wifi && this.wifi.state && this.wifi.state.channels ) {
             this.hopping = this.wifi.state.channels.length > 1;
         }
