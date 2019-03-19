@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 
@@ -15,15 +15,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     submitted: boolean = false;
     error: any;
     subscriptions: any = [];
+    returnTo: string = "/";
 
-    constructor(private api: ApiService, private formBuilder: FormBuilder, private router: Router) {
-        if( this.api.isLogged ) {
+    constructor(private api: ApiService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
+        if( this.api.Ready() ) {
             console.log("user already logged in");
             this.router.navigateByUrl("/");
         }
     }
 
     ngOnInit() {
+        this.api.logout();
+        this.returnTo = this.route.snapshot.queryParams['returnTo'] || '/';
+
         this.loginForm = this.formBuilder.group({
             username: [''],
             password: [''],
@@ -38,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 this.error = error;
             }),
             this.api.onLoggedIn.subscribe(() => {
-                this.router.navigateByUrl("/");
+                this.router.navigateByUrl(this.returnTo);
             })
         ];
     }

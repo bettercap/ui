@@ -1,6 +1,6 @@
 <div class="container-fluid" id="container">
 
-<hydra-main-header *ngIf="api.isLogged && api.session"></hydra-main-header>
+<hydra-main-header *ngIf="api.Ready()"></hydra-main-header>
 
 <router-outlet></router-outlet>
 

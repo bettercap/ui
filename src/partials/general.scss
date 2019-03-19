@@ -91,3 +91,22 @@ div.modal-header {
 .toast {
     font-size: .8rem;    
 }
+
+.dropdown-menu,
+.dropdown-item,
+.dropdown-item.active {
+    cursor: pointer;
+    background-color:#333; 
+    font-size: .8rem;
+    color: #aaa;
+    padding: 5px;
+    margin: 0;
+    line-height: 15px;
+}
+
+.dropdown-menu {
+    border: 1px solid #353535; 
+    padding: 5px;
+    margin-top: -1px;
+    border-radius: none;
+}

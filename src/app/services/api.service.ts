@@ -33,6 +33,7 @@ export class ApiService {
     private end: Date = new Date();
 
     public session: Session;
+
     private cachedSession: Observable<Session>;
     public events: Event[] = new Array();
     private cachedEvents: Observable<Event[]>;
@@ -47,6 +48,10 @@ export class ApiService {
 
     public URL() : string {
         return this.schema + '//' + this.host + ':' + this.port + this.path;
+    }
+
+    public Ready() : boolean {
+        return this.isLogged && this.session && this.session.modules && this.session.modules.length > 0;
     }
 
     constructor(private http:HttpClient) {

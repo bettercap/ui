@@ -81,10 +81,10 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
 
     private updateSession(session) {
         this.sessionError = null;
-        this.numHosts = session.lan['hosts'].length; 
-        this.numAps = session.wifi['aps'].length; 
-        this.numBLE = session.ble['devices'].length; 
-        this.numHID = session.hid['devices'].length; 
+        this.numHosts = session.lan['hosts'].length || 0; 
+        this.numAps = session.wifi['aps'].length || 0; 
+        this.numBLE = session.ble['devices'].length || 0; 
+        this.numHID = session.hid['devices'].length || 0; 
     }
 
     private eventCacheKey(event) {

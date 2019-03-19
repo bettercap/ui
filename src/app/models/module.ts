@@ -5,4 +5,5 @@ export interface Module {
     parameters: any;
     running: boolean;
     state: any;
+    handlers: any[];
 }

@@ -1,5 +1,10 @@
 import {Component, Output, Input, OnInit, OnDestroy} from '@angular/core';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {ApiService} from '../../services/api.service';
+import {Observable} from 'rxjs/Observable';
+
+// due to https://github.com/ng-bootstrap/ng-bootstrap/issues/917
+let handlers = [];
 
 @Component({
     selector: 'omnibar',
@@ -21,15 +26,26 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if( this.modName ) {
+        this.update();
+        this.api.onNewData.subscribe(session => {
             this.update();
-            this.api.onNewData.subscribe(session => {
-                this.update();
-            });
-        }
+        });
     }
 
     private update() {
+        handlers = [];
+
+        for( let i = 0; i < this.api.session.modules.length; i++ ){
+            let mod = this.api.session.modules[i];
+            if( this.modName && mod.name == this.modName )
+                this.modEnabled = mod.running;
+
+            for( let j = 0; j < mod.handlers.length; j++ ) {
+                handlers.push( mod.handlers[j].name );
+            }
+        }   
+            
+        this.api.session.modules;
         this.modEnabled = this.api.isModuleEnabled(this.modName); 
     }
 
@@ -53,6 +69,15 @@ export class OmnibarComponent implements OnInit, OnDestroy {
             let modName = mods[i].trim();
             this.api.cmd(modName + ' ' + toggle);
         }
+    }
+
+    searchCommand(text$: Observable<string>) {
+        return text$.pipe(
+            debounceTime(200),
+            distinctUntilChanged(),
+            map(term => term.length < 2 ? []
+                : handlers.filter(h => h.toLowerCase().indexOf(term.toLowerCase()) > -1))
+        );
     }
 
     onCmd() {

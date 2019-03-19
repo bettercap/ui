@@ -18,7 +18,7 @@
             <i class="fas fa-terminal"></i>
           </span>
         </div>
-        <input *ngIf="withCmd" [(ngModel)]="cmd" (keyup.enter)="onCmd()" type="text" class="form-control" placeholder="Command bar ..." aria-label="Command bar ..."/>
+        <input [ngbTypeahead]="searchCommand" [(ngModel)]="cmd" id="cmd" (keyup.enter)="onCmd()" type="text" class="form-control" placeholder="Command bar ..." aria-label="Command bar ..."/>
       </div>
     </div>
   </div>
