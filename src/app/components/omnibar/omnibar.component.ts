@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 
 // due to https://github.com/ng-bootstrap/ng-bootstrap/issues/917
 let handlers = [];
+let params = [];
 
 @Component({
     selector: 'omnibar',
@@ -34,6 +35,7 @@ export class OmnibarComponent implements OnInit, OnDestroy {
 
     private update() {
         handlers = [];
+        params = [];
 
         for( let i = 0; i < this.api.session.modules.length; i++ ){
             let mod = this.api.session.modules[i];
@@ -42,6 +44,10 @@ export class OmnibarComponent implements OnInit, OnDestroy {
 
             for( let j = 0; j < mod.handlers.length; j++ ) {
                 handlers.push( mod.handlers[j].name );
+            }
+
+            for( let name in mod.parameters ) {
+                params.push( mod.parameters[name].name );
             }
         }   
             
@@ -75,8 +81,20 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         return text$.pipe(
             debounceTime(200),
             distinctUntilChanged(),
-            map(term => term.length < 2 ? []
-                : handlers.filter(h => h.toLowerCase().indexOf(term.toLowerCase()) > -1))
+            map(function(term) {
+                if( term.length < 2 )
+                    return [];
+
+                let lwr = term.toLowerCase();
+                if( lwr.indexOf('set ') === 0 ) {
+                    let par = lwr.substring(4);
+                    return params
+                        .filter(p => p.toLowerCase().indexOf(par) > -1)
+                        .map(p => 'set ' + p);
+                }
+                
+                return handlers.filter(h => h.toLowerCase().indexOf(lwr) > -1);
+            })
         );
     }
 
