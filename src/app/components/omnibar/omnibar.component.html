@@ -8,8 +8,8 @@
            type="button" 
            *ngIf="clearCmd" 
            class="btn btn-dark btn-sm" 
-           placement="right" 
            ngbTooltip="Clear records from the current view." 
+           placement="right" 
            (click)="onClearClicked()">
           <i class="fas fa-trash-alt" ngTooltip="Clear the current view from records."></i>
         </button>
@@ -22,15 +22,20 @@
             <option 
                 *ngFor="let iface of api.session.interfaces" 
                 value="{{ iface.name }}"
-                [selected]="api.session.env.data['wifi.interface'] == iface.name"
+                [selected]="isWifiIface(iface)"
                 >{{ iface.name }}</option>
           </select>
         </ng-container>
 
         <span *ngFor="let mod of modules | keyvalue">
-          <button type="button" class="btn btn-dark btn-sm" ngbTooltip="{{(enabled[mod.key] ? 'Stop ' : 'Start ') + mod.key}}" (click)="onModuleToggleClicked(mod)">
-            <i *ngIf="enabled[mod.key]" class="fas fa-stop" style="color:red"></i>
-            <i *ngIf="!enabled[mod.key]" class="fas fa-play" style="color:green"></i>
+          <button 
+            type="button" 
+            class="btn btn-dark btn-sm" 
+            ngbTooltip="{{(enabled[mod.key] ? 'Stop ' : 'Start ') + mod.key + ' module.'}}" 
+            placement="right" 
+            (click)="onModuleToggleClicked(mod)">
+            <i *ngIf="enabled[mod.key]" class="fas fa-stop"></i>
+            <i *ngIf="!enabled[mod.key]" class="fas fa-play"></i>
           </button>
         </span>
 

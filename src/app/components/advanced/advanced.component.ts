@@ -22,7 +22,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
 
     successMessage: string = '';
     curTab: number = 0;
-    curMod: Module = null;
+    curMod: any = 0;
     curCmd: any = {
         name: '',
         description: '',
@@ -30,7 +30,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
         tokens: []
     };
 
-    // pktTot: number = 0;
+    pktTot: number = 0;
 
     constructor(private api: ApiService, private sortService: SortService) { 
         this.update(this.api.session);
@@ -115,7 +115,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
     }
 
     private update(session) {
-        if( this.curMod ) {
+        if( this.curMod !== 0 && this.curMod !== 1 ) {
             this.curMod.running = this.api.module(this.curMod.name).running;
         }
 
@@ -125,12 +125,10 @@ export class AdvancedComponent implements OnInit, OnDestroy {
             type: ''
         }); 
             
-        /*
         this.pktTot = 0;
         for( let proto in session.packets.Protos ) {
             this.pktTot += session.packets.Protos[proto];
         }
-        */
 
         this.session = session;
         this.modules = session.modules; 

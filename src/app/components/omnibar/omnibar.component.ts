@@ -59,6 +59,14 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         this.api.cmd(this.clearCmd);
     }
 
+    isWifiIface(iface : any ) : boolean {
+        let wif = this.api.session.env.data['wifi.interface'];
+        if( wif == '' ) {
+            return iface.name == this.api.session.interface.hostname;
+        }
+        return iface.name == wif;
+    }
+
     onSetWifiInterface(name : string) {
         this.api.cmd('set wifi.interface ' + name);
         this.toastr.info("Set wifi.interface to " + name);

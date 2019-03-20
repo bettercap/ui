@@ -4,11 +4,20 @@
   <div class="col-2 mod-nav">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
       <a 
-         (click)="curMod = null; successMessage = '';"
-         class="nav-link" [class.active]="curMod == null">
+         (click)="curMod = 0; successMessage = '';"
+         class="nav-link" [class.active]="curMod === 0">
         <strong>
           <i class="fas fa-cog"></i>
           Main
+        </strong>
+      </a>
+
+      <a 
+         (click)="curMod = 1; successMessage = '';"
+         class="nav-link" [class.active]="curMod === 1">
+        <strong>
+          <i class="fas fa-ethernet"></i>
+          Network
         </strong>
       </a>
 
@@ -23,7 +32,7 @@
   </div>
   <div class="col-10 mod-content">
 
-    <div *ngIf="!curMod" class="container-fluid shadow-sm">
+    <div *ngIf="curMod === 0" class="container-fluid shadow-sm">
 
       <div class="row">
         <div class="col-12">
@@ -62,26 +71,6 @@
           </table>
         </div>
       </div>
-      <!--
-      <div class="row">
-        <div class="col-12">
-          <h5>Packets per Protocol</h5>
-
-          <table class="table table-dark">
-            <tbody>
-              <tr *ngFor="let proto of session.packets.protos | keyvalue | search: omnibar.query">
-                <th width="10%">{{ proto.key }}</th>
-                <td>
-                  <ngb-progressbar type="info" [value]="proto.value" [max]="pktTot">
-                    {{ proto.value }}
-                  </ngb-progressbar>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      -->
 
       <div class="row">
         <div class="col-12">
@@ -133,7 +122,69 @@
 
     </div>
 
-    <div *ngIf="curMod" class="container-fluid shadow-sm">
+    <div *ngIf="curMod === 1" class="container-fluid shadow-sm">
+
+      <div class="row">
+        <div class="col-12">
+          <h5>Interfaces</h5>
+          <br/>
+
+          <table class="table table-sm table-dark">
+            <tbody>
+              <ng-container *ngFor="let iface of api.session.interfaces | search: omnibar.query">
+                <tr>
+                  <td width="1%" class="nowrap">
+                    <span class="badge badge-secondary" style="margin-right: 5px">{{ iface.name }}</span>   
+                    <small class="text-muted">{{ iface.flags }}</small>
+                  </td>
+                  <td>
+                    <span *ngIf="iface.mac != '0'">
+                      {{ iface.mac | uppercase }} 
+                      <small class="text-muted" *ngIf="iface.vendor">{{ iface.vendor }}</small>
+                    </span>
+                  </td>
+                </tr>
+                <tr *ngIf="iface.addresses.length == 0">
+                  <td colspan="2" style="padding-left:50px">
+                    <span class="text-muted">not connected</span>
+                  </td>
+                </tr>
+                <tr *ngFor="let a of iface.addresses">
+                  <td colspan="2" style="padding-left:50px">
+                    {{ a.address }} <small class="text-muted">{{ a.type }}</small>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <h5>Packets per Protocol</h5>
+
+          <table class="table table-dark">
+            <tbody>
+              <tr *ngFor="let proto of session.packets.protos | keyvalue | search: omnibar.query">
+                <th width="10%">{{ proto.key }}</th>
+                <td>
+                  <ngb-progressbar type="info" [value]="proto.value" [max]="pktTot">
+                    {{ proto.value }}
+                  </ngb-progressbar>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    
+
+
+    <div *ngIf="curMod !== 0 && curMod !== 1" class="container-fluid shadow-sm">
       <div class="row">
         <div class="col-12">
           <p class="mod-description">
