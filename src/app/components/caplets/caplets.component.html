@@ -7,6 +7,12 @@
       <a *ngIf="caplets.length == 0" class="nav-link">
         Install 
       </a>
+
+      <a *ngIf="caplets.length > 0" (click)="api.cmd('caplets.update')" class="nav-link" class="btn btn-sm btn-secondary" style="margin:10px">
+        <i class="fas fa-download"></i>
+        Update All
+      </a>
+
       <a 
          *ngFor="let cap of caplets | search: omnibar.query" 
          (click)="curCap = cap; successMessage = ''; errorMessage = '';"
@@ -16,6 +22,7 @@
 
     </div>
   </div>
+
   <div class="col-10 mod-content">
     
     <div *ngIf="caplets.length == 0" class="container-fluid shadow-sm">
@@ -42,12 +49,12 @@
       <div class="row">
         <div class="col-12">
 
-          <div class="btn-group" style="width:100%; margin-bottom:15px" role="group">
-            <button class="btn btn-sm btn-dark" (click)="runCaplet()" ngbTooltip="Run this caplet.">
-              <i class="fas fa-play"></i>
-            </button>
+          <div class="btn-group" style="width:100%; margin-bottom:10px" role="group">
             <button class="btn btn-sm btn-dark" (click)="saveCaplet()" ngbTooltip="Save caplet code.">
               <i class="fas fa-save"></i>
+            </button>
+            <button class="btn btn-sm btn-dark" (click)="runCaplet()" ngbTooltip="Run this caplet.">
+              <i class="fas fa-play"></i>
             </button>
             <input 
                  type="text" 
