@@ -124,3 +124,18 @@ button.drop-small {
     font-weight: bold;
     margin-left: 5px;
 }
+
+div.action-container {
+    background-color: #212529;
+    color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+
+    .form-check {
+        margin-top: 0;
+        margin-bottom: 0;
+        label {
+            font-size: .9rem;
+        }
+    }
+}

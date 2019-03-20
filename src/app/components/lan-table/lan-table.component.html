@@ -1,5 +1,81 @@
 <omnibar [modules]="{'net.recon': 'net.recon', 'net.probe': 'net.probe'}" [clearCmd]="'net.clear'" [withCmd]="true"></omnibar>
 
+<div *ngIf="viewSpoof" class="action-container shadow">
+  <form (ngSubmit)="onSpoofStart()">
+    <div class="form-group">
+      <label for="targets">arp.spoof.targets
+        <small class="text-muted">
+          Comma separated list of targets for the arp.spoof module.
+        </small>
+      </label>
+      <input type="text" 
+        class="form-control form-control-sm param-input" 
+        name="targets" 
+        id="targets" 
+        placeholder="Current targets of arp.spoof" 
+        [(ngModel)]="spoofOpts.targets">
+    </div>
+
+    <div class="form-group">
+      <label for="targets">arp.spoof.whitelist
+        <small class="text-muted">
+          Comma separated list of IP addresses, MAC addresses or aliases to skip while spoofing.
+        </small>
+      </label>
+      <input type="text" class="form-control form-control-sm param-input" id="whitelist" name="whitelist" [(ngModel)]="spoofOpts.whitelist">
+    </div>
+
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="fullDuplex" name="fullDuplex" [(ngModel)]="spoofOpts.fullduplex">
+      <label class="form-check-label" for="fullDuplex">
+        full-duplex spoofing
+        <small class="text-muted">
+          If set, both the targets and the gateway will be attacked, otherwise only the targets.
+          <strong>If the router has ARP spoofing protections in place this will make the attack fail.</strong>
+        </small>
+      </label>
+    </div>
+
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="internal" name="internal" [(ngModel)]="spoofOpts.internal">
+      <label class="form-check-label" for="internal">
+        spoof local connections
+        <small class="text-muted">
+          If set, local connections among computers of the network will be spoofed, otherwise only connections going to and coming from the external networks.
+        </small>
+      </label>
+    </div>
+
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="ban" name="ban" [(ngModel)]="spoofOpts.ban">
+      <label class="form-check-label" for="ban">
+        ban mode
+        <small class="text-muted">
+          If set, packets coming from the targets will not be forwarded and they won't be able to reach the internet.
+        </small>
+      </label>
+    </div>
+
+    <hr/>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-sm btn-warning">
+        <ng-container *ngIf="isSpoofing">
+          <i class="fas fa-redo-alt"></i>
+          Restart arp.spoof
+        </ng-container>
+        <ng-container *ngIf="!isSpoofing">
+          <i class="fas fa-play"></i>
+          Start arp.spoof
+        </ng-container>
+      </button>
+      <button type="button" class="btn btn-sm btn-dark" style="margin-left: 5px" (click)="hideSpoofMenu()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+
 <div class="table-responsive">
   <table class="table table-dark">
     <thead>
@@ -24,16 +100,39 @@
       <tr *ngFor="let host of hosts | search: omnibar.query" [class.alive]="host | alive:1000">
         <td>
           <div *ngIf="!scanState.scanning.includes(host.ipv4)" ngbDropdown [open]="visibleMenu == host.mac">
-            <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == host.mac ? null : host.mac)">
-              {{ host.ipv4 }}
-            </button>
-            <div ngbDropdownMenu class="menu-dropdown">
-              <ul>
-                <li>
-                  <a (click)="visibleMenu = null; showScannerModal(host)">Scan Ports</a>
-                </li>
-              </ul>
-            </div>
+            <span>
+              <input 
+                *ngIf="viewSpoof"
+                type="checkbox"
+                style="margin-right: 15px"
+                [attr.data-ip]="host.ipv4"
+                class="spoof-toggle"
+                [disabled]="host == iface || host == gateway"
+                (change)="updateSpoofingList()"
+                [checked]="isSpoofed(host)">
+
+              <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == host.mac ? null : host.mac)">
+                {{ host.ipv4 }}
+              </button>
+              <div ngbDropdownMenu class="menu-dropdown">
+                <ul>
+                  <li>
+                    <a (click)="visibleMenu = null; showScannerModal(host)">Scan Ports</a>
+                  </li>
+                  <li *ngIf="isSpoofed(host)">
+                    <a (click)="showSpoofMenuFor(host, false)">Remove from Spoof Targets</a>
+                  </li>
+                  <li *ngIf="!isSpoofed(host)">
+                    <a (click)="showSpoofMenuFor(host, true)">Add to Spoof Targets</a>
+                  </li>
+                </ul>
+              </div>
+
+              <span *ngIf="isSpoofed(host)" class="badge badge-danger" style="margin-left: 5px" ngbTooltip="Part of arp.spoof.targets">
+                <i class="fas fa-radiation"></i>
+              </span>
+
+            </span>
           </div>
 
           <span *ngIf="scanState.scanning.includes(host.ipv4)">

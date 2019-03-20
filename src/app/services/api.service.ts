@@ -188,10 +188,12 @@ export class ApiService {
 
                     return response;
                 } else {
+                    /*
                     console.error(
                         "version mismatch, UI requires API v" + environment.requires + 
                         " but " + this.URL() + " is at v" + this.session.version
                     );
+                    */
                 }
             }
 

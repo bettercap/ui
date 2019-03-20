@@ -17,6 +17,18 @@ export class LanTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
     hosts: Host[] = [];
+
+    isSpoofing: boolean = false;
+    viewSpoof: boolean = false;
+    spoofList: any = {};
+    spoofOpts: any = {
+        targets: '',
+        whitelist: '',
+        fullduplex: false,
+        internal: false,
+        ban: false
+    };
+
     scanState: any = {
         scanning: [],
         progress: 0.0
@@ -52,11 +64,108 @@ export class LanTableComponent implements OnInit, OnDestroy {
         this.sortSub.unsubscribe();
     }
 
+    isSpoofed(host : any) : boolean {
+        return (host.ipv4 in this.spoofList);
+    }
+
+    private updateSpoofOpts() {
+        this.spoofOpts.targets = Object.keys(this.spoofList).join(', ');
+    }
+
+    private resetSpoofOpts() {
+        this.spoofOpts = {
+            targets: this.api.session.env.data['arp.spoof.targets'],
+            whitelist: this.api.session.env.data['arp.spoof.whitelist'],
+            fullduplex: this.api.session.env.data['arp.spoof.fullduplex'].toLowerCase() == 'true',
+            internal: this.api.session.env.data['arp.spoof.internal'].toLowerCase() == 'true',
+            ban: false
+        };
+    }
+
+    hideSpoofMenu() {
+        this.viewSpoof = false; 
+        this.resetSpoofOpts();
+    }
+
+    showSpoofMenuFor( host : Host, add : boolean ) {
+        if( add )
+            this.spoofList[host.ipv4] = true;
+        else
+            delete this.spoofList[host.ipv4];
+
+        this.updateSpoofOpts();
+        this.visibleMenu = null; 
+        this.viewSpoof = true;
+    }
+
+    updateSpoofingList() {
+        let newSpoofList = this.spoofList;
+
+        $('.spoof-toggle').each((i, toggle) => {
+            let $toggle = $(toggle);
+            let ip = $toggle.attr('data-ip');
+            if( $toggle.is(':checked') ) {
+                newSpoofList[ip] = true;
+            } else {
+                delete newSpoofList[ip];
+            }
+        });
+
+        this.spoofList = newSpoofList;
+        this.updateSpoofOpts();
+    }
+
+    onSpoofStart() {
+        if( this.isSpoofing && !confirm("This will unspoof the current targets, set the new parameters and restart the module. Continue?") )
+            return;
+
+        this.api.cmd('set arp.spoof.targets ' + (this.spoofOpts.targets == "" ? '""' : this.spoofOpts.targets));
+        this.api.cmd('set arp.spoof.whitelist ' + (this.spoofOpts.whitelist == "" ? '""' : this.spoofOpts.whitelist));
+        this.api.cmd('set arp.spoof.fullduplex ' + this.spoofOpts.fullduplex);
+        this.api.cmd('set arp.spoof.internal ' + this.spoofOpts.internal);
+
+        let onCmd = this.spoofOpts.ban ? 'arp.ban on' : 'arp.spoof on';
+        
+        if( this.isSpoofing ) {
+            this.api.cmd('arp.spoof off; ' + onCmd);
+        }
+        else {
+            this.api.cmd(onCmd);
+        }
+
+        this.viewSpoof = false;
+        this.resetSpoofOpts();
+    }
+
     private update(session) {
+        const ipRe = /^(?=.*[^\.]$)((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.?){4}$/;
+
+        let spoofing = this.api.session.env.data['arp.spoof.targets']
+            // split by comma and trim spaces
+            .split(',')
+            .map(s => s.trim())
+            // remove empty elements
+            .filter(s => s.length);
+
+        this.isSpoofing = this.api.module('arp.spoof').running;
         this.scanState = this.api.module('syn.scan').state;
 
-        if( $('.menu-dropdown').is(':visible') )
+        // freeze the interface while the user is doing something
+        if( this.viewSpoof || $('.menu-dropdown').is(':visible') )
             return;
+        
+        this.resetSpoofOpts();
+        this.spoofList = {};
+        // if there are elements that are not IP addresses, it means the user
+        // has set the variable manually, which overrides the UI spoof list.
+        for( let i = 0; i < spoofing.length; i++ ) {
+            if( ipRe.test(spoofing[i]) ) {
+               this.spoofList[spoofing[i]] = true; 
+            } else {
+                this.spoofList = {};
+                break;
+            }
+        }
 
         this.iface = session.interface;
         this.gateway = session.gateway;
