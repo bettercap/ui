@@ -13,12 +13,11 @@ let params = [];
     styleUrls: ['./omnibar.component.scss']
 })
 export class OmnibarComponent implements OnInit, OnDestroy {
-    @Input() modName: string;
-    @Input() toggleCmd: string;
-    @Input() clearCmd: string;
+    @Input() modules: any = {}
+    @Input() clearCmd: string = "";
     @Input() withCmd: boolean;
 
-    modEnabled: boolean = false;
+    enabled: any = {}
     query: string = '';
     cmd: string = '';
 
@@ -39,8 +38,8 @@ export class OmnibarComponent implements OnInit, OnDestroy {
 
         for( let i = 0; i < this.api.session.modules.length; i++ ){
             let mod = this.api.session.modules[i];
-            if( this.modName && mod.name == this.modName )
-                this.modEnabled = mod.running;
+
+            this.enabled[mod.name] = mod.running;
 
             for( let j = 0; j < mod.handlers.length; j++ ) {
                 handlers.push( mod.handlers[j].name );
@@ -50,9 +49,6 @@ export class OmnibarComponent implements OnInit, OnDestroy {
                 params.push( mod.parameters[name].name );
             }
         }   
-            
-        this.api.session.modules;
-        this.modEnabled = this.api.isModuleEnabled(this.modName); 
     }
 
     ngOnDestroy() {
@@ -63,18 +59,13 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         this.api.cmd(this.clearCmd);
     }
 
-    onModuleToggleClicked() {
+    onModuleToggleClicked(mod : any) {
         this.update();
         
-        let toggle = this.modEnabled ? 'off' : 'on';
-        let mods = this.toggleCmd.split(',');
+        let toggle = this.enabled[mod.key] ? 'off' : 'on';
+        this.enabled[mod.key] = !this.enabled[mod.key];
 
-        this.modEnabled = !this.modEnabled;
-
-        for( let i = 0; i < mods.length; i++ ) {
-            let modName = mods[i].trim();
-            this.api.cmd(modName + ' ' + toggle);
-        }
+        this.api.cmd(mod.value + ' ' + toggle);
     }
 
     searchCommand(text$: Observable<string>) {

@@ -8,10 +8,12 @@
           <i class="fas fa-trash-alt" ngTooltip="Clear the current view from records."></i>
         </button>
 
-        <button *ngIf="modName" type="button" class="btn btn-dark btn-sm" ngbTooltip="{{(modEnabled ? 'Stop ' : 'Start ') + modName}}" (click)="onModuleToggleClicked()">
-          <i *ngIf="modEnabled" class="fas fa-stop" style="color:red" ngTooltip="Stop the module."></i>
-          <i *ngIf="!modEnabled" class="fas fa-play" style="color:green" ngTooltip="Start the module."></i>
-        </button>
+        <span *ngFor="let mod of modules | keyvalue">
+          <button type="button" class="btn btn-dark btn-sm" ngbTooltip="{{(enabled[mod.key] ? 'Stop ' : 'Start ') + mod.key}}" (click)="onModuleToggleClicked(mod)">
+            <i *ngIf="enabled[mod.key]" class="fas fa-stop" style="color:red"></i>
+            <i *ngIf="!enabled[mod.key]" class="fas fa-play" style="color:green"></i>
+          </button>
+        </span>
 
         <div class="input-group-prepend">
           <span class="input-group-text">

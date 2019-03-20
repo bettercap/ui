@@ -186,7 +186,7 @@ export class ApiService {
                                " but " + this.URL() + " is at v" + this.session.version
                     });
 
-                    return this.cachedSession;
+                    return response;
                 } else {
                     console.error(
                         "version mismatch, UI requires API v" + environment.requires + 
