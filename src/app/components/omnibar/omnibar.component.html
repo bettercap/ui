@@ -4,9 +4,28 @@
     <div class="col-md-12">
       <div class="input-group input-group-sm">
 
-        <button type="button" *ngIf="clearCmd" class="btn btn-dark btn-sm" placement="right" ngbTooltip="Clear table" (click)="onClearClicked()">
+        <button 
+           type="button" 
+           *ngIf="clearCmd" 
+           class="btn btn-dark btn-sm" 
+           placement="right" 
+           ngbTooltip="Clear records from the current view." 
+           (click)="onClearClicked()">
           <i class="fas fa-trash-alt" ngTooltip="Clear the current view from records."></i>
         </button>
+
+        <ng-container *ngIf="withIfaces">
+          <select 
+              [disabled]="api.module('wifi').running" 
+              (change)="onSetWifiInterface($event.target.value)" 
+              ngbTooltip="Change the wifi.interface parameter.">
+            <option 
+                *ngFor="let iface of api.session.interfaces" 
+                value="{{ iface.name }}"
+                [selected]="api.session.env.data['wifi.interface'] == iface.name"
+                >{{ iface.name }}</option>
+          </select>
+        </ng-container>
 
         <span *ngFor="let mod of modules | keyvalue">
           <button type="button" class="btn btn-dark btn-sm" ngbTooltip="{{(enabled[mod.key] ? 'Stop ' : 'Start ') + mod.key}}" (click)="onModuleToggleClicked(mod)">

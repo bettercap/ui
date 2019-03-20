@@ -2,6 +2,7 @@ import {Component, Output, Input, OnInit, OnDestroy} from '@angular/core';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {ApiService} from '../../services/api.service';
 import {Observable} from 'rxjs/Observable';
+import { ToastrService } from 'ngx-toastr';  
 
 // due to https://github.com/ng-bootstrap/ng-bootstrap/issues/917
 let handlers = [];
@@ -16,14 +17,13 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     @Input() modules: any = {}
     @Input() clearCmd: string = "";
     @Input() withCmd: boolean;
+    @Input() withIfaces: boolean = false;
 
     enabled: any = {}
     query: string = '';
     cmd: string = '';
 
-    constructor(private api: ApiService) { 
-        
-    }
+    constructor(private api: ApiService, private toastr: ToastrService) { }
 
     ngOnInit() {
         this.update();
@@ -57,6 +57,11 @@ export class OmnibarComponent implements OnInit, OnDestroy {
 
     onClearClicked() {
         this.api.cmd(this.clearCmd);
+    }
+
+    onSetWifiInterface(name : string) {
+        this.api.cmd('set wifi.interface ' + name);
+        this.toastr.info("Set wifi.interface to " + name);
     }
 
     onModuleToggleClicked(mod : any) {
