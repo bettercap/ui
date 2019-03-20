@@ -15,17 +15,16 @@ import { environment } from '../../environments/environment';
 
 import compareVersions from 'compare-versions';
 
-const NUM_EVENTS       = 50;
-
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
-    public schema: string   = 'http:';
-    public host: string     = document.location.hostname;
-    public port: string     = "8081";
-    public path: string     = '/api';
-    public interval: number = 1000;
+    public schema: string    = 'http:';
+    public host: string      = document.location.hostname;
+    public port: string      = "8081";
+    public path: string      = '/api';
+    public interval: number  = 1000;
+    public numEvents: number = 25;
 
     public isLogged: boolean = false;
     public error: Response | any;
@@ -105,6 +104,7 @@ export class ApiService {
             this.host = creds.host;
             this.port = creds.port;
             this.path = creds.path;
+            this.numEvents = creds.numEvents || this.numEvents;
 
             this.login(creds.username, creds.password).subscribe((session) => {
                 this.session = session;  
@@ -133,7 +133,8 @@ export class ApiService {
             schema: this.schema,
             host:this.host,
             port: this.port,
-            path: this.path
+            path: this.path,
+            numEvents: this.numEvents
         }));
         this.isLogged = true;
     }
@@ -153,7 +154,7 @@ export class ApiService {
         .get<Event[]>( this.URL() + '/events', 
         {
             headers: this.headers,
-            params: {'n': String(NUM_EVENTS)}
+            params: {'n': String(this.numEvents)}
         })
         .map(response => {
             this.events = response;

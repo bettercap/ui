@@ -17,6 +17,7 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     @Input() modules: any = {}
     @Input() clearCmd: string = "";
     @Input() withCmd: boolean;
+    @Input() withLimit: boolean = false;
     @Input() withIfaces: boolean = false;
 
     enabled: any = {}
