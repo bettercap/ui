@@ -72,7 +72,7 @@ export class BleTableComponent implements OnInit, OnDestroy {
         if( devices.length == 0 )
             this.currDev = null;
 
-        this.sortService.sort(this.devices, this.sort)
+        this.sortService.sort(devices, this.sort)
         this.devices = devices; 
 
         if( this.currDev != null ) {
