@@ -57,6 +57,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/caplets">
             <i class="fas fa-scroll">
+              <span *ngIf="numCaplets > 0" class="badge badge-pill badge-danger">{{ numCaplets }}</span>
             </i>
             Caplets
           </a>
@@ -65,6 +66,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/advanced">
             <i class="fa fa-cogs">
+              <span *ngIf="numRunning > 0" class="badge badge-pill badge-danger">{{ numRunning }}</span>
             </i>
             Advanced
           </a>

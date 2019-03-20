@@ -18,6 +18,7 @@ import { LanTableComponent } from './components/lan-table/lan-table.component';
 import { WifiTableComponent } from './components/wifi-table/wifi-table.component';
 import { BleTableComponent } from './components/ble-table/ble-table.component';
 import { HidTableComponent } from './components/hid-table/hid-table.component';
+import { CapletsComponent } from './components/caplets/caplets.component';
 import { AdvancedComponent } from './components/advanced/advanced.component';
 
 import { SignalIndicatorComponent } from './components/signal-indicator/signal-indicator.component';
@@ -28,6 +29,12 @@ import { SearchPipe } from './components/search.pipe';
 import { AlivePipe } from './components/alive.pipe';
 import { UnbashPipe } from './components/unbash.pipe';
 import { SizePipe } from './components/size.pipe';
+
+export function hljsLanguages() {
+  return [
+    {name: 'bash', func: bash}
+  ];
+}
 
 @NgModule({
     declarations: [
@@ -42,6 +49,7 @@ import { SizePipe } from './components/size.pipe';
         HidTableComponent,
         WifiTableComponent,
         AdvancedComponent,
+        CapletsComponent,
         
         OmnibarComponent,
         SignalIndicatorComponent,

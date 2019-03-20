@@ -28,7 +28,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
         tokens: []
     };
 
-    pktTot: number = 0;
+    // pktTot: number = 0;
 
     constructor(private api: ApiService, private sortService: SortService) { 
         this.update(this.api.session);
@@ -114,13 +114,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
 
     private update(session) {
         if( this.curMod ) {
-            for( let i = 0; i < session.modules.length; i++ ) {
-                let mod = session.modules[i];
-                if( this.curMod.name == mod.name ) {
-                    this.curMod.running = mod.running;
-                    break;
-                }
-            }
+            this.curMod.running = this.api.module(this.curMod.name).running;
         }
 
         this.sortService.sort(session.modules, {
@@ -128,11 +122,13 @@ export class AdvancedComponent implements OnInit, OnDestroy {
             direction: 'desc',
             type: ''
         }); 
-
+            
+        /*
         this.pktTot = 0;
         for( let proto in session.packets.Protos ) {
             this.pktTot += session.packets.Protos[proto];
         }
+        */
 
         this.session = session;
         this.modules = session.modules; 

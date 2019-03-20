@@ -97,6 +97,12 @@ export class ApiService {
         if(auth) {
             console.log("found localStorage credentials");
             let creds = JSON.parse(auth);
+
+            this.schema = creds.schema;
+            this.host = creds.host;
+            this.port = creds.port;
+            this.path = creds.path;
+
             this.login(creds.username, creds.password).subscribe((session) => {
                 this.session = session;  
             });
@@ -121,6 +127,10 @@ export class ApiService {
         localStorage.setItem('auth', JSON.stringify({
             username: this.user,
             password: this.pass,
+            schema: this.schema,
+            host:this.host,
+            port: this.port,
+            path: this.path
         }));
         this.isLogged = true;
     }

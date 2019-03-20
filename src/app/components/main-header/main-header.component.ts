@@ -28,6 +28,8 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     numAps = 0;
     numBLE = 0;
     numHID = 0;
+    numCaplets = 0;
+    numRunning = 0;
 
     subscriptions: any = [];
     modNotificationCache = {};
@@ -85,6 +87,8 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
         this.numAps = session.wifi['aps'].length || 0; 
         this.numBLE = session.ble['devices'].length || 0; 
         this.numHID = session.hid['devices'].length || 0; 
+        this.numCaplets = session.caplets.length || 0; 
+        this.numRunning = session.modules.filter(m => m.running).length;
     }
 
     private eventCacheKey(event) {

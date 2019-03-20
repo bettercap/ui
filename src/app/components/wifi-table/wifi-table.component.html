@@ -88,7 +88,7 @@
           <td [class.empty]="!ap.received">{{ ap.received | size }}</td>
           <td class="time">{{ ap.last_seen | date: 'HH:mm:ss' }}</td>
 
-          <td>
+          <td class="nowrap">
             <span *ngIf="ap.handshake" style="margin-right:10px" class="badge badge-danger" ngbTooltip="WPA key material captured!">
               <i class="fas fa-key"></i>
             </span>

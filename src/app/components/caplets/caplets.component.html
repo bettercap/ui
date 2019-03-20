@@ -1,0 +1,82 @@
+<omnibar [withCmd]="true"></omnibar>
+
+<div class="row">
+  <div class="col-2 mod-nav">
+    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+      <a *ngIf="caplets.length == 0" class="nav-link">
+        Install 
+      </a>
+      <a 
+         *ngFor="let cap of caplets | search: omnibar.query" 
+         (click)="curCap = cap; successMessage = ''; errorMessage = '';"
+         class="nav-link" [class.active]="curCap && curCap.name == cap.name">
+        {{ cap.name }} <small class="text-muted">{{ cap.size | size:0 }}</small>
+      </a>
+
+    </div>
+  </div>
+  <div class="col-10 mod-content">
+    
+    <div *ngIf="caplets.length == 0" class="container-fluid shadow-sm">
+      <div class="row">
+        <div class="col-12">
+          <p class="mod-description">
+            No caplets installed so far.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button type="button" class="btn btn-warning" (click)="api.cmd('caplets.update')">
+            <i class="fas fa-download"></i>
+            Install
+          </button>
+          <br/>
+          <br/>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="curCap" class="container-fluid shadow-sm">
+      <div class="row">
+        <div class="col-12">
+
+          <div class="btn-group" style="width:100%; margin-bottom:15px" role="group">
+            <button class="btn btn-sm btn-dark" (click)="runCaplet()" ngbTooltip="Run this caplet.">
+              <i class="fas fa-play"></i>
+            </button>
+            <button class="btn btn-sm btn-dark" (click)="saveCaplet()" ngbTooltip="Save caplet code.">
+              <i class="fas fa-save"></i>
+            </button>
+            <input 
+                 type="text" 
+                 class="form-control form-control-sm param-input disabled" 
+                 style="width:100%"
+                 value="{{ curCap.path }}" disabled readonly/>
+          </div>
+
+          <div *ngIf="successMessage" class="alert alert-dismissable fade show alert-success" role="alert">
+            {{ successMessage }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-dismissable fade show alert-danger" role="alert">
+            {{ errorMessage }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <textarea 
+            rows="30" 
+            id="capCode"
+            name="capCode"
+            class="form-control param-input caplet" required>{{ curCap.code.join("\n") }}</textarea>
+        </div>
+      </div>
+
+  </div>
+</div>

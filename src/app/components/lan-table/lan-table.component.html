@@ -70,7 +70,7 @@
         <td [class.empty]="!host.sent">{{ host.sent | size }}</td>
         <td [class.empty]="!host.received">{{ host.received | size }}</td>
         <td class="time">{{ host.last_seen | date: 'HH:mm:ss'}}</td>
-        <td class="metas">
+        <td class="metas nowrap">
 
           <span *ngIf="host == iface" class="badge badge-secondary">interface</span>
           <span *ngIf="host == gateway" class="badge badge-secondary">gateway</span>

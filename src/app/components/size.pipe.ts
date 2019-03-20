@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({name: 'size'})
 export class SizePipe implements PipeTransform {
     private units = [
-        'b',
+        'B',
         'KB',
         'MB',
         'GB',
