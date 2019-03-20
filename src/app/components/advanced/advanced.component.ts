@@ -4,6 +4,7 @@ import { SortService } from '../../services/sort.service';
 import { Module } from '../../models/module';
 import { Session } from '../../models/session';
 import { OmnibarComponent } from '../omnibar/omnibar.component';
+import { environment } from '../../../environments/environment';
 
 declare var $: any;
 
@@ -17,6 +18,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
 
     modules: Module[] = [];
     session: Session;
+    environment: any = environment;
 
     successMessage: string = '';
     curTab: number = 0;

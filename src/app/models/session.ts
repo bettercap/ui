@@ -10,17 +10,21 @@ import {Gps} from './gps';
 import {Module} from './module';
 
 export interface Session {
-  options: Option;
-  interface: Interface;
-  gateway: Interface;
-  env: Env;
-  lan: Lan;
-  wifi: Wifi;
-  ble: Ble;
-  hid: HID;
-  packets: Packets;
-  started_at: string;
-  active: boolean;
-  gps: Gps;
-  modules: Module[];
+    version: string;
+    os: string;
+    arch: string;
+    goversion: string;
+    options: Option;
+    interface: Interface;
+    gateway: Interface;
+    env: Env;
+    lan: Lan;
+    wifi: Wifi;
+    ble: Ble;
+    hid: HID;
+    packets: Packets;
+    started_at: string;
+    active: boolean;
+    gps: Gps;
+    modules: Module[];
 }

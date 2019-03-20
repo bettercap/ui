@@ -30,12 +30,6 @@ import { AlivePipe } from './components/alive.pipe';
 import { UnbashPipe } from './components/unbash.pipe';
 import { SizePipe } from './components/size.pipe';
 
-export function hljsLanguages() {
-  return [
-    {name: 'bash', func: bash}
-  ];
-}
-
 @NgModule({
     declarations: [
         AppComponent,

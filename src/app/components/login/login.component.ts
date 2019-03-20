@@ -2,7 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
+import { environment } from '../../../environments/environment';
 
+import * as compareVersions from 'compare-versions';
 import * as urlParse from 'url-parse';
 
 @Component({
@@ -14,8 +16,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     loginForm: FormGroup;
     submitted: boolean = false;
     error: any;
+    mismatch: any = null;
     subscriptions: any = [];
     returnTo: string = "/";
+    
 
     constructor(private api: ApiService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
         if( this.api.Ready() ) {
@@ -36,6 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.subscriptions = [
             this.api.onSessionError.subscribe(error => {
+                console.log(error);
                 this.error = error;
             }),
             this.api.onLoggedOut.subscribe(error => {

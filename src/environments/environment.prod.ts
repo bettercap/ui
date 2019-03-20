@@ -1,5 +1,8 @@
+import pkg from '../../package.json';
+
 export const environment = {
     production: true,
-    name: 'hydra',
-    version: '1.0.0 alpha'
+    name: pkg.name,
+    version: pkg.version,
+    requires: pkg.requires
 };

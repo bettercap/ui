@@ -1,11 +1,13 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-signin shadow-lg p-3 mb-5 bg-white rounded">
   <img [src]="'./assets/images/logo.png'" width="200px" alt="Hydra - Logo" class="img-responsive">
   <br/>
-  <ngb-alert *ngIf="error && error.status !== 0 && submitted" type="danger" (close)="error = submitted = false">
-    <span *ngIf="error.status != 0">
-      {{error.status}} {{error.statusText}}: wrong credentials.
-    </span>
+  <ngb-alert *ngIf="error && error.status == 401 && submitted" type="danger" (close)="error = submitted = false">
+    {{error.status}} {{error.statusText}}: wrong credentials.
   </ngb-alert>
+  <ngb-alert *ngIf="error && error.status == 666 && submitted" type="danger" (close)="error = submitted = false">
+    {{ error.error }}
+  </ngb-alert>
+
   <br/>
 
   <div class="form-group">

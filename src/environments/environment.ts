@@ -2,10 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import pkg from '../../package.json';
+
 export const environment = {
     production: false,
-    name: 'hydra',
-    version: '1.0.0 alpha'
+    name: pkg.name,
+    version: pkg.version,
+    requires: pkg.requires
 };
 
 /*

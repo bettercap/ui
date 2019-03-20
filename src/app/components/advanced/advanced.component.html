@@ -27,11 +27,39 @@
 
       <div class="row">
         <div class="col-12">
-          <p class="mod-description">
-          Session started on <strong>{{ api.session.started_at | date: 'short' }}</strong>, 
-          polling <strong>{{ api.URL() }}</strong> every {{ api.interval }}ms, ping is {{ api.ping() }}ms.
-          </p>
-          <hr/>
+          <h5>Status</h5>
+
+          <table class="table table-dark">
+            <tbody>
+              <tr>
+                <th>UI Version</th>
+                <td>
+                  {{ environment.version }}
+                  <span class="text-muted">
+                    requires API {{ environment.requires }}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <th>Connected To</th>
+                <td>
+                  {{ api.URL() }}
+                  <span class="text-muted">
+                    polled every {{ api.interval }}ms with a ping of {{ api.ping() }}ms
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <th>API Version</th>
+                <td>
+                  {{ api.session.version }} 
+                  <span class="text-muted">
+                    compiled with {{ api.session.goversion }} for {{ api.session.os }} {{ api.session.arch }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <!--

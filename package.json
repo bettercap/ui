@@ -1,6 +1,7 @@
 {
   "name": "hydra",
   "version": "1.0.0a",
+  "requires": "2.20",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -30,6 +31,7 @@
     "@types/jquery": "^3.3.29",
     "add": "^2.0.6",
     "bootstrap": "^4.2.1",
+    "compare-versions": "^3.4.0",
     "core-js": "^2.5.4",
     "highlight.js": "^9.15.6",
     "jquery": "^3.3.1",

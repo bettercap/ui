@@ -11,6 +11,9 @@ import 'rxjs/add/operator/catch';
 import {Session} from '../models/session';
 import {Event} from '../models/event';
 import {Command, Response} from '../models/command';
+import { environment } from '../../environments/environment';
+
+import compareVersions from 'compare-versions';
 
 const NUM_EVENTS       = 50;
 
@@ -172,9 +175,27 @@ export class ApiService {
 
             let wasLogged = this.isLogged;
 
-            this.saveCreds();
             this.session = response;
 
+            if(  compareVersions(this.session.version, environment.requires) == -1 ) {
+                if( environment.production ) {
+                    this.logout();
+                    this.onLoggedOut.emit({
+                        status: 666,
+                        error: "This client requires at least API v" + environment.requires + 
+                               " but " + this.URL() + " is at v" + this.session.version
+                    });
+
+                    return this.cachedSession;
+                } else {
+                    console.error(
+                        "version mismatch, UI requires API v" + environment.requires + 
+                        " but " + this.URL() + " is at v" + this.session.version
+                    );
+                }
+            }
+
+            this.saveCreds();
             if(wasLogged == false) {
                 console.log("loggedin.emit");
                 this.onLoggedIn.emit();
