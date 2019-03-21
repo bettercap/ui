@@ -15,6 +15,7 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
 
     events: Event[] = [];
+    ignored: string[] = [];
     modEnabled: boolean = false;
     sort: ColumnSortedEvent;
     query: string = '';
@@ -45,16 +46,19 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     }
 
     private update(events) {
-        this.modEnabled = this.api.isModuleEnabled('events.stream');
+        var mod = this.api.module('events.stream');
+
+        this.modEnabled = mod.running;
+        this.ignored = mod.state.ignoring;
         this.events = events; 
         this.sortService.sort(this.events, this.sort)
     }
 
-    btnFor(event : Event) : string {
-        if( event.tag == 'wifi.client.handshake' )
+    btnFor(tag : string) : string {
+        if( tag == 'wifi.client.handshake' )
             return 'danger';
 
-        let tag = event.tag.split('.')[0];
+        tag = tag.split('.')[0];
         switch(tag) {
             case 'wifi': return 'success';
             case 'endpoint': return 'secondary';

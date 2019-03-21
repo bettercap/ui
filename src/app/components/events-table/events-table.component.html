@@ -1,5 +1,26 @@
 <omnibar [clearCmd]="'events.clear'" [withCmd]="true" [withLimit]="true"></omnibar>
 
+<div *ngIf="ignored.length > 0">
+  <table class="table table-sm table-dark" style="margin-bottom: 0">
+    <tbody>
+      <tr>
+        <td width="1%">Silenced:</td>
+        <td>
+          <button 
+           *ngFor="let name of ignored"
+           class="btn btn-sm btn-event btn-{{ btnFor(name) }}"
+           style="margin-left: 5px"
+           (click)="api.cmd('events.include ' + name)"
+           ngbTooltip="Click to include this type of events again."
+           >
+         {{ name }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <div class="table-responsive">
   <table class="table table-sm table-dark">
     <thead>
@@ -21,7 +42,7 @@
         <td>{{ event.time | date: 'HH:mm:ss' }}</td>
         <td>
           <button 
-            class="btn btn-sm btn-event btn-{{ btnFor(event) }}"
+            class="btn btn-sm btn-event btn-{{ btnFor(event.tag) }}"
             (click)="api.cmd('events.ignore ' + event.tag)"
             ngbTooltip="Click to ignore this type of events, run 'events.include {{ event.tag }}' later to restore it."
             placement="right"
