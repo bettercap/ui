@@ -48,6 +48,20 @@ export class EventsTableComponent implements OnInit, OnDestroy {
         this.sortService.sort(this.events, this.sort)
     }
 
+    btnFor(event : Event) : string {
+        if( event.tag == 'wifi.client.handshake' )
+            return 'danger';
+
+        let tag = event.tag.split('.')[0];
+        switch(tag) {
+            case 'wifi': return 'success';
+            case 'endpoint': return 'secondary';
+            case 'ble': return 'primary';
+            case 'hid': return 'warning';
+            default: return 'dark';
+        }
+    }
+
     clear() {
         this.api.clearEvents();
         this.events = [];

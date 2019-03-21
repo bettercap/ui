@@ -1,7 +1,7 @@
 <omnibar [clearCmd]="'events.clear'" [withCmd]="true" [withLimit]="true"></omnibar>
 
 <div class="table-responsive">
-  <table class="table table-dark">
+  <table class="table table-sm table-dark">
     <thead>
       <tr>
         <th width="1%" sortable-column="time" sort-type="time" sort-direction="desc">Time</th>
@@ -19,13 +19,15 @@
 
       <tr *ngFor="let event of events | search: omnibar.query">
         <td>{{ event.time | date: 'HH:mm:ss' }}</td>
-        <td [ngSwitch]="event.tag.split('.')[0]">
-          <span *ngSwitchCase="'wifi'" class="badge badge-success">{{ event.tag }}</span>
-          <span *ngSwitchCase="'endpoint'" class="badge badge-secondary">{{ event.tag }}</span>
-          <span *ngSwitchCase="'ble'" class="badge badge-primary">{{ event.tag }}</span>
-          <span *ngSwitchCase="'hid'" class="badge badge-warning">{{ event.tag }}</span>
-
-          <span *ngSwitchDefault class="badge badge-dark">{{ event.tag }}</span>
+        <td>
+          <button 
+            class="btn btn-sm btn-event btn-{{ btnFor(event) }}"
+            (click)="api.cmd('events.ignore ' + event.tag)"
+            ngbTooltip="Click to ignore this type of events, run 'events.include {{ event.tag }}' later to restore it."
+            placement="right"
+          >
+            {{ event.tag }}
+          </button>
         </td>
         <td>
           <event-data [event]="event"></event-data>
