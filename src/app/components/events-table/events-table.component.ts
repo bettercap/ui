@@ -4,6 +4,8 @@ import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import { Event } from '../../models/event';
 import { OmnibarComponent } from '../omnibar/omnibar.component';
 
+declare var $: any;
+
 @Component({
     selector: 'hydra-events-table',
     templateUrl: './events-table.component.html',
