@@ -58,6 +58,8 @@ tr.alive {
     }
 }
 
-td.nowrap {
+td.nowrap,
+th.nowrap,
+tr.nowrap {
     white-space: nowrap;
 }

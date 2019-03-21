@@ -80,13 +80,13 @@
   <table class="table table-dark">
     <thead>
       <tr>
-        <th sortable-column="ipv4" sort-type="ip" sort-direction="asc">IP</th>
-        <th sortable-column="mac">MAC</th>
+        <th width="1%" class="nowrap" sortable-column="ipv4" sort-type="ip" sort-direction="asc">IP</th>
+        <th width="1%" class="nowrap" sortable-column="mac">MAC</th>
         <th sortable-column="hostname">Hostname / Alias</th>
         <th sortable-column="vendor">Vendor</th>
-        <th sortable-column="sent">Sent</th>
-        <th sortable-column="received">Received</th>
-        <th sortable-column="last_seen">Last seen</th>
+        <th width="1%" class="nowrap" sortable-column="sent">Sent</th>
+        <th width="1%" class="nowrap" sortable-column="received">Received</th>
+        <th width="1%" class="nowrap" sortable-column="last_seen">Last seen</th>
         <th>Info</th>
       </tr>
     </thead>
@@ -98,7 +98,7 @@
       </tr>
 
       <tr *ngFor="let host of hosts | search: omnibar.query" [class.alive]="host | alive:1000">
-        <td>
+        <td class="nowrap">
           <div *ngIf="!scanState.scanning.includes(host.ipv4)" ngbDropdown [open]="visibleMenu == host.mac">
             <span>
               <input 
@@ -164,8 +164,8 @@
           <span *ngIf="host.alias" class="badge badge-pill badge-secondary">{{ host.alias }}</span>
         </td>
         <td [class.empty]="!host.vendor">{{ host.vendor ? host.vendor : 'unknown' }}</td>
-        <td [class.empty]="!host.sent">{{ host.sent | size }}</td>
-        <td [class.empty]="!host.received">{{ host.received | size }}</td>
+        <td [class.empty]="!host.sent" class="nowrap">{{ host.sent | size }}</td>
+        <td [class.empty]="!host.received" class="nowrap">{{ host.received | size }}</td>
         <td class="time">{{ host.last_seen | date: 'HH:mm:ss'}}</td>
         <td class="metas nowrap">
 

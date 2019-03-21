@@ -1,6 +1,8 @@
 <span [ngSwitch]="true" class="event-data">
   <span *ngSwitchCase="event.tag == 'endpoint.new'">
-    Detected <strong>{{ data.ipv4 }}</strong> {{ data.mac | uppercase }} 
+    Detected <strong>{{ data.ipv4 }}</strong> 
+    <span *ngIf="data.alias" class="badge badge-pill badge-secondary" style="margin-left: 5px">{{ data.alias }}</span>
+    {{ data.mac | uppercase }} 
     <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>
   </span>
   <span *ngSwitchCase="event.tag == 'endpoint.lost'">
