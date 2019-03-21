@@ -36,6 +36,12 @@ export class CapletsComponent implements OnInit, OnDestroy {
 
     }
 
+    onUpdateAll() {
+        if( confirm("This will download the new caplets from github and overwrite the previously installed ones, continue?") ) {
+            this.api.cmd('caplets.update');
+        }
+    }
+
     runCaplet() {
         this.api.cmdResponse("include " + this.curCap.path).subscribe(
             (val) => {

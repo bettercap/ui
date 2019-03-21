@@ -120,10 +120,10 @@
                     <a (click)="visibleMenu = null; showScannerModal(host)">Scan Ports</a>
                   </li>
                   <li *ngIf="isSpoofed(host)">
-                    <a (click)="showSpoofMenuFor(host, false)">Remove from Spoof Targets</a>
+                    <a (click)="showSpoofMenuFor(host, false)">Remove from arp.spoof.targets</a>
                   </li>
                   <li *ngIf="!isSpoofed(host)">
-                    <a (click)="showSpoofMenuFor(host, true)">Add to Spoof Targets</a>
+                    <a (click)="showSpoofMenuFor(host, true)">Add to arp.spoof.targets</a>
                   </li>
                 </ul>
               </div>

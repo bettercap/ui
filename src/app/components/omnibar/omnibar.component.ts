@@ -57,7 +57,9 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     }
 
     onClearClicked() {
-        this.api.cmd(this.clearCmd);
+        if( confirm("This will clear the records from both the API and the UI, continue?") ) {
+            this.api.cmd(this.clearCmd);
+        }
     }
 
     isWifiIface(iface : any ) : boolean {

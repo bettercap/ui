@@ -8,7 +8,7 @@
         Install 
       </a>
 
-      <a *ngIf="caplets.length > 0" (click)="api.cmd('caplets.update')" class="nav-link" class="btn btn-sm btn-secondary" style="margin:10px">
+      <a *ngIf="caplets.length > 0" (click)="onUpdateAll()" class="nav-link" class="btn btn-sm btn-secondary" style="margin:10px">
         <i class="fas fa-download"></i>
         Update All
       </a>
