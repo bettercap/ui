@@ -50,12 +50,23 @@ export class WifiTableComponent implements OnInit, OnDestroy {
         this.sortSub.unsubscribe();
     }
 
-    setAlias(client) {
-        let alias = prompt("Set an alias for this client:", client.alias);
+    setAlias(host) {
+        $('#in').val(host.alias);
+        $('#inhost').val(host.mac);
+        $('#inputModalTitle').html('Set alias for ' + host.mac);
+        $('#inputModal').modal('show');
+    }
+
+    doSetAlias() {
+        $('#inputModal').modal('hide');
+
+        let mac = $('#inhost').val();
+        let alias = $('#in').val();
+
         if( alias.trim() == "" )
             alias = '""';
 
-        this.api.cmd("alias " + client.mac + " " + alias);
+        this.api.cmd("alias " + mac + " " + alias);
     }
 
     private update(session) {

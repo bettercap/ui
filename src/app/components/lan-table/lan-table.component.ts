@@ -196,14 +196,22 @@ export class LanTableComponent implements OnInit, OnDestroy {
     }
 
     setAlias(host) {
-        let alias = prompt("Set an alias for this host:", host.alias);
-        if( alias === null )
-            return;
+        $('#in').val(host.alias);
+        $('#inhost').val(host.mac);
+        $('#inputModalTitle').html('Set alias for ' + host.mac);
+        $('#inputModal').modal('show');
+    }
+
+    doSetAlias() {
+        $('#inputModal').modal('hide');
+
+        let mac = $('#inhost').val();
+        let alias = $('#in').val();
 
         if( alias.trim() == "" )
             alias = '""';
 
-        this.api.cmd("alias " + host.mac + " " + alias);
+        this.api.cmd("alias " + mac + " " + alias);
     }
 
     showScannerModal(host) {
