@@ -23,6 +23,7 @@
         <td>
           <span *ngIf="state.sniffing == device.address">
             {{ device.address | uppercase }}
+            <span *ngIf="device.alias" class="badge badge-pill badge-secondary" style="margin-left:5px">{{ device.alias }}</span>
             <span class="badge badge-pill badge-warning" style="margin-left: 5px" ngbTooltip="{{ state.injecting ? 'Injecting' : 'Sniffing' }} ...">
               <span class="spinner-border spinner-border-sm" style="font-size:.7rem" role="status" aria-hidden="true"></span>
               <span *ngIf="state.injecting">
@@ -49,8 +50,13 @@
                 <li>
                   <a (click)="visibleMenu = null; showInjectModal(device);">Inject Script</a>
                 </li>
+                <li>
+                  <a (click)="visibleMenu = null; setAlias(device)">Set Alias</a>
+                </li>
               </ul>
             </div>
+
+            <span *ngIf="device.alias" class="badge badge-pill badge-secondary" style="margin-left:5px">{{ device.alias }}</span>
           </div>
         </td>
         <td [class.empty]="!device.type">
@@ -139,6 +145,34 @@
         <span *ngFor="let p of curDev.payloads" class="payload">
           {{ p.split(' ').splice(1).join(' ') }}<br/>
         </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="inputModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="inputModalTitle">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h5 id="inputModalTitle"></h5>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="doSetAlias()">
+          <div class="form-group row">
+            <div class="col">
+              <input type="text" class="form-control param-input" id="in" value="">
+              <input type="hidden" id="inhost" value="">
+            </div>
+          </div>
+          <div class="text-right">
+            <button type="submit" class="btn btn-dark">Ok</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

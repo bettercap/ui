@@ -61,6 +61,25 @@ export class HidTableComponent implements OnInit, OnDestroy {
         this.sortSub.unsubscribe();
     }
 
+    setAlias(dev) {
+        $('#in').val(dev.alias);
+        $('#inhost').val(dev.address);
+        $('#inputModalTitle').html('Set alias for ' + dev.address);
+        $('#inputModal').modal('show');
+    }
+
+    doSetAlias() {
+        $('#inputModal').modal('hide');
+
+        let mac = $('#inhost').val();
+        let alias = $('#in').val();
+
+        if( alias.trim() == "" )
+            alias = '""';
+
+        this.api.cmd("alias " + mac + " " + alias);
+    }
+
     showInjectModal(dev) {
         let pathToken = { label: 'Save As', id: 'PATH', value: '/tmp/bettercap-hid-script.txt' };
         let dataToken = { label: 'Code', id: 'DATA', value:

@@ -6,7 +6,7 @@
       <tr>
         <th style="width:1%" sortable-column="rssi" sort-direction="asc">RSSI</th>
         <th style="width:1%" class="nowrap" sortable-column="mac">MAC</th>
-        <th sortable-column="name">Name</th>
+        <th sortable-column="name">Name / Alias</th>
         <th sortable-column="vendor">Vendor</th>
         <th sortable-column="flags">Flags</th>
         <th style="width:1%" sortable-column="connectable">Connectable</th>
@@ -27,8 +27,26 @@
           <td>
             <hydra-signal-indicator [signalstrength]="device.rssi"></hydra-signal-indicator>
           </td>
-          <td>{{ device.mac | uppercase }}</td>
-          <td [class.empty]="!device.name">{{ (device.name ? device.name : 'none') | unbash }}</td>
+          <td>
+            <div ngbDropdown [open]="visibleMenu == device.mac">
+              <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == device.mac ? null : device.mac)">
+                {{ device.mac | uppercase }}
+              </button>
+              <div ngbDropdownMenu class="menu-dropdown">
+                <ul>
+                  <li>
+                    <a (click)="visibleMenu = null; setAlias(device)">Set Alias</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </td>
+          
+          <td [class.empty]="!device.name && !device.alias">
+            {{ (device.name ? device.name : device.alias ? '' : 'none') | unbash }}
+            <span *ngIf="device.alias" class="badge badge-pill badge-secondary">{{ device.alias }}</span>
+          </td>
+
           <td [class.empty]="!device.vendor">{{ device.vendor ? device.vendor : 'unknown' }}</td>
           <td [class.empty]="!device.flags">{{ device.flags ? device.flags : 'none' }}</td>
           <td align="center">
@@ -171,6 +189,34 @@
           </div>
           <div class="text-right">
             <button type="submit" class="btn btn-dark">Write</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="inputModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="inputModalTitle">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h5 id="inputModalTitle"></h5>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="doSetAlias()">
+          <div class="form-group row">
+            <div class="col">
+              <input type="text" class="form-control param-input" id="in" value="">
+              <input type="hidden" id="inhost" value="">
+            </div>
+          </div>
+          <div class="text-right">
+            <button type="submit" class="btn btn-dark">Ok</button>
           </div>
         </form>
       </div>

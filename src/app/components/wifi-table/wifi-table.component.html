@@ -6,7 +6,7 @@
       <tr>
         <th width="1%" sortable-column="rssi" sort-direction="asc">RSSI</th>
         <th sortable-column="mac">BSSID</th>
-        <th sortable-column="hostname">ESSID</th>
+        <th sortable-column="hostname">ESSID / Alias</th>
         <th sortable-column="vendor">Vendor</th>
         <th sortable-column="encryption">Encryption</th>
 
@@ -50,11 +50,17 @@
                 <li *ngIf="ap.clients.length > 0">
                   <a (click)="api.cmd('wifi.deauth ' + ap.mac); visibleMenu = null;">Deauthenticate Clients</a>
                 </li>
+                <li>
+                  <a (click)="setAlias(ap); visibleMenu = null;">Set Alias</a>
+                </li>
               </ul>
             </div>
           </div>
           </td>
-          <td [class.empty]="ap.hostname === '<hidden>'">{{ ap.hostname }}</td>
+          <td [class.empty]="ap.hostname === '<hidden>'">
+            {{ ap.hostname }}
+            <span *ngIf="ap.alias" class="badge badge-pill badge-secondary" style="margin-left:5px">{{ ap.alias }}</span>
+          </td>
           <td [class.empty]="!ap.vendor">{{ ap.vendor ? ap.vendor : 'unknown' }}</td>
 
           <td align="center">

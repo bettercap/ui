@@ -19,6 +19,7 @@ export class BleTableComponent implements OnInit, OnDestroy {
     devices: Device[] = [];
     sort: ColumnSortedEvent;
     sortSub: any;
+    visibleMenu: string = "";
     currDev: Device = null;
     currScan: Device = null;
 
@@ -45,6 +46,25 @@ export class BleTableComponent implements OnInit, OnDestroy {
         this.sortSub.unsubscribe();
     }
 
+    setAlias(dev) {
+        $('#in').val(dev.alias);
+        $('#inhost').val(dev.mac);
+        $('#inputModalTitle').html('Set alias for ' + dev.mac);
+        $('#inputModal').modal('show');
+    }
+
+    doSetAlias() {
+        $('#inputModal').modal('hide');
+
+        let mac = $('#inhost').val();
+        let alias = $('#in').val();
+
+        if( alias.trim() == "" )
+            alias = '""';
+
+        this.api.cmd("alias " + mac + " " + alias);
+    }
+
     enumServices(dev) {
         this.currScan = dev;
         this.api.cmd('ble.enum ' + dev.mac);
@@ -67,6 +87,10 @@ export class BleTableComponent implements OnInit, OnDestroy {
 
     private update(session) {
         this.currScan = this.api.module('ble.recon').state.scanning;
+
+        // freeze the interface while the user is doing something
+        if( $('.menu-dropdown').is(':visible') )
+            return;
 
         let devices = session.ble['devices'];
         if( devices.length == 0 )
