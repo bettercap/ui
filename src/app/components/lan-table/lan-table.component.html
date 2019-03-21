@@ -128,9 +128,7 @@
                 </ul>
               </div>
 
-              <span *ngIf="isSpoofed(host)" class="badge badge-danger" style="margin-left: 5px" ngbTooltip="Part of arp.spoof.targets">
-                <i class="fas fa-radiation"></i>
-              </span>
+              <i *ngIf="isSpoofed(host)" style="margin-left: 5px; color: #d2322d" ngbTooltip="Part of arp.spoof.targets" class="fas fa-radiation"></i>
 
             </span>
           </div>
