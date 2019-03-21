@@ -34,6 +34,7 @@
             "styles": [
                 "./node_modules/ngx-toastr/toastr.css",
                 "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+                "src/assets/fontawesome/css/all.css",
                 "src/styles.scss"
             ],
             "scripts": [
