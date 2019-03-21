@@ -2,6 +2,7 @@ import { app, BrowserWindow } from "electron";
 import * as path from "path";
 import * as url from "url";
 import * as fs from "fs";
+let win: BrowserWindow;
 
 function createWindow() {
     win = new BrowserWindow({ 
@@ -21,12 +22,16 @@ function createWindow() {
         })
     );
 
+    if( process.argv.includes('--dev-tools') ) {
+        win.webContents.openDevTools({
+            mode: 'detach'
+        });
+    }
+
     win.on("closed", () => {
         win = null;
     });
 }
-
-let win: BrowserWindow;
 
 app.on("ready", createWindow);
 
