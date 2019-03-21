@@ -49,7 +49,7 @@ export class EventsTableComponent implements OnInit, OnDestroy {
         var mod = this.api.module('events.stream');
 
         this.modEnabled = mod.running;
-        this.ignored = mod.state.ignoring;
+        this.ignored = mod.state.ignoring.sort();
         this.events = events; 
         this.sortService.sort(this.events, this.sort)
     }
