@@ -33,7 +33,7 @@
       </tr>
 
       <ng-container *ngFor="let ap of aps | search: omnibar.query">
-        <tr *ngIf="(!currAP || currAP.mac == ap.mac) && (!wifi || wifi.state.channels.includes(ap.channel))" [class.alive]="ap | alive:3000">
+        <tr *ngIf="(!currAP || currAP.mac == ap.mac) && (!wifi || wifi.state.channels.includes(ap.channel))" [class.alive]="ap | alive:1000">
           <td>
             <hydra-signal-indicator [signalstrength]="ap.rssi"></hydra-signal-indicator>
           </td>

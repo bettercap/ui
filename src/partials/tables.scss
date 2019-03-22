@@ -63,3 +63,11 @@ th.nowrap,
 tr.nowrap {
     white-space: nowrap;
 }
+
+table.table-dark {
+    tbody {
+        tr:hover {
+            background-color: rgba(38, 45, 53, 0.95);
+        }
+    }
+}

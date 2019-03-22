@@ -23,7 +23,7 @@
       </tr>
 
       <ng-container *ngFor="let device of devices | search: omnibar.query">
-        <tr *ngIf="!currDev || currDev.mac == device.mac" [class.alive]="device | alive:500">
+        <tr *ngIf="!currDev || currDev.mac == device.mac" [class.alive]="device | alive:100">
           <td>
             <hydra-signal-indicator [signalstrength]="device.rssi"></hydra-signal-indicator>
           </td>

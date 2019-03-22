@@ -76,7 +76,7 @@
           </div>
 
         </td>
-        <td>{{ device.channels }}</td>
+        <td class="nowrap">{{ device.channels.join(', ') }}</td>
         <td class="time">{{ device.last_seen | date: 'HH:mm:ss' }}</td>
       </tr>
     </tbody>
