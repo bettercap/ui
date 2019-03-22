@@ -38,24 +38,24 @@
             <hydra-signal-indicator [signalstrength]="ap.rssi"></hydra-signal-indicator>
           </td>
           <td>
-          <div ngbDropdown [open]="visibleMenu == ap.mac">
-            <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == ap.mac ? null : ap.mac)">
-              {{ ap.mac | uppercase }}
-            </button>
-            <div ngbDropdownMenu class="menu-dropdown">
-              <ul>
-                <li>
-                  <a (click)="api.cmd('wifi.assoc ' + ap.mac); visibleMenu = null;">Associate</a>
-                </li>
-                <li *ngIf="ap.clients.length > 0">
-                  <a (click)="api.cmd('wifi.deauth ' + ap.mac); visibleMenu = null;">Deauthenticate Clients</a>
-                </li>
-                <li>
-                  <a (click)="setAlias(ap); visibleMenu = null;">Set Alias</a>
-                </li>
-              </ul>
+            <div ngbDropdown [open]="visibleMenu == ap.mac">
+              <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == ap.mac ? null : ap.mac)">
+                {{ ap.mac | uppercase }}
+              </button>
+              <div ngbDropdownMenu class="menu-dropdown">
+                <ul>
+                  <li>
+                    <a (click)="api.cmd('wifi.assoc ' + ap.mac); visibleMenu = null;">Associate</a>
+                  </li>
+                  <li *ngIf="ap.clients.length > 0">
+                    <a (click)="api.cmd('wifi.deauth ' + ap.mac); visibleMenu = null;">Deauthenticate Clients</a>
+                  </li>
+                  <li>
+                    <a (click)="setAlias(ap); visibleMenu = null;">Set Alias</a>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
           </td>
           <td [class.empty]="ap.hostname === '<hidden>'">
             {{ ap.hostname }}
@@ -65,10 +65,15 @@
 
           <td align="center">
             <i *ngIf="ap.encryption === 'OPEN'" class="fas fa-unlock" style="color:green" placement="top" ngbTooltip="Open Network"></i>
-            <span *ngIf="ap.encryption !== 'OPEN'">{{ ap.encryption }} <small class="text-muted">{{ ap.cipher }}, {{ ap.authentication }}</small></span>
+
+            <i *ngIf="ap.handshake" style="color: red; margin-right: 5px" ngbTooltip="WPA key material captured!" class="fas fa-key"></i>
+
+            <span *ngIf="ap.encryption !== 'OPEN'" ngbTooltip="{{ ap.cipher }}, {{ ap.authentication}}">
+              {{ ap.encryption }}
+            </span>
           </td>
           
-          <td *ngIf="hopping">
+          <td *ngIf="hopping" align="center">
             <button type="button" class="btn btn-dark btn-sm btn-action" (click)="api.cmd('wifi.recon.channel ' + ap.channel)" ngbTooltip="Stay on channel {{ ap.channel }}.">
               {{ ap.channel }}
             </button>
@@ -79,7 +84,7 @@
             {{ ap.channel }}
           </td>
 
-          <td [class.empty]="ap.clients.length == 0">
+          <td [class.empty]="ap.clients.length == 0" align="center">
             <span *ngIf="ap.clients.length == 0">0</span>
             <span *ngIf="ap.clients.length > 0">
               <span style="cursor:pointer;" class="badge badge-danger" (click)="currAP = (currAP ? null : ap)">
@@ -95,10 +100,7 @@
           <td class="time">{{ ap.last_seen | date: 'HH:mm:ss' }}</td>
 
           <td class="nowrap">
-            <span *ngIf="ap.handshake" style="margin-right:10px" class="badge badge-danger" ngbTooltip="WPA key material captured!">
-              <i class="fas fa-key"></i>
-            </span>
-
+            
             <div ngbDropdown *ngIf="(ap.wps | json) != '{}'" [open]="visibleWPS == ap.mac" placement="left" style="display: inline">
               <button ngbDropdownToggle 
                 class="btn btn-sm badge badge-warning btn-action drop-small" 

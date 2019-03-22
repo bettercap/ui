@@ -4,11 +4,11 @@
   <table class="table table-dark table-sm">
     <thead>
       <tr>
-        <th sortable-column="address" sort-direction="asc">Address</th>
+        <th width="1%" sortable-column="address" sort-direction="asc">Address</th>
         <th sortable-column="type">Type</th>
-        <th sortable-column="payloads">Payloads</th>
+        <th width="1%" sortable-column="payloads">Data</th>
         <th width="1%" sortable-column="channels">Channels</th>
-        <th sortable-column="last_seen">Last seen</th>
+        <th width="1%" class="nowrap" sortable-column="last_seen">Last seen</th>
       </tr>
     </thead>
     <tbody>
@@ -20,11 +20,11 @@
       </tr>
 
       <tr *ngFor="let device of devices | search: omnibar.query" [class.alive]="device | alive:5000">
-        <td>
+        <td class="nowrap">
           <span *ngIf="state.sniffing == device.address">
             {{ device.address | uppercase }}
             <span *ngIf="device.alias" class="badge badge-pill badge-secondary" style="margin-left:5px">{{ device.alias }}</span>
-            <span class="badge badge-pill badge-warning" style="margin-left: 5px" ngbTooltip="{{ state.injecting ? 'Injecting' : 'Sniffing' }} ...">
+            <span class="badge badge-pill badge-warning" style="margin-left: 5px">
               <span class="spinner-border spinner-border-sm" style="font-size:.7rem" role="status" aria-hidden="true"></span>
               <span *ngIf="state.injecting">
                 injecting ...
@@ -62,7 +62,7 @@
         <td [class.empty]="!device.type">
           {{ device.type ? device.type : 'unknown'}}
         </td>
-        <td [class.empty]="device.payloads_size == 0">
+        <td [class.empty]="device.payloads_size == 0" class="nowrap">
           <span *ngIf="device.payloads_size == 0">0</span>
 
           <div ngbDropdown *ngIf="device.payloads_size > 0">
@@ -77,7 +77,7 @@
 
         </td>
         <td class="nowrap">{{ device.channels.join(', ') }}</td>
-        <td class="time">{{ device.last_seen | date: 'HH:mm:ss' }}</td>
+        <td class="nowrap time">{{ device.last_seen | date: 'HH:mm:ss' }}</td>
       </tr>
     </tbody>
   </table>
