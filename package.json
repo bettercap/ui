@@ -34,6 +34,7 @@
     "@types/jquery": "^3.3.29",
     "add": "^2.0.6",
     "bootstrap": "^4.2.1",
+    "compare-versions": "^3.4.0",
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
     "ng": "0.0.0",
@@ -46,7 +47,7 @@
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.12.1",
+    "@angular-devkit/build-angular": "^0.13.6",
     "@angular/cli": "~7.1.4",
     "@angular/compiler-cli": "^7.2.8",
     "@angular/language-service": "~7.1.0",

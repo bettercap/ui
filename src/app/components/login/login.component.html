@@ -30,7 +30,7 @@
     <label for="url">API URL</label>
     <input type="text" formControlName="url" id="url" class="form-control" required>
     <ngb-alert *ngIf="submitted && error && error.status === 0" type="danger" (close)="error = submitted = false">
-      Can't connect to {{ api.URL() }}
+      Can't connect to {{ api.settings.URL() }}
     </ngb-alert>
   </div>
 

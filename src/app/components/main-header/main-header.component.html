@@ -19,7 +19,7 @@
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" [class.text-muted]="!api.isModuleEnabled('net.recon')" routerLink="/lan">
+          <a class="nav-link" [class.text-muted]="!api.module('net.recon').running" routerLink="/lan">
             <i class="fa fa-network-wired">
               <span *ngIf="numHosts > 0" class="badge badge-pill badge-danger">{{ numHosts }}</span>
             </i>
@@ -28,7 +28,7 @@
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" [class.text-muted]="!api.isModuleEnabled('wifi')" routerLink="/wifi">
+          <a class="nav-link" [class.text-muted]="!api.module('wifi').running" routerLink="/wifi">
             <i class="fa fa-wifi">
               <span *ngIf="numAps > 0" class="badge badge-pill badge-danger">{{ numAps }}</span>
             </i>
@@ -37,7 +37,7 @@
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" [class.text-muted]="!api.isModuleEnabled('ble.recon')" routerLink="/ble">
+          <a class="nav-link" [class.text-muted]="!api.module('ble.recon').running" routerLink="/ble">
             <i class="fab fa-bluetooth-b">
               <span *ngIf="numBLE > 0" class="badge badge-pill badge-danger">{{ numBLE }}</span>
             </i>
@@ -46,7 +46,7 @@
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" [class.text-muted]="!api.isModuleEnabled('hid')" routerLink="/hid">
+          <a class="nav-link" [class.text-muted]="!api.module('hid').running" routerLink="/hid">
             <i class="fa fa-keyboard">
               <span *ngIf="numHID > 0" class="badge badge-pill badge-danger">{{ numHID }}</span>
             </i>

@@ -74,7 +74,7 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     }
 
     toggleModule() {
-        let toggle = this.api.isModuleEnabled('events.stream') ? 'off' : 'on';
+        let toggle = this.api.module('events.stream').running ? 'off' : 'on';
         let enabled = toggle == 'on' ? true : false;
         this.api.cmd("events.stream " + toggle);
         this.modEnabled = enabled;

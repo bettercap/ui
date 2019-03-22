@@ -43,7 +43,7 @@ export class CapletsComponent implements OnInit, OnDestroy {
     }
 
     runCaplet() {
-        this.api.cmdResponse("include " + this.curCap.path).subscribe(
+        this.api.cmd("include " + this.curCap.path, true).subscribe(
             (val) => {
                 this.successMessage = 'Caplet executed.';
             },

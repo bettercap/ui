@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { environment } from '../../../environments/environment';
 
-import * as compareVersions from 'compare-versions';
 import * as urlParse from 'url-parse';
 
 @Component({
@@ -35,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.loginForm = this.formBuilder.group({
             username: [''],
             password: [''],
-            url:      [this.api.URL(), Validators.required]
+            url:      [this.api.settings.URL(), Validators.required]
         });
 
         this.subscriptions = [
@@ -72,10 +71,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         if( !this.loginForm.invalid ) {
             let parsed = urlParse(this.form.url.value, false);
 
-            this.api.schema = parsed.protocol;
-            this.api.host = parsed.hostname;
-            this.api.port = parsed.port;
-            this.api.path = parsed.pathname;
+            this.api.settings.schema = parsed.protocol;
+            this.api.settings.host = parsed.hostname;
+            this.api.settings.port = parsed.port;
+            this.api.settings.path = parsed.pathname;
 
             this.api
             .login(this.form.username.value, this.form.password.value)

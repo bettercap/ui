@@ -48,9 +48,9 @@
               <tr>
                 <th>Connected To</th>
                 <td>
-                  {{ api.URL() }}
+                  {{ api.settings.URL() }}
                   <span class="text-muted">
-                    polled every {{ api.interval }}ms with a ping of {{ api.ping() }}ms
+                    polled every {{ api.settings.interval }}ms with a ping of {{ api.ping }}ms
                   </span>
                 </td>
               </tr>

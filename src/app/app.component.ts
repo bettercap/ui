@@ -47,9 +47,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.titleService.setTitle(environment.name + ' ' + environment.version);
-        if( !this.session ) {
-            this.api.loadCreds();
-        }
     }
 
     ngOnDestroy() {
