@@ -64,11 +64,10 @@
           <td [class.empty]="!ap.vendor">{{ ap.vendor ? ap.vendor : 'unknown' }}</td>
 
           <td align="center">
-            <i *ngIf="ap.encryption === 'OPEN'" class="fas fa-unlock" style="color:green" placement="top" ngbTooltip="Open Network"></i>
-
-            <i *ngIf="ap.handshake" style="color: red; margin-right: 5px" ngbTooltip="WPA key material captured!" class="fas fa-key"></i>
+            <i *ngIf="ap.encryption === 'OPEN'" class="fas fa-unlock empty" placement="top" ngbTooltip="Open Network"></i>
 
             <span *ngIf="ap.encryption !== 'OPEN'" ngbTooltip="{{ ap.cipher }}, {{ ap.authentication}}">
+              <i *ngIf="ap.handshake" style="color: red; margin-right: 5px" ngbTooltip="WPA key material captured to {{ api.env('wifi.handshakes.file') }}" class="fas fa-key"></i>
               {{ ap.encryption }}
             </span>
           </td>

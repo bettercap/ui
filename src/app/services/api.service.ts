@@ -17,7 +17,7 @@ import { Command, Response } from '../models/command';
 
 export class Settings {
     public schema: string   = 'http:';
-    public host: string     = document.location.hostname;
+    public host: string     = document.location.hostname || "127.0.0.1";
     public port: string     = "8081";
     public path: string     = '/api';
     public interval: number = 1000;
@@ -122,6 +122,14 @@ export class ApiService {
             }
         }
         return null;
+    }
+
+    public env(name : string) {
+        for( let key in this.session.env.data ) {
+            if( name == key )
+                return this.session.env.data[key];
+        }
+        return "";
     }
     
     // start polling /api/events every second
