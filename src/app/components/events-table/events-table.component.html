@@ -4,14 +4,14 @@
   <table class="table table-sm table-dark" style="margin-bottom: 5px">
     <tbody>
       <tr>
-        <td width="1%">Silenced</td>
+        <td width="1%">Muted</td>
         <td>
           <button 
            *ngFor="let name of ignored"
            class="btn btn-sm btn-event btn-{{ btnFor(name) }}"
            style="margin-left: 5px"
            (click)="api.cmd('events.include ' + name)"
-           ngbTooltip="Click to include this type of events again."
+           ngbTooltip="Click to unmute this type of events."
            >
          {{ name }}
           </button>
@@ -44,7 +44,7 @@
           <button 
             class="btn btn-sm btn-event btn-{{ btnFor(event.tag) }}"
             (click)="api.cmd('events.ignore ' + event.tag)"
-            ngbTooltip="Click to ignore this type of events, run 'events.include {{ event.tag }}' later to restore it."
+            ngbTooltip="Click to mute this type of events."
             placement="right"
           >
             {{ event.tag }}

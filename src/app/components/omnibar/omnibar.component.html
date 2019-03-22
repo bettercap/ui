@@ -16,14 +16,14 @@
 
         <ng-container *ngIf="withLimit">
           <select 
-              (change)="api.numEvents = $event.target.value" 
+              (change)="api.settings.events = $event.target.value" 
               placement="right"
               ngbTooltip="Set how many events to display.">
-            <option value="15" [selected]="api.numEvents == 15">15</option>
-            <option value="25" [selected]="api.numEvents == 25">25</option>
-            <option value="50" [selected]="api.numEvents == 50">50</option>
-            <option value="100" [selected]="api.numEvents == 100">100</option>
-            <option value="500" [selected]="api.numEvents == 500">500</option>
+            <option value="15" [selected]="api.settings.events == 15">15</option>
+            <option value="25" [selected]="api.settings.events == 25">25</option>
+            <option value="50" [selected]="api.settings.events == 50">50</option>
+            <option value="100" [selected]="api.settings.events == 100">100</option>
+            <option value="500" [selected]="api.settings.events == 500">500</option>
           </select>
         </ng-container>
 
