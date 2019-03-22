@@ -42,11 +42,14 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.api.onSessionError.subscribe(error => {
                 console.log(error);
                 this.error = error;
+                console.log("session error:" + error);
             }),
             this.api.onLoggedOut.subscribe(error => {
                 this.error = error;
+                console.log("logged out:" + error);
             }),
             this.api.onLoggedIn.subscribe(() => {
+                console.log("logged in");
                 this.router.navigateByUrl(this.returnTo);
             })
         ];
@@ -64,6 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
+        this.error = null;
         this.submitted = true;
         if( !this.loginForm.invalid ) {
             let parsed = urlParse(this.form.url.value, false);
