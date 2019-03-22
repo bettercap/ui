@@ -51,7 +51,7 @@
           <td [class.empty]="!device.flags">{{ device.flags ? device.flags : 'none' }}</td>
           <td align="center">
             <i class="fas fa-check" *ngIf="device.connectable" style="color:green"></i>
-            <i class="fas fa-time" *ngIf="!device.connectable" style="color:red"></i>
+            <i class="fas fa-times" *ngIf="!device.connectable" style="color:red"></i>
           </td>
           <td align="center">
             <span *ngIf="currScan && device.services.length == 0" class="badge badge-warning">
