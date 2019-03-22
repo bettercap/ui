@@ -16,6 +16,7 @@ export interface Session {
     goversion: string;
     options: Option;
     interface: Interface;
+    interfaces: any[];
     gateway: Interface;
     env: Env;
     lan: Lan;

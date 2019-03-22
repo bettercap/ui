@@ -28,12 +28,22 @@
         </ng-container>
 
         <ng-container *ngIf="withIfaces">
+          <span 
+            *ngIf="ifaces.length == 0" 
+            ngbTooltip="No compatible interfaces found. Disconnect from any network the wireless interface you want to use for scanning."
+            placement="right"
+            class="badge badge-warning" 
+            style="margin: 3px; padding-top:7px">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
           <select 
+              id="wifiiface"
+              *ngIf="ifaces.length > 0"
               [disabled]="api.module('wifi').running" 
               (change)="onSetWifiInterface($event.target.value)" 
               ngbTooltip="Change the wifi.interface parameter.">
             <option 
-                *ngFor="let iface of api.session.interfaces" 
+                *ngFor="let iface of ifaces" 
                 value="{{ iface.name }}"
                 [selected]="isWifiIface(iface)"
                 >{{ iface.name }}</option>

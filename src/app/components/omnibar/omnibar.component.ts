@@ -4,6 +4,8 @@ import {ApiService} from '../../services/api.service';
 import {Observable} from 'rxjs/Observable';
 import { ToastrService } from 'ngx-toastr';  
 
+declare var $: any;
+
 // due to https://github.com/ng-bootstrap/ng-bootstrap/issues/917
 let handlers = [];
 let params = [];
@@ -23,6 +25,7 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     enabled: any = {}
     query: string = '';
     cmd: string = '';
+    ifaces: any = [];
 
     constructor(private api: ApiService, private toastr: ToastrService) { }
 
@@ -50,6 +53,15 @@ export class OmnibarComponent implements OnInit, OnDestroy {
                 params.push( mod.parameters[name].name );
             }
         }   
+
+        this.ifaces = [];
+        for( let i = 0; i < this.api.session.interfaces.length; i++ ) {
+            let iface = this.api.session.interfaces[i];
+
+            if( iface.addresses.length == 0 && !iface.flags.includes('LOOPBACK') ) {
+                this.ifaces.push(iface);
+            }
+        }
     }
 
     ngOnDestroy() {
@@ -79,9 +91,26 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         this.update();
         
         let toggle = this.enabled[mod.key] ? 'off' : 'on';
-        this.enabled[mod.key] = !this.enabled[mod.key];
+        let selected = $('#wifiiface').val();
+        let bar = this;
+        let cb = function() {
+            bar.enabled[mod.key] = !bar.enabled[mod.key];
+            bar.api.cmd(mod.value + ' ' + toggle);
+        };
 
-        this.api.cmd(mod.value + ' ' + toggle);
+        if( selected && toggle == 'on' && this.withIfaces ) {
+            this.api.cmd('set wifi.interface ' + selected, true).subscribe(
+                (val) => {
+                    cb();
+                },
+                error => {
+                    cb();
+                },
+                () => {}
+            );
+        } else {
+            cb();
+        }
     }
 
     searchCommand(text$: Observable<string>) {
