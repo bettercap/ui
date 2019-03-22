@@ -10,8 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../services/api.service';
 import { EventComponent } from '../event/event.component';
 
-import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
-
 declare var $: any;
 
 @Component({
@@ -20,8 +18,6 @@ declare var $: any;
     styleUrls: ['./main-header.component.scss']
 })
 export class MainHeaderComponent implements OnInit, OnDestroy {
-    faSignOutAlt = faSignOutAlt;
-
     apiFirstUpdate: boolean = true;
     numEvents = 0;
     numHosts = 0;

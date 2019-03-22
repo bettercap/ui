@@ -4,8 +4,6 @@ import { ApiService } from '../../services/api.service';
 import { Host } from '../../models/host';
 import { OmnibarComponent } from '../omnibar/omnibar.component';
 
-import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
-
 declare var $: any;
 
 @Component({
@@ -41,8 +39,6 @@ export class LanTableComponent implements OnInit, OnDestroy {
 
     visibleMeta = null;
     visibleMenu = null;
-
-    faInfoCircle = faInfoCircle;
 
     constructor(private api: ApiService, private sortService: SortService) { 
         this.sort = {field: 'ipv4', type:'ip', direction: 'desc'};

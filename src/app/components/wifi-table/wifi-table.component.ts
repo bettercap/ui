@@ -5,8 +5,6 @@ import {Ap} from '../../models/ap';
 import {Module} from '../../models/module';
 import { OmnibarComponent } from '../omnibar/omnibar.component';
 
-import {faUnlock} from '@fortawesome/free-solid-svg-icons';
-
 declare var $: any;
 
 @Component({
@@ -27,8 +25,6 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     sortSub: any;
     currAP: Ap = null;
     hopping: boolean = true;
-
-    faUnlock = faUnlock;
 
     constructor(private api: ApiService, private sortService: SortService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};

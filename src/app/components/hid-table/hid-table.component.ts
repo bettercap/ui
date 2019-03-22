@@ -5,8 +5,6 @@ import {HIDDevice} from '../../models/hid.device';
 import {Module} from '../../models/module';
 import { OmnibarComponent } from '../omnibar/omnibar.component';
 
-import {faCheckCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
-
 declare var $: any;
 
 @Component({
@@ -37,9 +35,6 @@ export class HidTableComponent implements OnInit, OnDestroy {
         address: "",
         payloads: []
     };
-
-    faCheckCircle = faCheckCircle;
-    faTimes = faTimes;
 
     constructor(private api: ApiService, private sortService: SortService) { 
         this.sort = {field: 'address', direction: 'asc', type:''};

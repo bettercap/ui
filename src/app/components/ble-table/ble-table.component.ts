@@ -4,8 +4,6 @@ import {ApiService} from '../../services/api.service';
 import {Device} from '../../models/device';
 import { OmnibarComponent } from '../omnibar/omnibar.component';
 
-import {faCheckCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
-
 declare var $: any;
 
 @Component({
@@ -22,9 +20,6 @@ export class BleTableComponent implements OnInit, OnDestroy {
     visibleMenu: string = "";
     currDev: Device = null;
     currScan: Device = null;
-
-    faCheckCircle = faCheckCircle;
-    faTimes = faTimes;
 
     constructor(private api: ApiService, private sortService: SortService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};

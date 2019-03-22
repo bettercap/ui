@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';  
 import { ToastrModule } from 'ngx-toastr';
@@ -59,7 +58,6 @@ import { SizePipe } from './components/size.pipe';
         ReactiveFormsModule,
         HttpClientModule,
         AppRoutingModule,
-        FontAwesomeModule,
         NgbModule,
         BrowserAnimationsModule,
         ToastrModule.forRoot({
