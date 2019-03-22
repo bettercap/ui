@@ -27,7 +27,7 @@
       <tr>
         <th width="1%" sortable-column="time" sort-type="time" sort-direction="desc">Time</th>
         <th width="1%" sortable-column="tag">Type</th>
-        <th>Data</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -39,7 +39,7 @@
       </tr>
 
       <tr *ngFor="let event of events | search: omnibar.query">
-        <td>{{ event.time | date: 'HH:mm:ss' }}</td>
+        <td class="nowrap">{{ event.time | date: 'short' }}</td>
         <td>
           <button 
             class="btn btn-sm btn-event btn-{{ btnFor(event.tag) }}"
