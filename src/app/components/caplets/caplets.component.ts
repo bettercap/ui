@@ -42,10 +42,10 @@ export class CapletsComponent implements OnInit, OnDestroy {
         }
     }
 
-    runCaplet() {
-        this.api.cmd("include " + this.curCap.path, true).subscribe(
+    runCaplet(cap) {
+        this.api.cmd("include " + cap.path, true).subscribe(
             (val) => {
-                this.successMessage = 'Caplet executed.';
+                this.successMessage = cap.path + ' executed.';
             },
             error => {
                 this.errorMessage = error.error;
@@ -54,17 +54,32 @@ export class CapletsComponent implements OnInit, OnDestroy {
         );
     }
 
-    saveCaplet() {
-        let code = $('#capCode').val();
-        this.api.writeFile(this.curCap.path, code).subscribe(
+    saveCaplet(cap) {
+        let code = $('#capCode' + cap.index).val();
+        this.api.writeFile(cap.path, code).subscribe(
             (val) => {
-                this.successMessage = 'Caplet saved.';
+                this.successMessage = cap.path + ' saved.';
             },
             error => {
                 this.errorMessage = error.error;
             },
             () => {}
         );
+    }
+
+    private curScripts() {
+        if( !this.curCap )
+            return [];
+
+        this.curCap.index = 0;
+        let files = [this.curCap];
+        for( let i = 0; i < this.curCap.scripts.length; i++ ){
+            let script = this.curCap.scripts[i];
+            script.index = i + 1;
+            files.push(script);
+        }
+
+        return files;
     }
 
     private update(session) {

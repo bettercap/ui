@@ -18,8 +18,15 @@
          (click)="curCap = cap; successMessage = ''; errorMessage = '';"
          class="nav-link" [class.active]="curCap && curCap.name == cap.name">
         {{ cap.name }} <small class="text-muted">{{ cap.size | size:0 }}</small>
-      </a>
 
+
+        <div *ngIf="curCap && curCap.name == cap.name && cap.scripts.length> 0" style="padding-left:15px">
+          <small *ngFor="let script of cap.scripts" class="text-muted">
+            {{ script.path.split('/').pop() }} {{ script.size | size:0 }}
+          </small>
+        </div>
+      </a>
+      
     </div>
   </div>
 
@@ -45,44 +52,47 @@
       </div>
     </div>
 
-    <div *ngIf="curCap" class="container-fluid shadow-sm">
+    <div *ngIf="successMessage" class="alert alert-dismissable fade show alert-success" role="alert">
+      {{ successMessage }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-dismissable fade show alert-danger" role="alert">
+      {{ errorMessage }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div *ngFor="let item of curScripts()" class="container-fluid shadow-sm">
       <div class="row">
         <div class="col-12">
 
           <div class="btn-group" style="width:100%; margin-bottom:10px" role="group">
-            <button class="btn btn-sm btn-dark" (click)="saveCaplet()" ngbTooltip="Save caplet code.">
+            <button class="btn btn-sm btn-dark" (click)="saveCaplet(item)" ngbTooltip="Save caplet code.">
               <i class="fas fa-save"></i>
             </button>
-            <button class="btn btn-sm btn-dark" (click)="runCaplet()" ngbTooltip="Run this caplet.">
+            <button *ngIf="item.path.indexOf('.cap') != -1" class="btn btn-sm btn-dark" (click)="runCaplet(item)" ngbTooltip="Run this caplet.">
               <i class="fas fa-play"></i>
             </button>
             <input 
                  type="text" 
                  class="form-control form-control-sm param-input disabled" 
                  style="width:100%"
-                 value="{{ curCap.path }}" disabled readonly/>
-          </div>
-
-          <div *ngIf="successMessage" class="alert alert-dismissable fade show alert-success" role="alert">
-            {{ successMessage }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <div *ngIf="errorMessage" class="alert alert-dismissable fade show alert-danger" role="alert">
-            {{ errorMessage }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+                 value="{{ item.path }}" disabled readonly/>
           </div>
 
           <textarea 
-            rows="30" 
-            id="capCode"
-            name="capCode"
-            class="form-control param-input caplet" required>{{ curCap.code.join("\n") }}</textarea>
+            rows="{{ item.code.length <= 30 ? item.code.length : 30 }}" 
+            id="capCode{{ item.index }}"
+            name="capCode{{ item.index }}"
+            class="form-control param-input caplet" required>{{ item.code.join("\n") }}</textarea>
+
+          <br/>
         </div>
+
       </div>
 
   </div>
