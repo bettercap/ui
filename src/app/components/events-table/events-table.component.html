@@ -4,7 +4,18 @@
   <table class="table table-sm table-dark" style="margin-bottom: 5px">
     <tbody>
       <tr>
-        <td width="1%">Muted</td>
+        <td width="1%" class="nowrap">
+          <button 
+            *ngIf="ignored.length > 1"
+            class="btn btn-sm btn-dark btn-action btn-event"
+            ngbTooltip="Clear the muted events list."
+            placement="right"
+            (click)="api.cmd('events.filters.clear')"
+            >
+            <i class="fas fa-trash-alt"></i> 
+          </button>
+          Muted
+        </td>
         <td>
           <button 
            *ngFor="let name of ignored"
