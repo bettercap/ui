@@ -1,7 +1,7 @@
-<div class="container-fluid" id="container" [class.paused]="api.paused">
+<div class="container-fluid page" id="container" [class.paused]="api.paused">
 
-<ui-main-header *ngIf="api.Ready()"></ui-main-header>
+  <ui-main-header *ngIf="api.Ready()"></ui-main-header>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 
 </div>

@@ -4,6 +4,7 @@
     background-color: #343a40;
     // border-bottom: 1px solid #222;
     padding-bottom: 10px;
+    margin-top: 56px;
 
     button {
         background-color:#333; 
@@ -25,5 +26,11 @@
         border: 1px solid #353535; 
         background-color:#333; 
         color: #999;
+    }
+}
+
+@media (min-width: 992px) {
+    .omnibar {
+        margin-top: 86px;
     }
 }
