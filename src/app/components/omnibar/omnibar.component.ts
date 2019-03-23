@@ -1,7 +1,10 @@
 import {Component, Output, Input, OnInit, OnDestroy} from '@angular/core';
+import {Router, NavigationStart } from '@angular/router';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
-import {ApiService} from '../../services/api.service';
 import {Observable} from 'rxjs/Observable';
+
+import {OmniBarService} from '../../services/omnibar.service';
+import {ApiService} from '../../services/api.service';
 import { ToastrService } from 'ngx-toastr';  
 
 declare var $: any;
@@ -16,24 +19,95 @@ let params = [];
     styleUrls: ['./omnibar.component.scss']
 })
 export class OmnibarComponent implements OnInit, OnDestroy {
-    @Input() modules: any = {}
-    @Input() clearCmd: string = "";
-    @Input() withCmd: boolean;
-    @Input() withLimit: boolean = false;
-    @Input() withIfaces: boolean = false;
+    modules: any = {}
+    clearCmd: string = "";
+    withCmd: boolean = false;
+    withLimit: boolean = false;
+    withIfaces: boolean = false;
 
     enabled: any = {}
-    query: string = '';
     cmd: string = '';
     ifaces: any = [];
 
-    constructor(private api: ApiService, private toastr: ToastrService) { }
+    configs: any = {
+        '/lan': {
+            'modules': {
+                'net.recon': 'net.recon',
+                'net.probe': 'net.probe'
+            },
+            'clearCmd': 'net.clear',
+            'withCmd': true
+        },
+
+        '/wifi': {
+            'modules': { 'wifi': 'wifi.recon' },
+            'clearCmd': 'wifi.clear',
+            'withCmd': true,
+            'withIfaces': true
+        },
+
+        '/ble': {
+            'modules': { 'ble.recon': 'ble.recon' },
+            'clearCmd': 'ble.clear',
+            'withCmd': true
+        },
+
+        '/hid': {
+            'modules': { 'hid': 'hid.recon' },
+            'clearCmd': 'hid.clear',
+            'withCmd': true,
+        },
+
+        '/caplets': {
+            'withCmd': true
+        },
+
+        '/advanced': {
+            'withCmd': true
+        },
+
+        '/events': {
+            'clearCmd': 'events.clear',
+            'withCmd': true,
+            'withLimit': true
+        },
+    };
+
+    constructor(private svc: OmniBarService, private api: ApiService, private toastr: ToastrService, private router: Router) { 
+        
+    }
 
     ngOnInit() {
+        this.router.events
+        .subscribe((event) => {
+            if( event instanceof NavigationStart) {
+                this.updateState(event.url);
+            }
+        });
+
+        this.updateState(this.router.url);
+
         this.update();
         this.api.onNewData.subscribe(session => {
             this.update();
         });
+    }
+
+    private updateState( url : string ) {
+        this.modules = {};
+        this.clearCmd = '';
+        this.withCmd  = true;
+        this.withLimit = false;
+        this.withIfaces = false;
+
+        for( var path in this.configs ) {
+            if( url.indexOf(path) === 0 ) {
+                for( var attr in this.configs[path] ) {
+                    this[attr] = this.configs[path][attr];
+                }
+                return;
+            }
+        }
     }
 
     private update() {

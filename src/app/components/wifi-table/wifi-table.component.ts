@@ -3,7 +3,7 @@ import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import {ApiService} from '../../services/api.service';
 import {Ap} from '../../models/ap';
 import {Module} from '../../models/module';
-import { OmnibarComponent } from '../omnibar/omnibar.component';
+import { OmniBarService } from '../../services/omnibar.service';
 
 declare var $: any;
 
@@ -13,8 +13,6 @@ declare var $: any;
     styleUrls: ['./wifi-table.component.scss']
 })
 export class WifiTableComponent implements OnInit, OnDestroy {
-    @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
-
     aps: Ap[] = [];
     wifi: Module;
     sort: ColumnSortedEvent;
@@ -26,7 +24,7 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     currAP: Ap = null;
     hopping: boolean = true;
 
-    constructor(private api: ApiService, private sortService: SortService) { 
+    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};
         this.update(this.api.session);
     }

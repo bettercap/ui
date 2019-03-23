@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { SortService } from '../../services/sort.service';
 import { Session } from '../../models/session';
-import { OmnibarComponent } from '../omnibar/omnibar.component';
+import { OmniBarService } from '../../services/omnibar.service';
 
 declare var $: any;
 
@@ -12,8 +12,6 @@ declare var $: any;
     styleUrls: ['./caplets.component.scss']
 })
 export class CapletsComponent implements OnInit, OnDestroy {
-    @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
-
     caplets: any[] = [];
     session: Session;
 
@@ -22,7 +20,7 @@ export class CapletsComponent implements OnInit, OnDestroy {
     curTab: number = 0;
     curCap: any = null;
 
-    constructor(private api: ApiService, private sortService: SortService) { 
+    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
         this.update(this.api.session);
     }
 

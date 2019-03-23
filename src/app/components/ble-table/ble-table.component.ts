@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import {ApiService} from '../../services/api.service';
 import {Device} from '../../models/device';
-import { OmnibarComponent } from '../omnibar/omnibar.component';
+import { OmniBarService } from '../../services/omnibar.service';
 
 declare var $: any;
 
@@ -12,8 +12,6 @@ declare var $: any;
     styleUrls: ['./ble-table.component.scss']
 })
 export class BleTableComponent implements OnInit, OnDestroy {
-    @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
-
     devices: Device[] = [];
     sort: ColumnSortedEvent;
     sortSub: any;
@@ -21,7 +19,7 @@ export class BleTableComponent implements OnInit, OnDestroy {
     currDev: Device = null;
     currScan: Device = null;
 
-    constructor(private api: ApiService, private sortService: SortService) { 
+    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};
         this.update(this.api.session);
     }

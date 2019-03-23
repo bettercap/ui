@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import { ApiService } from '../../services/api.service';
 import { Host } from '../../models/host';
-import { OmnibarComponent } from '../omnibar/omnibar.component';
+import { OmniBarService } from '../../services/omnibar.service';
 
 declare var $: any;
 
@@ -12,8 +12,6 @@ declare var $: any;
     styleUrls: ['./lan-table.component.scss']
 })
 export class LanTableComponent implements OnInit, OnDestroy {
-    @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
-
     hosts: Host[] = [];
 
     isSpoofing: boolean = false;
@@ -40,7 +38,7 @@ export class LanTableComponent implements OnInit, OnDestroy {
     visibleMeta = null;
     visibleMenu = null;
 
-    constructor(private api: ApiService, private sortService: SortService) { 
+    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
         this.sort = {field: 'ipv4', type:'ip', direction: 'desc'};
         this.update(this.api.session);
     }

@@ -1,4 +1,4 @@
-<div class="omnibar shadow-lg fixed-top">
+<div class="omnibar">
 
   <div *ngIf="withCmd" class="row">
     <div class="col-md-12">
@@ -88,7 +88,7 @@
     <div class="col-md-12">
       <div class="input-group input-group-sm">
 
-        <input [(ngModel)]="query" type="text" class="form-control" placeholder="Search ..." aria-label="Search"/>
+        <input [(ngModel)]="svc.query" type="text" class="form-control" placeholder="Search ..." aria-label="Search"/>
 
       </div>
     </div>

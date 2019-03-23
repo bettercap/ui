@@ -3,7 +3,7 @@ import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import {ApiService} from '../../services/api.service';
 import {HIDDevice} from '../../models/hid.device';
 import {Module} from '../../models/module';
-import { OmnibarComponent } from '../omnibar/omnibar.component';
+import { OmniBarService } from '../../services/omnibar.service';
 
 declare var $: any;
 
@@ -13,8 +13,6 @@ declare var $: any;
     styleUrls: ['./hid-table.component.scss']
 })
 export class HidTableComponent implements OnInit, OnDestroy {
-    @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
-
     devices: HIDDevice[] = [];
     hid: Module = null;
     sort: ColumnSortedEvent;
@@ -36,7 +34,7 @@ export class HidTableComponent implements OnInit, OnDestroy {
         payloads: []
     };
 
-    constructor(private api: ApiService, private sortService: SortService) { 
+    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
         this.sort = {field: 'address', direction: 'asc', type:''};
         this.update(this.api.session.hid['devices']);
     }

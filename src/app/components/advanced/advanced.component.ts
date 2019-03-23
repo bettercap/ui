@@ -4,7 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { SortService } from '../../services/sort.service';
 import { Module } from '../../models/module';
 import { Session } from '../../models/session';
-import { OmnibarComponent } from '../omnibar/omnibar.component';
+import { OmniBarService } from '../../services/omnibar.service';
 import { environment } from '../../../environments/environment';
 
 declare var $: any;
@@ -15,8 +15,6 @@ declare var $: any;
     styleUrls: ['./advanced.component.scss']
 })
 export class AdvancedComponent implements OnInit, OnDestroy {
-    @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
-
     modules: Module[] = [];
     session: Session;
     environment: any = environment;
@@ -33,7 +31,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
 
     pktTot: number = 0;
 
-    constructor(private api: ApiService, private sortService: SortService, private route: ActivatedRoute) { 
+    constructor(private api: ApiService, private sortService: SortService, private route: ActivatedRoute, private omnibar: OmniBarService) { 
         this.update(this.api.session);
     }
 

@@ -1,8 +1,8 @@
 import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { SortService, ColumnSortedEvent } from '../../services/sort.service';
+import { OmniBarService } from '../../services/omnibar.service';
 import { Event } from '../../models/event';
-import { OmnibarComponent } from '../omnibar/omnibar.component';
 
 declare var $: any;
 
@@ -12,8 +12,6 @@ declare var $: any;
     styleUrls: ['./events-table.component.scss']
 })
 export class EventsTableComponent implements OnInit, OnDestroy {
-    @ViewChild(OmnibarComponent) omnibar:OmnibarComponent;
-
     events: Event[] = [];
     ignored: string[] = [];
     modEnabled: boolean = false;
@@ -21,7 +19,7 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     query: string = '';
     subscriptions: any = [];
 
-    constructor(private api: ApiService, private sortService: SortService) { 
+    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
         this.sort = {field: 'time', direction: 'asc', type:''};
         this.update(this.api.events);
     }
