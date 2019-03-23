@@ -11,10 +11,8 @@ This is the official [bettercap](https://www.bettercap.org/)'s web UI, **this pr
 
 ## Prerequisites
 
-What things you need to install the software and how to install them
-
-- Node
-- NPM
+- node
+- npm
 
 ## Getting Started
 
@@ -23,7 +21,7 @@ In order to run the web ui, first clone the repo somewhere and build the source:
 ```sh
 git clone https://github.com/bettercap/ui.git ~/ui
 cd ~/ui
-npm install --save
+npm i --save
 ng build --prod 
 ```
 
