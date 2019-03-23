@@ -51,6 +51,9 @@
                   {{ api.settings.URL() }}
                   <span class="text-muted">
                     polled every {{ api.settings.interval }}ms with a ping of {{ api.ping }}ms
+                    <strong *ngIf="api.paused">
+                      (paused)
+                    </strong>
                   </span>
                 </td>
               </tr>

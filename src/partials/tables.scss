@@ -1,3 +1,18 @@
+.paused:after {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: "\f04c"; 
+    position: absolute;
+    font-size: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: .02;
+    color: white;
+    z-index: 1000;
+    pointer-events: none;
+}
+
 div.table-responsive {
     min-height: 600px;
 }

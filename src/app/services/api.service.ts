@@ -68,6 +68,8 @@ export class ApiService {
     public events         : Event[] = new Array();
     // current /api/session execution time in milliseconds
     public ping           : number = 0;
+    // true if updates have been paused
+    public paused         : boolean = false;
 
     // triggerd when the session object has been updated
     public onNewData      : EventEmitter<Session> = new EventEmitter();
@@ -219,8 +221,10 @@ export class ApiService {
 
     // handler for /api/events response
     private eventsNew(response) {
-        this.events = response;
-        this.onNewEvents.emit(response);
+        if( this.paused == false ) {
+            this.events = response;
+            this.onNewEvents.emit(response);
+        }
         return response;
     }
 
@@ -289,17 +293,16 @@ export class ApiService {
 
     // handler for /api/session response
     private sessionNew(start, response) {
-        this.ping    = new Date().getTime() - start.getTime();
-        this.session = response;
+        this.ping = new Date().getTime() - start.getTime();
 
         // if in prod, make sure we're talking to a compatible API version
-        if(  compareVersions(this.session.version, environment.requires) == -1 ) {
+        if(  compareVersions(response.version, environment.requires) == -1 ) {
             if( environment.production ) {
                 this.logout();
                 this.onLoggedOut.emit({
                     status: 666,
                     error: "This client requires at least API v" + environment.requires + 
-                    " but " + this.settings.URL() + " is at v" + this.session.version
+                    " but " + this.settings.URL() + " is at v" + response.version
                 });
                 return response;
             }
@@ -308,8 +311,11 @@ export class ApiService {
         // save credentials and emit logged in event if needed
         this.setLoggedIn();
 
-        // inform all subscribers that new data is available
-        this.onNewData.emit(response);
+        if( this.paused == false ) {
+            // inform all subscribers that new data is available
+            this.session = response;
+            this.onNewData.emit(response);
+        }
 
         return response;
     }

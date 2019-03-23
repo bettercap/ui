@@ -6,12 +6,24 @@
 
         <button 
            type="button" 
+           class="btn btn-dark btn-sm" 
+           ngbTooltip="{{ api.paused ? 'Resume API polling.' : 'Pause API polling and freeze the UI for editing.' }}" 
+           placement="right" 
+           (click)="api.paused = !api.paused">
+          <i *ngIf="api.paused" class="fas fa-play"></i>
+          <span *ngIf="!api.paused">
+            {{ api.ping }}ms
+          </span>
+        </button>
+
+        <button 
            *ngIf="clearCmd" 
+           type="button" 
            class="btn btn-dark btn-sm" 
            ngbTooltip="Clear records from the current view." 
            placement="right" 
            (click)="onClearClicked()">
-          <i class="fas fa-trash-alt" ngTooltip="Clear the current view from records."></i>
+          <i class="fas fa-trash-alt"></i>
         </button>
 
         <ng-container *ngIf="withLimit">
