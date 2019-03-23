@@ -23,6 +23,7 @@ const routes: Routes = [
     { path: 'hid', component: HidTableComponent,  canActivate: [AuthGuard]},
     { path: 'caplets', component: CapletsComponent,  canActivate: [AuthGuard]},
     { path: 'advanced', component: AdvancedComponent,  canActivate: [AuthGuard]},
+    { path: 'advanced/:module', component: AdvancedComponent,  canActivate: [AuthGuard]},
 
     { path: '**', redirectTo: 'events' }
 ];

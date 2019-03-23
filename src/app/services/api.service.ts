@@ -22,9 +22,31 @@ export class Settings {
     public path: string     = '/api';
     public interval: number = 1000;
     public events: number   = 25;
+    public pinned: any = {
+        modules: {},
+        caplets: {}
+    };
 
     public URL() : string {
         return this.schema + '//' + this.host + ':' + this.port + this.path;
+    }
+
+    public isPinned(name : string) : boolean {
+        return (name in this.pinned.modules) || (name in this.pinned.caplets);
+    }
+
+    public pinToggle(name : string, what : string) {
+        if( what == 'caplet' ) {
+            if( this.isPinned(name) )
+                delete this.pinned.caplets[name];
+            else
+                this.pinned.caplets[name] = true;
+        } else {
+            if( this.isPinned(name) )
+                delete this.pinned.modules[name];
+            else
+                this.pinned.modules[name] = true;
+        }
     }
 
     public from(obj : any) {
@@ -34,6 +56,19 @@ export class Settings {
         this.path     = obj.path || this.path;
         this.interval = obj.interval || this.interval;
         this.events   = obj.events || this.events;
+        this.pinned   = obj.pinned || this.pinned;
+    }
+
+    public save() {
+        localStorage.setItem('settings', JSON.stringify({
+            schema: this.schema,
+            host: this.host,
+            port: this.port,
+            path: this.path,
+            interval: this.interval,
+            events: this.events,
+            pinned: this.pinned
+        }));
     }
 }
 
@@ -47,6 +82,13 @@ export class Credentials {
         this.user    = user;
         this.pass    = pass;
         this.headers = new HttpHeaders().set("Authorization", "Basic " + btoa(this.user+":"+this.pass));
+    }
+
+    public save() {
+        localStorage.setItem('auth', JSON.stringify({
+            username: this.user,
+            password: this.pass
+        }));
     }
 
     public clear() {
@@ -204,19 +246,8 @@ export class ApiService {
 
     // save settings and user credentials to the local storage
     private saveStorage() {
-        localStorage.setItem('auth', JSON.stringify({
-            username: this.creds.user,
-            password: this.creds.pass
-        }));
-
-        localStorage.setItem('settings', JSON.stringify({
-            schema: this.settings.schema,
-            host: this.settings.host,
-            port: this.settings.port,
-            path: this.settings.path,
-            interval: this.settings.interval,
-            events: this.settings.events
-        }));
+        this.creds.save();
+        this.settings.save();
     }
 
     // handler for /api/events response

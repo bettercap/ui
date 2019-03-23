@@ -6,22 +6,25 @@
       <a 
          (click)="curMod = 0; successMessage = '';"
          class="nav-link" [class.active]="curMod === 0">
-          <i class="fas fa-cog"></i>
+          <i class="fas fa-cog" style="margin-right: 5px"></i>
           Main
       </a>
 
       <a 
          (click)="curMod = 1; successMessage = '';"
          class="nav-link" [class.active]="curMod === 1">
-          <i class="fas fa-ethernet"></i>
+          <i class="fas fa-ethernet" style="margin-right: 5px"></i>
           Network
       </a>
 
       <a 
          *ngFor="let mod of modules | search: omnibar.query" 
          (click)="curMod = mod; successMessage = '';"
+         href="#/advanced/{{ mod.name }}"
          class="nav-link" [class.active]="curMod && curMod.name == mod.name" [class.text-muted]="!mod.running">
+        <i class="fas fa-{{ mod.name | modicon }}" style="margin-right: 5px"></i>
         {{ mod.name }}
+        <i *ngIf="api.settings.isPinned(mod.name)" class="fas fa-thumbtack float-right shadow" style="transform: rotate(45deg); font-size: .7rem"></i>
       </a>
 
     </div>
@@ -188,6 +191,12 @@
           <p class="mod-description">
             {{ curMod.description }}
           </p>
+          <a (click)="api.settings.pinToggle(curMod.name)" 
+             ngbTooltip="{{ api.settings.isPinned(curMod.name) ? 'Unpin' : 'Pin' }} this module to the navigation bar."
+             style="cursor:pointer;margin-right: 15px"
+             >
+            <i class="fas fa-thumbtack shadow" [ngStyle]="{'transform': api.settings.isPinned(curMod.name) ? 'rotate(45deg)' : ''}"></i>
+          </a>
           <span *ngIf="curMod.running" class="badge badge-success">
             Running
           </span> 

@@ -63,6 +63,13 @@
           </a>
         </li>
 
+        <li class="nav-item" *ngFor="let mod of api.settings.pinned.modules | keyvalue" routerLinkActive="active">
+          <a class="nav-link" routerLink="/advanced/{{ mod.key }}">
+            <i class="fa fa-{{ mod.key | modicon }}"></i>
+            {{ mod.key }}
+          </a>
+        </li>
+
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/advanced">
             <i class="fa fa-cogs">

@@ -1,4 +1,5 @@
 import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 import { ApiService } from '../../services/api.service';
 import { SortService } from '../../services/sort.service';
 import { Module } from '../../models/module';
@@ -32,11 +33,20 @@ export class AdvancedComponent implements OnInit, OnDestroy {
 
     pktTot: number = 0;
 
-    constructor(private api: ApiService, private sortService: SortService) { 
+    constructor(private api: ApiService, private sortService: SortService, private route: ActivatedRoute) { 
         this.update(this.api.session);
     }
 
     ngOnInit() {
+        this.route.paramMap.subscribe(params => {
+            this.curMod = this.api.module(params.get("module")) || this.curMod;
+        });
+
+        let modname = this.route.snapshot.paramMap.get("module");
+        if( modname ) {
+            this.curMod = this.api.module(modname) || this.curMod;
+        }
+
         this.api.onNewData.subscribe(session => {
             this.update(session);
         });
