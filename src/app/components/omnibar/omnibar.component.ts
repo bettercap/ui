@@ -115,7 +115,6 @@ export class OmnibarComponent implements OnInit, OnDestroy {
 
     searchCommand(text$: Observable<string>) {
         return text$.pipe(
-            debounceTime(200),
             distinctUntilChanged(),
             map(function(term) {
                 if( term.length < 2 )
