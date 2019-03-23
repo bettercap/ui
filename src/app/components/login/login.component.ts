@@ -18,9 +18,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     mismatch: any = null;
     subscriptions: any = [];
     returnTo: string = "/";
-    
+    env: any = environment;
 
     constructor(private api: ApiService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
+        console.log("env:", this.env);
+
         if( this.api.Ready() ) {
             console.log("user already logged in");
             this.router.navigateByUrl("/");

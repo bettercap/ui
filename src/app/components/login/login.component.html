@@ -1,14 +1,17 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-signin shadow-lg p-3 mb-5 bg-white rounded">
-  <img [src]="'./assets/images/logo.png'" width="200px" alt="bettercap - Logo" class="img-responsive">
-  <br/>
+  <img [src]="'./assets/images/logo.png'" width="150px" alt="bettercap - Logo" class="img-responsive">
+  <div style="text-align: center; margin-top: 15px">
+    <small>bettercap {{ env.name }} v{{ env.version }} | requires bettercap v{{ env.requires }}</small>
+  </div>
+
+  <hr/>
+
   <ngb-alert *ngIf="error && error.status == 401 && submitted" type="danger" (close)="error = submitted = false">
     {{error.status}} {{error.statusText}}: wrong credentials.
   </ngb-alert>
   <ngb-alert *ngIf="error && error.status == 666 && submitted" type="danger" (close)="error = submitted = false">
     {{ error.error }}
   </ngb-alert>
-
-  <br/>
 
   <div class="form-group">
     <label for="username">Username</label>
