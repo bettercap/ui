@@ -17,12 +17,12 @@
          *ngFor="let cap of caplets | search: omnibar.query" 
          (click)="curCap = cap; successMessage = ''; errorMessage = '';"
          class="nav-link" [class.active]="curCap && curCap.name == cap.name">
-        {{ cap.name }} <small class="text-muted">{{ cap.size | size:0 }}</small>
-
+        {{ cap.name.split('/').pop() }} <small class="text-muted">{{ cap.size | size:0 }}</small>
 
         <div *ngIf="curCap && curCap.name == cap.name && cap.scripts.length> 0" style="padding-left:15px">
           <small *ngFor="let script of cap.scripts" class="text-muted">
             {{ script.path.split('/').pop() }} {{ script.size | size:0 }}
+            <br/>
           </small>
         </div>
       </a>
