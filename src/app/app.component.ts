@@ -46,7 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.titleService.setTitle(environment.name + ' ' + environment.version);
+        this.titleService.setTitle('bettercap ' + environment.name + ' ' + environment.version);
     }
 
     ngOnDestroy() {
