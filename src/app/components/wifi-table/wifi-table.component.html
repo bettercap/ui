@@ -144,7 +144,7 @@
         </td>
       </tr>
 
-      <tr *ngFor="let client of currAP.clients">
+      <tr *ngFor="let client of currAP.clients | search: omnibar.query">
         <td>
           <ui-signal-indicator [signalstrength]="client.rssi"></ui-signal-indicator>
         </td>
