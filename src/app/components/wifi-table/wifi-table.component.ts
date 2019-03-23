@@ -8,7 +8,7 @@ import { OmnibarComponent } from '../omnibar/omnibar.component';
 declare var $: any;
 
 @Component({
-    selector: 'hydra-wifi-table',
+    selector: 'ui-wifi-table',
     templateUrl: './wifi-table.component.html',
     styleUrls: ['./wifi-table.component.scss']
 })

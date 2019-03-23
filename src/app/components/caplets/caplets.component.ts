@@ -7,7 +7,7 @@ import { OmnibarComponent } from '../omnibar/omnibar.component';
 declare var $: any;
 
 @Component({
-    selector: 'hydra-caplets',
+    selector: 'ui-caplets',
     templateUrl: './caplets.component.html',
     styleUrls: ['./caplets.component.scss']
 })

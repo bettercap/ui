@@ -1,13 +1,13 @@
 <p align="center">
-  <img alt="Hydra" src="https://github.com/bettercap/hydra/blob/master/src/assets/images/logo.png" height="140" />
+  <img alt="bettercap" src="https://github.com/bettercap/ui/blob/master/src/assets/images/logo.png" height="140" />
   <p align="center">
     <a href="https://github.com/bettercap/bettercap/blob/master/LICENSE.md"><img alt="Software License" src="https://img.shields.io/badge/license-GPL3-brightgreen.svg?style=flat-square"></a>
   </p>
 </p>
 
-# Hydra
+# bettercap
 
-Hydra is a UI crafted on top of [bettercap](https://www.bettercap.org/), **this project is still work in progress**. 
+This is the official [bettercap](https://www.bettercap.org/)'s web UI, **this project is still work in progress**. 
 
 ## Prerequisites
 
@@ -21,13 +21,13 @@ What things you need to install the software and how to install them
 In order to run the web ui, first clone the repo somewhere and build the source:
 
 ```sh
-git clone https://github.com/bettercap/hydra.git ~/hydra
-cd ~/hydra
+git clone https://github.com/bettercap/ui.git ~/ui
+cd ~/ui
 npm install --save
 ng build --prod 
 ```
 
-This shoud generate the `~/hydra/dist/hydra` folder, then you can use `bettercap` (make sure it's updated) for both the REST API and to serve the web ui itself via the `http.server` module:
+This shoud generate the `~/ui/dist/ui` folder, then you can use `bettercap` (make sure it's updated) for both the REST API and to serve the web ui itself via the `http.server` module:
 
 ```sh
 sudo bettercap
@@ -53,7 +53,7 @@ And start serving the UI (by default on port 80 of the IP address of the interfa
 
 ```
 set http.server.address 127.0.0.1
-set http.server.path /path/to/hydra/dist/hydra 
+set http.server.path /path/to/ui/dist/ui 
 http.server on
 ```
 
@@ -63,4 +63,4 @@ For further information, [refer to bettercap's documentation](https://www.better
 
 ## License
 
-Hydra is made with ♥  by [the dev team](https://github.com/bettercap/hydra/graphs/contributors) and it's released under the GPL 3 license.
+This UI is made with ♥  by [the dev team](https://github.com/bettercap/ui/graphs/contributors) and it's released under the GPL 3 license.

@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "hydra": {
+    "ui": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "hydra",
+      "prefix": "ui",
       "schematics": {
         "@schematics/angular:component": {
           "styleext": "scss"
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/hydra",
+            "outputPath": "dist/ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,18 +72,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hydra:build"
+            "browserTarget": "ui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "hydra:build:production"
+              "browserTarget": "ui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "hydra:build"
+            "browserTarget": "ui:build"
           }
         },
         "test": {
@@ -117,7 +117,7 @@
         }
       }
     },
-    "hydra-e2e": {
+    "ui-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -126,11 +126,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "hydra:serve"
+            "devServerTarget": "ui:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "hydra:serve:production"
+              "devServerTarget": "ui:serve:production"
             }
           }
         },
@@ -146,5 +146,5 @@
       }
     }
   },
-  "defaultProject": "hydra"
+  "defaultProject": "ui"
 }

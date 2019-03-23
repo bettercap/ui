@@ -8,7 +8,7 @@ import { OmnibarComponent } from '../omnibar/omnibar.component';
 declare var $: any;
 
 @Component({
-    selector: 'hydra-hid-table',
+    selector: 'ui-hid-table',
     templateUrl: './hid-table.component.html',
     styleUrls: ['./hid-table.component.scss']
 })

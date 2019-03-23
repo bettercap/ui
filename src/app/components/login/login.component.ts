@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import * as urlParse from 'url-parse';
 
 @Component({
-    selector: 'hydra-login',
+    selector: 'ui-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })

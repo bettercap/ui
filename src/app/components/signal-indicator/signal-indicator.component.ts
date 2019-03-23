@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
-    selector: 'hydra-signal-indicator',
+    selector: 'ui-signal-indicator',
     templateUrl: './signal-indicator.component.html',
     styleUrls: ['./signal-indicator.component.scss']
 })

@@ -13,7 +13,7 @@ import { EventComponent } from '../event/event.component';
 declare var $: any;
 
 @Component({
-    selector: 'hydra-main-header',
+    selector: 'ui-main-header',
     templateUrl: './main-header.component.html',
     styleUrls: ['./main-header.component.scss']
 })

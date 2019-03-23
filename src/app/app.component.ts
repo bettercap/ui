@@ -8,7 +8,7 @@ import { Session } from './models/session';
 const POLLING_INTERVAL = 1000;
 
 @Component({
-    selector: 'hydra-root',
+    selector: 'ui-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })

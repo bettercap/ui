@@ -7,7 +7,7 @@ import { OmnibarComponent } from '../omnibar/omnibar.component';
 declare var $: any;
 
 @Component({
-    selector: 'hydra-events-table',
+    selector: 'ui-events-table',
     templateUrl: './events-table.component.html',
     styleUrls: ['./events-table.component.scss']
 })

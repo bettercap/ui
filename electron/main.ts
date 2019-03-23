@@ -16,7 +16,7 @@ function createWindow() {
 
     win.loadURL(
         url.format({
-            pathname: path.join(__dirname, `/../../dist/hydra/index.html`),
+            pathname: path.join(__dirname, `/../../dist/ui/index.html`),
             protocol: "file:",
             slashes: true
         })

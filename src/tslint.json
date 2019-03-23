@@ -10,7 +10,7 @@
         "component-selector": [
             true,
             "element",
-            "hydra",
+            "ui",
             "kebab-case"
         ]
     }

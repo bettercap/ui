@@ -35,7 +35,7 @@
       <ng-container *ngFor="let ap of aps | search: omnibar.query">
         <tr *ngIf="(!currAP || currAP.mac == ap.mac) && (!wifi || wifi.state.channels.includes(ap.channel))" [class.alive]="ap | alive:1000">
           <td>
-            <hydra-signal-indicator [signalstrength]="ap.rssi"></hydra-signal-indicator>
+            <ui-signal-indicator [signalstrength]="ap.rssi"></ui-signal-indicator>
           </td>
           <td>
             <div ngbDropdown [open]="visibleMenu == ap.mac">
@@ -146,7 +146,7 @@
 
       <tr *ngFor="let client of currAP.clients">
         <td>
-          <hydra-signal-indicator [signalstrength]="client.rssi"></hydra-signal-indicator>
+          <ui-signal-indicator [signalstrength]="client.rssi"></ui-signal-indicator>
         </td>
         <td class="nowrap">
           <span ngbDropdown [open]="visibleClientMenu == client.mac">

@@ -25,7 +25,7 @@
       <ng-container *ngFor="let device of devices | search: omnibar.query">
         <tr *ngIf="!currDev || currDev.mac == device.mac" [class.alive]="device | alive:100">
           <td>
-            <hydra-signal-indicator [signalstrength]="device.rssi"></hydra-signal-indicator>
+            <ui-signal-indicator [signalstrength]="device.rssi"></ui-signal-indicator>
           </td>
           <td>
             <div ngbDropdown [open]="visibleMenu == device.mac">

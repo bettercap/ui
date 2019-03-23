@@ -1,5 +1,5 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-signin shadow-lg p-3 mb-5 bg-white rounded">
-  <img [src]="'./assets/images/logo.png'" width="200px" alt="Hydra - Logo" class="img-responsive">
+  <img [src]="'./assets/images/logo.png'" width="200px" alt="bettercap - Logo" class="img-responsive">
   <br/>
   <ngb-alert *ngIf="error && error.status == 401 && submitted" type="danger" (close)="error = submitted = false">
     {{error.status}} {{error.statusText}}: wrong credentials.

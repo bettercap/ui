@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 declare var $: any;
 
 @Component({
-    selector: 'hydra-advanced',
+    selector: 'ui-advanced',
     templateUrl: './advanced.component.html',
     styleUrls: ['./advanced.component.scss']
 })
