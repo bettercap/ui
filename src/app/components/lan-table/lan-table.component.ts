@@ -38,7 +38,7 @@ export class LanTableComponent implements OnInit, OnDestroy {
     visibleMeta = null;
     visibleMenu = null;
 
-    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
+    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
         this.sort = {field: 'ipv4', type:'ip', direction: 'desc'};
         this.update(this.api.session);
     }

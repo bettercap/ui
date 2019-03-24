@@ -31,7 +31,7 @@ export class AdvancedComponent implements OnInit, OnDestroy {
 
     pktTot: number = 0;
 
-    constructor(private api: ApiService, private sortService: SortService, private route: ActivatedRoute, private omnibar: OmniBarService) { 
+    constructor(private api: ApiService, private sortService: SortService, private route: ActivatedRoute, public omnibar: OmniBarService) { 
         this.update(this.api.session);
     }
 

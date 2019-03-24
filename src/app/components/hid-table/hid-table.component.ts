@@ -34,7 +34,7 @@ export class HidTableComponent implements OnInit, OnDestroy {
         payloads: []
     };
 
-    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
+    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
         this.sort = {field: 'address', direction: 'asc', type:''};
         this.update(this.api.session.hid['devices']);
     }

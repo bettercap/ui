@@ -24,7 +24,7 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     currAP: Ap = null;
     hopping: boolean = true;
 
-    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
+    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};
         this.update(this.api.session);
     }

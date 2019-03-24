@@ -19,7 +19,7 @@ export class BleTableComponent implements OnInit, OnDestroy {
     currDev: Device = null;
     currScan: Device = null;
 
-    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
+    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};
         this.update(this.api.session);
     }

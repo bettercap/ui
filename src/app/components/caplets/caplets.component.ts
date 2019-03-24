@@ -20,7 +20,7 @@ export class CapletsComponent implements OnInit, OnDestroy {
     curTab: number = 0;
     curCap: any = null;
 
-    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
+    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
         this.update(this.api.session);
     }
 
@@ -65,7 +65,7 @@ export class CapletsComponent implements OnInit, OnDestroy {
         );
     }
 
-    private curScripts() {
+    curScripts() {
         if( !this.curCap )
             return [];
 

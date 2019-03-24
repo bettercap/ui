@@ -19,7 +19,7 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     query: string = '';
     subscriptions: any = [];
 
-    constructor(private api: ApiService, private sortService: SortService, private omnibar: OmniBarService) { 
+    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
         this.sort = {field: 'time', direction: 'asc', type:''};
         this.update(this.api.events);
     }
