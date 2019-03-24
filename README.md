@@ -20,7 +20,7 @@ make build
 sudo make install
 ```
 
-Make sure you have the [latest version of bettercap](https://github.com/bettercap/bettercap/releases) and update your caplets:
+Make sure you have the [latest version of bettercap](https://github.com/bettercap/bettercap/releases) and update your [caplets](https://github.com/bettercap/caplets):
 
 ```sh
 sudo bettercap -eval "caplets.update; q"
