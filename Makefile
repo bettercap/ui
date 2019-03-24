@@ -10,10 +10,6 @@ build: deps
 	@echo "buiding ui ..."
 	@ng build --prod
 
-dev: deps
-	@echo "building ui (dev mode) ..."
-	@ng build
-	
 zip: build
 	@echo "creating ui.zip ..."
 	@cd dist && zip -r ../ui.zip . && cd ..
