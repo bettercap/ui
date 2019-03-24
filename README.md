@@ -5,7 +5,7 @@
   </p>
 </p>
 
-# bettercap
+# ui
 
 This is the official [bettercap](https://www.bettercap.org/)'s web UI, **this project is still work in progress**. 
 
