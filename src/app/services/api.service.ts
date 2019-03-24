@@ -375,6 +375,8 @@ export class ApiService {
     // POST /api/file given its name and new contents
     public writeFile(name : string, data : string) {
         console.log("writeFile " + name + " " + data.length + "b");
+
+        this.paused = false;
         return this.http.post<Response>(
             this.settings.URL() + '/file', 
             new Blob([data]),
@@ -388,6 +390,8 @@ export class ApiService {
     // just broadcast errors via the event emitter, or synchronous and 
     // return a subscribable response
     public cmd(cmd: string, sync: boolean = false) {
+        this.paused = false;
+
         if( sync ) {
             console.log("cmd: " + cmd);
             return this.http.post<Response>(
