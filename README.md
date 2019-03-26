@@ -23,7 +23,7 @@ sudo make install
 Make sure you have the [latest version of bettercap](https://github.com/bettercap/bettercap/releases) and update your [caplets](https://github.com/bettercap/caplets):
 
 ```sh
-sudo bettercap -eval "caplets.update; q"
+sudo bettercap -eval "update.check on; caplets.update; q"
 ```
 
 Edit the access credentials in `/usr/local/share/bettercap/caplets/http-ui.cap` and start the `http-ui` caplet: 
