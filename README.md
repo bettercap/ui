@@ -1,15 +1,14 @@
 <p align="center">
   <img alt="bettercap" src="https://github.com/bettercap/ui/blob/master/src/assets/images/logo.png" height="140" />
   <p align="center">
+    <a href="https://github.com/bettercap/ui/releases/latest"><img alt="Release" src="https://img.shields.io/github/release/bettercap/ui.svg?style=flat-square"></a>
     <a href="https://github.com/bettercap/bettercap/blob/master/LICENSE.md"><img alt="Software License" src="https://img.shields.io/badge/license-GPL3-brightgreen.svg?style=flat-square"></a>
   </p>
 </p>
 
-# ui
-
 This is the official [bettercap](https://www.bettercap.org/)'s web UI, **this project is still work in progress**. 
 
-## Installing a Release
+## Installation
 
 Download the latest [ui.zip precompiled release](https://github.com/bettercap/ui/releases) and unzip it to `/usr/local/share/bettercap/ui`:
 
