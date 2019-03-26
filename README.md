@@ -6,7 +6,7 @@
   </p>
 </p>
 
-This is the official [bettercap](https://www.bettercap.org/)'s web UI, **this project is still work in progress**. 
+This is the official [bettercap](https://www.bettercap.org/)'s web UI.
 
 ## Installation
 
