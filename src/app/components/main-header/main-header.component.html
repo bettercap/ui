@@ -109,6 +109,15 @@
   </div>
 </div>
 
+<div *ngIf="api.settings.Warning()" id="sslWarning">
+  <div class="alert alert-danger" role="alert">
+    <h5 class="alert-heading">WARNING</h5>
+    <p class="mb-0">
+    {{ api.settings.URL() }} is using an <strong>insecure connection</strong>, refer to <a href="https://www.bettercap.org/modules/core/api.rest/#parameters" target="_blank">the documentation</a> to configure the api.rest module to use SSL.<br/>
+    </p>
+  </div>
+</div>
+
 <div id="commandError" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="commandErrorTitle">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

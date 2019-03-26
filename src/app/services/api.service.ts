@@ -33,6 +33,13 @@ export class Settings {
         return this.schema + '//' + this.host + ':' + this.port + this.path;
     }
 
+    public Warning() : boolean {
+        if( this.host == 'localhost' || this.host == '127.0.0.1' )
+            return false;
+
+        return this.schema == 'https:';
+    }
+
     public isPinned(name : string) : boolean {
         return (name in this.pinned.modules) || (name in this.pinned.caplets);
     }
