@@ -26,7 +26,7 @@ Make sure you have the [latest version of bettercap](https://github.com/betterca
 sudo bettercap -eval "update.check on; caplets.update; q"
 ```
 
-Edit the access credentials in `/usr/local/share/bettercap/caplets/http-ui.cap` and start the `http-ui` caplet: 
+Edit the access credentials in `/usr/local/share/bettercap/caplets/http-ui.cap` and start the `http-ui` caplet (you can instead use the `https-ui` caplet to use SSL, in which case you'll need to import bettercap's self signed certificate or use a certificate that your browser will accept): 
 
 ```sh
 sudo bettercap -caplet http-ui -autostart ""
