@@ -9,15 +9,14 @@
 
 This is the official [bettercap](https://www.bettercap.org/)'s web UI, **this project is still work in progress**. 
 
-## Building from Sources
+## Installing a Release
 
-Assuming you have `make`, `node` and `npm` correctly installed, first clone the repo somewhere, build the source and install to `/usr/local/share/bettercap/ui`:
+Download the latest [ui.zip precompiled release](https://github.com/bettercap/ui/releases) and unzip it to `/usr/local/share/bettercap/ui`:
 
 ```sh
-git clone https://github.com/bettercap/ui.git ~/ui
-cd ~/ui
-make build
-sudo make install
+wget https://github.com/bettercap/ui/releases/download/VERSION/ui.zip
+sudo mkdir -p /usr/local/share/bettercap
+sudo unzip ui.zip -d /usr/local/share/bettercap/
 ```
 
 Make sure you have the [latest version of bettercap](https://github.com/bettercap/bettercap/releases) and update your [caplets](https://github.com/bettercap/caplets):
@@ -35,6 +34,17 @@ sudo bettercap -caplet http-ui -autostart ""
 The web ui will be available at `http://127.0.0.1/`.
 
 For further information, [refer to bettercap's documentation](https://www.bettercap.org/).
+
+## Building from Sources
+
+Assuming you have `make`, `node` and `npm` correctly installed, first clone the repo somewhere, build the source and install to `/usr/local/share/bettercap/ui`:
+
+```sh
+git clone https://github.com/bettercap/ui.git ~/ui
+cd ~/ui
+make build
+sudo make install
+```
 
 ## License
 
