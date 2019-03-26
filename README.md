@@ -29,7 +29,7 @@ sudo bettercap -eval "caplets.update; q"
 Edit the access credentials in `/usr/local/share/bettercap/caplets/http-ui.cap` and start the `http-ui` caplet: 
 
 ```sh
-sudo bettercap -capet http-ui -autostart ""
+sudo bettercap -caplet http-ui -autostart ""
 ```
 
 The web ui will be available at `http://127.0.0.1/`.
