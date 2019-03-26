@@ -160,7 +160,7 @@
                   <a (click)="visibleMenu = null; clipboard.copy(client.mac.toUpperCase())">Copy</a>
                 </li>
                 <li>
-                  <a (click)="setAlias(client)">Set Alias</a>
+                  <a (click)="setAlias(client); visibleClientMenu = null;">Set Alias</a>
                 </li>
                 <li>
                   <a (click)="api.cmd('wifi.deauth ' + client.mac); visibleClientMenu = null;">Deauthenticate</a>
