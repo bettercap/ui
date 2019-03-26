@@ -7,11 +7,11 @@
         <button 
            type="button" 
            class="btn btn-dark btn-sm" 
-           ngbTooltip="{{ api.paused ? 'Resume API polling.' : 'Pause API polling and freeze the UI for editing.' }}" 
+           ngbTooltip="{{ api.isPaused() ? 'Resume API polling.' : 'Pause API polling and freeze the UI for editing.' }}" 
            placement="right" 
            (click)="api.paused = !api.paused">
-          <i *ngIf="api.paused" class="fas fa-play"></i>
-          <span *ngIf="!api.paused">
+          <i *ngIf="api.isPaused()" class="fas fa-play"></i>
+          <span *ngIf="!api.isPaused()">
             {{ api.ping }}ms
           </span>
         </button>

@@ -15,6 +15,8 @@ import { Session } from '../models/session';
 import { Event } from '../models/event';
 import { Command, Response } from '../models/command';
 
+declare var $: any;
+
 export class Settings {
     public schema: string   = 'http:';
     public host: string     = document.location.hostname || "127.0.0.1";
@@ -342,13 +344,24 @@ export class ApiService {
         // save credentials and emit logged in event if needed
         this.setLoggedIn();
 
-        if( this.paused == false ) {
+        if( !this.isPaused() ) {
             // inform all subscribers that new data is available
             this.session = response;
             this.onNewData.emit(response);
         }
 
         return response;
+    }
+
+    public isPaused() {
+        // pause ui updates if:
+        //
+        // the user excplicitly pressed the paused button
+        return this.paused || 
+        // an action button is hovered (https://stackoverflow.com/questions/8981463/detect-if-hovering-over-element-with-jquery)
+        $('.btn-action').filter(function() { return $(this).is(":hover"); }).length > 0 || 
+        // a dropdown is open
+        $('.menu-dropdown').is(':visible');
     }
 
     // GET /api/session and return an observable Session
