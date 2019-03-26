@@ -1,7 +1,7 @@
 #!/bin/bash
 # nothing to see here, just a utility i use to create new releases ^_^
 
-CURRENT_VERSION=$(cat core/banner.go | grep Version | cut -d '"' -f 2)
+CURRENT_VERSION=$(cat package.json | grep '"version"' | cut -d '"' -f 4)
 TO_UPDATE=(
     package.json
 )
