@@ -1,6 +1,6 @@
 {
   "name": "ui",
-  "version": "1.0.0a",
+  "version": "1.0.0",
   "requires": "2.20",
   "main": "electron/dist/main.js",
   "scripts": {
