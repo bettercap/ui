@@ -18,6 +18,7 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     sort: ColumnSortedEvent;
     query: string = '';
     subscriptions: any = [];
+    curEvent: any = null;
 
     constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
         this.sort = {field: 'time', direction: 'asc', type:''};
@@ -64,6 +65,18 @@ export class EventsTableComponent implements OnInit, OnDestroy {
             case 'hid': return 'warning';
             default: return 'dark';
         }
+    }
+
+    showEvent(event : any) {
+        this.curEvent = event;
+        $('#eventModal').modal('show');
+    }
+
+    curEventData() {
+        if( this.curEvent ) {
+            return JSON.stringify(this.curEvent.data, null, 2);
+        }
+        return '';
     }
 
     clear() {

@@ -59,10 +59,20 @@
             {{ event.tag }}
           </button>
         </td>
-        <td>
+        <td (click)="showEvent(event)" style="cursor: pointer">
           <event-data [event]="event"></event-data>
         </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<div id="eventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eventModalTitle" [ngModel]="curEvent" name="fieldName" ngDefaultControl>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <pre><code style="color:white">{{ curEventData() | unbash }}</code></pre>
+      </div>
+    </div>
+  </div>
 </div>
