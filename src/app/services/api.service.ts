@@ -18,9 +18,9 @@ import { Command, Response } from '../models/command';
 declare var $: any;
 
 export class Settings {
-    public schema: string   = 'http:';
+    public schema: string   = document.location.protocol || 'http:';
     public host: string     = document.location.hostname || "127.0.0.1";
-    public port: string     = "8081";
+    public port: string     = (document.location.protocol || 'http:') == 'http:' ? '8081' : '8083';
     public path: string     = '/api';
     public interval: number = 1000;
     public events: number   = 25;
