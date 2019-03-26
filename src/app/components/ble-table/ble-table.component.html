@@ -33,6 +33,9 @@
               <div ngbDropdownMenu class="menu-dropdown">
                 <ul>
                   <li>
+                    <a (click)="visibleMenu = null; clipboard.copy(device.mac.toUpperCase())">Copy</a>
+                  </li>
+                  <li>
                     <a (click)="visibleMenu = null; setAlias(device)">Set Alias</a>
                   </li>
                 </ul>

@@ -3,6 +3,7 @@ import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import {ApiService} from '../../services/api.service';
 import {Device} from '../../models/device';
 import { OmniBarService } from '../../services/omnibar.service';
+import { ClipboardService } from '../../services/clipboard.service';
 
 declare var $: any;
 
@@ -19,7 +20,7 @@ export class BleTableComponent implements OnInit, OnDestroy {
     currDev: Device = null;
     currScan: Device = null;
 
-    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
+    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService, public clipboard: ClipboardService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};
         this.update(this.api.session);
     }

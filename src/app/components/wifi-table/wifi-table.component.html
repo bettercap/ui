@@ -43,6 +43,9 @@
               <div ngbDropdownMenu class="menu-dropdown">
                 <ul>
                   <li>
+                    <a (click)="visibleMenu = null; clipboard.copy(ap.mac.toUpperCase())">Copy</a>
+                  </li>
+                  <li>
                     <a (click)="api.cmd('wifi.assoc ' + ap.mac); visibleMenu = null;">Associate</a>
                   </li>
                   <li *ngIf="ap.clients.length > 0">
@@ -153,6 +156,9 @@
             </button>
             <div ngbDropdownMenu class="menu-dropdown">
               <ul>
+                <li>
+                  <a (click)="visibleMenu = null; clipboard.copy(client.mac.toUpperCase())">Copy</a>
+                </li>
                 <li>
                   <a (click)="setAlias(client)">Set Alias</a>
                 </li>

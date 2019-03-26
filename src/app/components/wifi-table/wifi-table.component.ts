@@ -4,6 +4,7 @@ import {ApiService} from '../../services/api.service';
 import {Ap} from '../../models/ap';
 import {Module} from '../../models/module';
 import { OmniBarService } from '../../services/omnibar.service';
+import { ClipboardService } from '../../services/clipboard.service';
 
 declare var $: any;
 
@@ -24,7 +25,7 @@ export class WifiTableComponent implements OnInit, OnDestroy {
     currAP: Ap = null;
     hopping: boolean = true;
 
-    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
+    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService, public clipboard: ClipboardService) { 
         this.sort = {field: 'rssi', direction: 'asc', type:''};
         this.update(this.api.session);
     }

@@ -4,6 +4,7 @@ import {ApiService} from '../../services/api.service';
 import {HIDDevice} from '../../models/hid.device';
 import {Module} from '../../models/module';
 import { OmniBarService } from '../../services/omnibar.service';
+import { ClipboardService } from '../../services/clipboard.service';
 
 declare var $: any;
 
@@ -34,7 +35,7 @@ export class HidTableComponent implements OnInit, OnDestroy {
         payloads: []
     };
 
-    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
+    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService, public clipboard: ClipboardService) { 
         this.sort = {field: 'address', direction: 'asc', type:''};
         this.update(this.api.session.hid['devices']);
     }
