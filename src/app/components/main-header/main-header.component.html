@@ -7,7 +7,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/events">
             <i class="fas fa-terminal">
-              <span *ngIf="numEvents > 0" class="badge badge-pill badge-danger">{{ numEvents }}</span>
+              <span *ngIf="counters.events > 0" class="badge badge-pill badge-danger">{{ counters.events }}</span>
             </i>
             <span class="nav-text">Events</span>
           </a>
@@ -16,7 +16,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" [class.text-muted]="!api.module('net.recon').running" routerLink="/lan">
             <i class="fa fa-network-wired">
-              <span *ngIf="numHosts > 0" class="badge badge-pill badge-danger">{{ numHosts }}</span>
+              <span *ngIf="counters.hosts > 0" class="badge badge-pill badge-danger">{{ counters.hosts }}</span>
             </i>
             <span class="nav-text">LAN</span>
           </a>
@@ -25,7 +25,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" [class.text-muted]="!api.module('wifi').running" routerLink="/wifi">
             <i class="fa fa-wifi">
-              <span *ngIf="numAps > 0" class="badge badge-pill badge-danger">{{ numAps }}</span>
+              <span *ngIf="counters.aps > 0" class="badge badge-pill badge-danger">{{ counters.aps }}</span>
             </i>
             <span class="nav-text">WiFi</span>
           </a>
@@ -34,7 +34,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" [class.text-muted]="!api.module('ble.recon').running" routerLink="/ble">
             <i class="fab fa-bluetooth-b">
-              <span *ngIf="numBLE > 0" class="badge badge-pill badge-danger">{{ numBLE }}</span>
+              <span *ngIf="counters.ble > 0" class="badge badge-pill badge-danger">{{ counters.ble }}</span>
             </i>
             <span class="nav-text">BLE</span>
           </a>
@@ -43,7 +43,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" [class.text-muted]="!api.module('hid').running" routerLink="/hid">
             <i class="fa fa-keyboard">
-              <span *ngIf="numHID > 0" class="badge badge-pill badge-danger">{{ numHID }}</span>
+              <span *ngIf="counters.hid > 0" class="badge badge-pill badge-danger">{{ counters.hid }}</span>
             </i>
             <span class="nav-text">HID</span>
           </a>
@@ -52,7 +52,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/caplets">
             <i class="fas fa-scroll">
-              <span *ngIf="numCaplets > 0" class="badge badge-pill badge-danger">{{ numCaplets }}</span>
+              <span *ngIf="counters.caplets > 0" class="badge badge-pill badge-danger">{{ counters.caplets }}</span>
             </i>
             <span class="nav-text">Caplets</span>
           </a>
@@ -72,7 +72,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/advanced">
             <i class="fa fa-cogs">
-              <span *ngIf="numRunning > 0" class="badge badge-pill badge-danger">{{ numRunning }}</span>
+              <span *ngIf="counters.running > 0" class="badge badge-pill badge-danger">{{ counters.running }}</span>
             </i>
             <span class="nav-text">Advanced</span>
           </a>

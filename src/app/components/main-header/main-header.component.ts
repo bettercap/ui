@@ -19,13 +19,16 @@ declare var $: any;
 })
 export class MainHeaderComponent implements OnInit, OnDestroy {
     apiFirstUpdate: boolean = true;
-    numEvents = 0;
-    numHosts = 0;
-    numAps = 0;
-    numBLE = 0;
-    numHID = 0;
-    numCaplets = 0;
-    numRunning = 0;
+
+    counters : any = {
+        events: 0,
+        hosts: 0,
+        aps: 0,
+        ble: 0,
+        hid: 0,
+        caplets: 0,
+        running: 0
+    };
 
     subscriptions: any = [];
     modNotificationCache = {};
@@ -79,12 +82,12 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
 
     private updateSession(session) {
         this.sessionError = null;
-        this.numHosts = session.lan['hosts'].length || 0; 
-        this.numAps = session.wifi['aps'].length || 0; 
-        this.numBLE = session.ble['devices'].length || 0; 
-        this.numHID = session.hid['devices'].length || 0; 
-        this.numCaplets = session.caplets.length || 0; 
-        this.numRunning = session.modules.filter(m => m.running).length;
+        this.counters.hosts = session.lan['hosts'].length || 0; 
+        this.counters.aps = session.wifi['aps'].length || 0; 
+        this.counters.ble = session.ble['devices'].length || 0; 
+        this.counters.hid = session.hid['devices'].length || 0; 
+        this.counters.caplets = session.caplets.length || 0; 
+        this.counters.running = session.modules.filter(m => m.running).length;
     }
 
     private eventCacheKey(event) {
@@ -172,11 +175,11 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
 
     private updateEvents(events, firstUpdate: boolean = false) {
         this.sessionError = null;
-        this.numEvents = events.length;
-        if( this.numEvents == 0 ){
+        this.counters.events = events.length;
+        if( this.counters.events == 0 ){
             this.toastr.clear();
         } else {
-            for( let i = 0; i < this.numEvents; i++ ) {
+            for( let i = 0; i < this.counters.events; i++ ) {
                 let event = events[i];
                 if( this.isTrackedEvent(event) ) {
                     this.handleTrackedEvent(event, firstUpdate);

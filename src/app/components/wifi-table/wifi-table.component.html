@@ -103,7 +103,7 @@
             
             <div ngbDropdown *ngIf="(ap.wps | json) != '{}'" [open]="visibleWPS == ap.mac" placement="left" style="display: inline">
               <button ngbDropdownToggle 
-                class="btn btn-sm badge badge-warning btn-action drop-small" 
+                class="btn btn-sm badge badge-warning btn-action drop-small btn-tiny" 
                 (click)="visibleWPS = (visibleWPS == ap.mac ? null : ap.mac)">
                 WPS {{ ap.wps.Version }}
               </button>

@@ -173,14 +173,14 @@
         <td class="time">{{ host.last_seen | date: 'HH:mm:ss'}}</td>
         <td class="metas nowrap">
 
-          <span *ngIf="host == iface" class="badge badge-secondary">interface</span>
-          <span *ngIf="host == gateway" class="badge badge-secondary">gateway</span>
+          <span *ngIf="host == iface" class="badge badge-secondary btn-tiny">interface</span>
+          <span *ngIf="host == gateway" class="badge badge-secondary btn-tiny">gateway</span>
 
           <span *ngFor="let group of groupMetas(host.meta.values) | keyvalue" class="btn-group drop-left">
 
             <div ngbDropdown [open]="visibleMeta == host.mac+group.key" placement="left">
               <button ngbDropdownToggle 
-                class="btn btn-sm badge badge-warning btn-action drop-small"
+                class="btn btn-sm badge badge-warning btn-action drop-small btn-tiny"
                 (click)="visibleMeta = (visibleMeta == host.mac+group.key ? null : host.mac+group.key)">
                 {{ group.key }}
               </button>
