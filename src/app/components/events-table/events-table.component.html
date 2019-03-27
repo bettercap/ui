@@ -3,15 +3,6 @@
     <tbody>
       <tr>
         <td width="1%" class="nowrap">
-          <button 
-            *ngIf="ignored.length > 1"
-            class="btn btn-sm btn-dark btn-action btn-event"
-            ngbTooltip="Clear the muted events list."
-            placement="right"
-            (click)="api.cmd('events.filters.clear')"
-            >
-            <i class="fas fa-trash-alt"></i> 
-          </button>
           Muted
         </td>
         <td>
@@ -23,6 +14,17 @@
            ngbTooltip="Click to unmute this type of events."
            >
          {{ name }}
+          </button>
+
+          <button 
+            *ngIf="ignored.length > 1"
+            class="btn btn-sm btn-danger btn-action btn-event"
+           style="margin-left: 10px"
+            ngbTooltip="Clear the muted events list."
+            placement="right"
+            (click)="api.cmd('events.filters.clear')"
+            >
+            clear
           </button>
         </td>
       </tr>
