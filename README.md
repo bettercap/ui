@@ -10,24 +10,16 @@ This is the official [bettercap](https://www.bettercap.org/)'s web UI.
 
 ## Installation
 
-Download the latest [ui.zip precompiled release](https://github.com/bettercap/ui/releases) and unzip it to `/usr/local/share/bettercap/ui`:
+Make sure you have the [latest version of bettercap](https://github.com/bettercap/bettercap/releases), then:
 
 ```sh
-wget https://github.com/bettercap/ui/releases/download/VERSION/ui.zip
-sudo mkdir -p /usr/local/share/bettercap
-sudo unzip ui.zip -d /usr/local/share/bettercap/
-```
-
-Make sure you have the [latest version of bettercap](https://github.com/bettercap/bettercap/releases) and update your [caplets](https://github.com/bettercap/caplets):
-
-```sh
-sudo bettercap -eval "update.check on; caplets.update; q"
+sudo bettercap -eval "caplets.update; ui.update; q"
 ```
 
 Edit the access credentials in `/usr/local/share/bettercap/caplets/http-ui.cap` and start the `http-ui` caplet (you can instead use the `https-ui` caplet to use SSL, in which case you'll need to import bettercap's self signed certificate or use a certificate that your browser will accept): 
 
 ```sh
-sudo bettercap -caplet http-ui -autostart ""
+sudo bettercap -caplet http-ui"
 ```
 
 The web ui will be available at `http://127.0.0.1/`.
