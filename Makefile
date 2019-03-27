@@ -2,16 +2,13 @@ clean:
 	@echo "cleaning ..."
 	@rm -rf dist ui.zip
 
-deps:
-	@echo "installing dependencies ..."
-	@npm i
-
-build: deps
+build:
 	@echo "buiding ui ..."
 	@ng build --prod
 
 zip: build
 	@echo "creating ui.zip ..."
+	@rm -rf ui.zip
 	@cd dist && zip -r ../ui.zip . && cd ..
 
 install:

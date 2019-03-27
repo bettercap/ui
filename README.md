@@ -33,6 +33,7 @@ Assuming you have `make`, `node` and `npm` correctly installed, first clone the 
 ```sh
 git clone https://github.com/bettercap/ui.git ~/ui
 cd ~/ui
+make deps
 make build
 sudo make install
 ```
