@@ -24,6 +24,7 @@ export class Settings {
     public path: string     = '/api';
     public interval: number = 1000;
     public events: number   = 25;
+    public muted: string[]  = [];
     public pinned: any = {
         modules: {},
         caplets: {}
@@ -65,6 +66,7 @@ export class Settings {
         this.path     = obj.path || this.path;
         this.interval = obj.interval || this.interval;
         this.events   = obj.events || this.events;
+        this.muted    = obj.muted || this.muted;
         this.pinned   = obj.pinned || this.pinned;
     }
 
@@ -76,6 +78,7 @@ export class Settings {
             path: this.path,
             interval: this.interval,
             events: this.events,
+            muted: this.muted,
             pinned: this.pinned
         }));
     }
@@ -121,6 +124,8 @@ export class ApiService {
     public ping           : number = 0;
     // true if updates have been paused
     public paused         : boolean = false;
+    // filled if /api/session can't be retrieved
+    public error          : any = null;
 
     // triggerd when the session object has been updated
     public onNewData      : EventEmitter<Session> = new EventEmitter();
@@ -248,7 +253,6 @@ export class ApiService {
         console.log("api.clearStorage()");
 
         localStorage.removeItem('auth');
-        localStorage.removeItem('settings');
 
         this.creds.clear();
     }
@@ -300,7 +304,7 @@ export class ApiService {
 
     // set the credentials as valid after a succesfull session request,
     // if the user was logged out, it'll emit the onLoggedIn event
-    private setLoggedIn() {
+    private setLoggedIn() : boolean {
         let wasLogged = this.creds.valid;
 
         this.creds.valid = true;
@@ -311,6 +315,8 @@ export class ApiService {
             console.log("loggedin.emit");
             this.onLoggedIn.emit();
         }
+
+        return wasLogged;
     }
 
     // handler for /api/session error
@@ -323,6 +329,7 @@ export class ApiService {
             console.log("loggedout.emit");
             this.onLoggedOut.emit(error);
         } else {
+            this.error = error;
             console.log("error.emit");
             this.onSessionError.emit(error);
         }
@@ -333,7 +340,10 @@ export class ApiService {
 
     // handler for /api/session response
     private sessionNew(start, response) {
-        this.ping = new Date().getTime() - start.getTime();
+        let wasError = this.error != null;
+
+        this.ping  = new Date().getTime() - start.getTime();
+        this.error = null;
 
         // if in prod, make sure we're talking to a compatible API version
         if(  compareVersions(response.version, environment.requires) == -1 ) {
@@ -349,11 +359,28 @@ export class ApiService {
         }
         
         // save credentials and emit logged in event if needed
-        this.setLoggedIn();
+        let wasLogged = this.setLoggedIn();
 
         if( !this.isPaused() ) {
-            // inform all subscribers that new data is available
+            // update the session object instance
             this.session = response;
+
+            let muted = this.module('events.stream').state.ignoring.sort();
+            // if we just logged in and the user has muted events in his
+            // preferences that are not in the API ignore list, we need to
+            // restore them
+            if( wasError == true || wasLogged == false ) {
+                let toRestore = this.settings.muted.filter(function(e){ return !muted.includes(e); })
+                if( toRestore.length ) {
+                    console.log("restoring muted events:", toRestore);
+                    for( let i = 0; i < toRestore.length; i++ ) {
+                        this.cmd("events.ignore " + toRestore[i]);
+                    }
+                }
+            }
+            // update muted events
+            this.settings.muted = muted;
+            // inform all subscribers that new data is available
             this.onNewData.emit(response);
         }
 
