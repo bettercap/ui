@@ -4,6 +4,7 @@
 CURRENT_VERSION=$(cat package.json | grep '"version"' | cut -d '"' -f 4)
 TO_UPDATE=(
     package.json
+    package-lock.json
 )
 
 echo -n "Current version is $CURRENT_VERSION, select new version: "
