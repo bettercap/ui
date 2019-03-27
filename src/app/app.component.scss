@@ -9,12 +9,14 @@ div#container{
     margin:0;
 
     &.page {
-        margin-top: 130px;
+        margin-top: 163px;
         padding: 10px;
-    }
 
-    @media (min-width: 992px) {
-        &.page {
+        @media (min-width: 424px) {
+            margin-top: 125px;
+        }
+
+        @media (min-width: 768px) {
             margin-top: 158px;
         }
     }

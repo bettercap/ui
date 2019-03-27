@@ -1,20 +1,15 @@
 <header id="uiMainHeader" class="fixed-top shadow-lg">
 
-  <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <nav class="navbar navbar-dark bg-dark">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav">
 
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/events">
             <i class="fas fa-terminal">
               <span *ngIf="numEvents > 0" class="badge badge-pill badge-danger">{{ numEvents }}</span>
             </i>
-            Events
+            <span class="nav-text">Events</span>
           </a>
         </li>
 
@@ -23,7 +18,7 @@
             <i class="fa fa-network-wired">
               <span *ngIf="numHosts > 0" class="badge badge-pill badge-danger">{{ numHosts }}</span>
             </i>
-            LAN
+            <span class="nav-text">LAN</span>
           </a>
         </li>
 
@@ -32,7 +27,7 @@
             <i class="fa fa-wifi">
               <span *ngIf="numAps > 0" class="badge badge-pill badge-danger">{{ numAps }}</span>
             </i>
-            WiFi
+            <span class="nav-text">WiFi</span>
           </a>
         </li>
 
@@ -41,7 +36,7 @@
             <i class="fab fa-bluetooth-b">
               <span *ngIf="numBLE > 0" class="badge badge-pill badge-danger">{{ numBLE }}</span>
             </i>
-            BLE
+            <span class="nav-text">BLE</span>
           </a>
         </li>
 
@@ -50,7 +45,7 @@
             <i class="fa fa-keyboard">
               <span *ngIf="numHID > 0" class="badge badge-pill badge-danger">{{ numHID }}</span>
             </i>
-            HID
+            <span class="nav-text">HID</span>
           </a>
         </li>
 
@@ -59,7 +54,7 @@
             <i class="fas fa-scroll">
               <span *ngIf="numCaplets > 0" class="badge badge-pill badge-danger">{{ numCaplets }}</span>
             </i>
-            Caplets
+            <span class="nav-text">Caplets</span>
           </a>
         </li>
 
@@ -70,7 +65,7 @@
              ngbTooltip="{{ api.module(mod.key).description }}" 
              placement="bottom">
             <i class="fa fa-{{ mod.key | modicon }}"></i>
-            {{ mod.key }}
+            <span class="nav-text">{{ mod.key }}</span>
           </a>
         </li>
 
@@ -79,22 +74,18 @@
             <i class="fa fa-cogs">
               <span *ngIf="numRunning > 0" class="badge badge-pill badge-danger">{{ numRunning }}</span>
             </i>
-            Advanced
+            <span class="nav-text">Advanced</span>
           </a>
         </li>
 
-      </ul>
-
-      <ul class="navbar-nav">
-        <li class="nav-item">
+        <li class="nav-item right">
           <a style="cursor:pointer" class="nav-link" (click)="logout()">
             <i class="fas fa-sign-out-alt"></i>
-            Logout
+            <span class="nav-text">Logout</span>
           </a>
         </li>
       </ul>
 
-    </div>
   </nav>
 
   <omnibar></omnibar>
