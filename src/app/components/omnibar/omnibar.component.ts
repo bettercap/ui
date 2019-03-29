@@ -130,6 +130,13 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         let file = $('#replayFile').val();
 
         this.api.cmd("api.rest.replay " + file);
+
+        this.rest.state.load_progress = 0.0;
+
+        $('#loadingModal').appendTo('body').modal({
+            backdrop: 'static', 
+            keyboard: false
+        });
     }
 
     setReplayFrame(frame) {
@@ -174,6 +181,10 @@ export class OmnibarComponent implements OnInit, OnDestroy {
 
     private update() {
         this.rest = this.api.module('api.rest');
+
+        if( this.rest.state.load_progress == 100.0 ) {
+            $('#loadingModal').modal('hide');
+        }
 
         handlers = [];
         params = [];

@@ -60,8 +60,7 @@
         </button>
 
         <button *ngIf="rest.state.loading" class="btn btn-sm btn-dark" disabled>
-            <span class="spinner-border spinner-border-sm" style="font-size:.7rem" role="status" aria-hidden="true"></span>
-            loading {{ rest.state.rec_filename.split('/').pop() }} ...
+          loading ...
         </button>
 
         <div ngbDropdown *ngIf="!rest.state.recording && !rest.state.replaying && !rest.state.loading">
@@ -205,6 +204,25 @@
   </div>
 </div>
 
+<div id="loadingModal" class="modal fade" [attr.data-backdrop]="static" [attr.data-keyboard]="false" tabindex="-1" role="dialog" aria-labelledby="loadingModalTitle">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+          Loading session from {{ rest.state.rec_filename.split('/').pop() }} ...
+          <br>
+          <br/>
+          <ngb-progressbar 
+            type="success" 
+            [value]="rest.state.load_progress"
+            [striped]="true" 
+            [animated]="true">
+              <i>{{ rest.state.load_progress | number:'1.0-0' }}%</i>
+          </ngb-progressbar>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="replayModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="replayModalTitle">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -231,3 +249,4 @@
     </div>
   </div>
 </div>
+
