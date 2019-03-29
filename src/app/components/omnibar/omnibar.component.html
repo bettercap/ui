@@ -10,7 +10,7 @@
              type="button" 
              class="btn btn-dark btn-sm" 
              placement="right" 
-             ngbTooltip="{{ api.isPaused() ? 'Play' : 'Pause' }} replay."
+             ngbTooltip="{{ api.isPaused() ? 'Continue' : 'Pause' }} replay."
              (click)="api.paused = !api.paused">
           <i *ngIf="api.isPaused()" class="fas fa-play"></i>
           <i *ngIf="!api.isPaused()" class="fas fa-pause"></i>
