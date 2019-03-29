@@ -65,8 +65,10 @@
 
         <div ngbDropdown *ngIf="withLimit && !rest.state.recording && !rest.state.replaying && !rest.state.loading">
           <button ngbDropdownToggle 
+           ngbTooltip="Record or replay the session."
+           placement="right"
            class="btn btn-dark btn-sm">
-            <i class="fas fa-circle" style="color: darkred"></i>
+            <i class="fas fa-video"></i>
           </button>
 
           <div ngbDropdownMenu class="menu-dropdown">
