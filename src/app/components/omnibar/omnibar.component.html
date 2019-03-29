@@ -63,7 +63,7 @@
           loading ...
         </button>
 
-        <div ngbDropdown *ngIf="!rest.state.recording && !rest.state.replaying && !rest.state.loading">
+        <div ngbDropdown *ngIf="withLimit && !rest.state.recording && !rest.state.replaying && !rest.state.loading">
           <button ngbDropdownToggle 
            class="btn btn-dark btn-sm">
             <i class="fas fa-circle" style="color: darkred"></i>
