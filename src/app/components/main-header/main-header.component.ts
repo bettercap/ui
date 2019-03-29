@@ -158,7 +158,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
             // first time we get the event we don't want to notify the user,
             // otherwise dozens of notifications might be generated after
             // a page refresh
-            if( firstUpdate == false ) {
+            if( firstUpdate == false && !this.api.module('api.rest').state.replaying ) {
                 this.toastr.show(
                     this.eventHTML(event), 
                     event.tag, 

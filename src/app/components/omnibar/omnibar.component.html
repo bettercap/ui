@@ -1,8 +1,85 @@
 <div class="omnibar">
 
   <div *ngIf="withCmd" class="row">
-    <div class="col-md-12">
+
+    <div *ngIf="rest.state.replaying" class="col-md-12">
       <div class="input-group input-group-sm">
+        
+        <button 
+            *ngIf="rest.state.replaying"
+             type="button" 
+             class="btn btn-dark btn-sm" 
+             placement="right" 
+             ngbTooltip="{{ api.isPaused() ? 'Play' : 'Pause' }} replay."
+             (click)="api.paused = !api.paused">
+          <i *ngIf="api.isPaused()" class="fas fa-play"></i>
+          <i *ngIf="!api.isPaused()" class="fas fa-pause"></i>
+        </button>
+
+        <button 
+           type="button" 
+           class="btn btn-dark btn-sm" 
+           placement="right" 
+           ngbTooltip="Stop replay."
+           (click)="stopReplaying()">
+          <i class="fas fa-stop"></i>
+        </button>
+
+        <button class="btn btn-dark btn-sm">
+          {{ rest.state.rec_cur_frame | rectime }}
+        </button>
+
+        <input 
+         type="range" 
+         id="replayRange"
+         class="custom-range" 
+         (change)="rest.state.rec_cur_frame = api.sessionFrom = api.eventsFrom = $event.target.value" 
+         min="0" 
+         max="{{ rest.state.rec_frames }}" 
+         value="{{ rest.state.rec_cur_frame }}">
+
+        <button class="btn btn-dark btn-sm">
+          {{ rest.state.rec_frames | rectime }}
+        </button>
+
+      </div>
+    </div>
+
+    <div class="col-md-12" *ngIf="!rest.state.replaying">
+      <div class="input-group input-group-sm">
+
+        <button 
+           *ngIf="rest.state.recording"
+           type="button" 
+           class="btn btn-dark btn-sm" 
+           ngbTooltip="Stop recording the session." 
+           placement="right" 
+           (click)="stopRecording()">
+          <i class="fas fa-stop"></i>
+          {{ rest.state.rec_time | rectime }}
+        </button>
+
+        <div ngbDropdown *ngIf="!rest.state.recording && !rest.state.replaying">
+          <button ngbDropdownToggle 
+           class="btn btn-dark btn-sm">
+            <i class="fas fa-circle" style="color: darkred"></i>
+          </button>
+
+          <div ngbDropdownMenu class="menu-dropdown">
+            <ul>
+              <li>
+                <a (click)="showRecordModal()">
+                  <i class="fas fa-circle" style="color: darkred"></i> Record Session
+                </a>
+              </li>
+              <li>
+                <a (click)="showReplayModal()">
+                  <i class="fas fa-folder-open"></i> Replay
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
 
         <button 
            type="button" 
@@ -94,4 +171,58 @@
     </div>
   </div>
 
+</div>
+
+<div id="recordModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="recordModalTitle">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h5 id="recordModalTitle">Record File</h5>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="doRecord()">
+          <div class="form-group row">
+            <div class="col">
+              <input type="text" class="form-control" id="recordFile" value="">
+            </div>
+          </div>
+          <div class="text-right">
+            <button type="submit" class="btn btn-dark">Start Recording</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="replayModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="replayModalTitle">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h5 id="replayModalTitle">Replay Session File</h5>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="doReplay()">
+          <div class="form-group row">
+            <div class="col">
+              <input type="text" class="form-control" id="replayFile" value="">
+            </div>
+          </div>
+          <div class="text-right">
+            <button type="submit" class="btn btn-dark">Replay</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

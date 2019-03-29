@@ -1,7 +1,7 @@
 {
   "name": "ui",
-  "version": "1.1.0",
-  "requires": "2.20",
+  "version": "1.2.0",
+  "requires": "2.22",
   "main": "electron/dist/main.js",
   "scripts": {
     "ng": "ng",

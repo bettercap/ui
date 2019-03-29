@@ -126,6 +126,10 @@ export class ApiService {
     public paused         : boolean = false;
     // filled if /api/session can't be retrieved
     public error          : any = null;
+    // if filled it will pass the parameter once to /api/session
+    public sessionFrom    : string = '';
+    // if filled it will pass the parameter once to /api/events
+    public eventsFrom     : string = '';
 
     // triggerd when the session object has been updated
     public onNewData      : EventEmitter<Session> = new EventEmitter();
@@ -284,11 +288,19 @@ export class ApiService {
 
     // GET /api/events and return an observable list of events
     public getEvents() : Observable<Event[]> {
+        if( this.isPaused() )
+            return this.cachedEvents;
+
+        let from = this.eventsFrom;
+        if( from != '' ) {
+            this.eventsFrom = '';
+        }
+
         return this.http
         .get<Event[]>( this.settings.URL() + '/events', 
         {
             headers: this.creds.headers,
-            params: {'n': String(this.settings.events)}
+            params: {'from':from, 'n': String(this.settings.events)}
         })
         .map(response => this.eventsNew(response))
         .catch(error => this.eventsError(error));
@@ -361,28 +373,26 @@ export class ApiService {
         // save credentials and emit logged in event if needed
         let wasLogged = this.setLoggedIn();
 
-        if( !this.isPaused() ) {
-            // update the session object instance
-            this.session = response;
+        // update the session object instance
+        this.session = response;
 
-            let muted = this.module('events.stream').state.ignoring.sort();
-            // if we just logged in and the user has muted events in his
-            // preferences that are not in the API ignore list, we need to
-            // restore them
-            if( wasError == true || wasLogged == false ) {
-                let toRestore = this.settings.muted.filter(function(e){ return !muted.includes(e); })
-                if( toRestore.length ) {
-                    console.log("restoring muted events:", toRestore);
-                    for( let i = 0; i < toRestore.length; i++ ) {
-                        this.cmd("events.ignore " + toRestore[i]);
-                    }
+        let muted = this.module('events.stream').state.ignoring.sort();
+        // if we just logged in and the user has muted events in his
+        // preferences that are not in the API ignore list, we need to
+        // restore them
+        if( wasError == true || wasLogged == false ) {
+            let toRestore = this.settings.muted.filter(function(e){ return !muted.includes(e); })
+            if( toRestore.length ) {
+                console.log("restoring muted events:", toRestore);
+                for( let i = 0; i < toRestore.length; i++ ) {
+                    this.cmd("events.ignore " + toRestore[i]);
                 }
             }
-            // update muted events
-            this.settings.muted = muted;
-            // inform all subscribers that new data is available
-            this.onNewData.emit(response);
         }
+        // update muted events
+        this.settings.muted = muted;
+        // inform all subscribers that new data is available
+        this.onNewData.emit(response);
 
         return response;
     }
@@ -400,9 +410,20 @@ export class ApiService {
 
     // GET /api/session and return an observable Session
     public getSession() : Observable<Session> {
+        if( this.isPaused() )
+            return this.cachedSession;
+
+        let from = this.sessionFrom;
+        if( from != '' ) {
+            this.sessionFrom = '';
+        }
+
         let start = new Date();
         return this.http
-        .get<Session>( this.settings.URL() + '/session', {headers: this.creds.headers})
+        .get<Session>( this.settings.URL() + '/session', {
+            headers: this.creds.headers,
+            params: {'from':from}
+        })
         .map(response => this.sessionNew(start, response))
         .catch(error => this.sessionError(error));
     }

@@ -11,10 +11,15 @@
     }
 
     input,
-    select {
+    select,
+    label {
         background-color:#333; 
         border: 1px solid #353535; 
         color: #aaa;
+    }
+
+    label {
+
     }
 
     select {
@@ -27,3 +32,49 @@
         color: #999;
     }
 }
+
+// https://github.com/twbs/bootstrap/issues/27572
+.input-group > .custom-range {
+  display: block;
+  height: calc(2.25rem + 2px);
+  padding: 0 .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-clip: padding-box;
+  border-radius: .25rem;
+  transition: box-shadow .15s ease-in-out;
+}
+.input-group > .custom-range {
+  position: relative;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  width: 1%;
+  margin-bottom: 0;
+}
+.input-group > .custom-range:focus {
+  z-index: 3;
+}
+.input-group-sm > .custom-range {
+  height: calc(1.8125rem + 2px);
+  padding: 0 .5rem;
+  font-size: .875rem;
+  line-height: 1.5;
+  border-radius: .2rem;
+}
+.input-group-lg > .custom-range {
+  height: calc(2.875rem + 2px);
+  padding-left: 0 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: .3rem;
+}
+.input-group > .custom-range:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.input-group > .custom-range:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+

@@ -29,6 +29,7 @@ import { AlivePipe } from './components/alive.pipe';
 import { UnbashPipe } from './components/unbash.pipe';
 import { SizePipe } from './components/size.pipe';
 import { ModIconPipe } from './components/modicon.pipe';
+import { RecTimePipe } from './components/rectime.pipe';
 
 @NgModule({
     declarations: [
@@ -52,7 +53,8 @@ import { ModIconPipe } from './components/modicon.pipe';
         AlivePipe,
         UnbashPipe,
         SizePipe,
-        ModIconPipe
+        ModIconPipe,
+        RecTimePipe
     ],
     imports: [
         BrowserModule,

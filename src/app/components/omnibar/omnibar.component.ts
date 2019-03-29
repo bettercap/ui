@@ -19,7 +19,7 @@ let params = [];
     styleUrls: ['./omnibar.component.scss']
 })
 export class OmnibarComponent implements OnInit, OnDestroy {
-    modules: any = {}
+    modules: any = {};
     clearCmd: string = "";
     withCmd: boolean = false;
     withLimit: boolean = false;
@@ -28,6 +28,7 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     enabled: any = {}
     cmd: string = '';
     ifaces: any = [];
+    rest: any = null;
 
     configs: any = {
         '/lan': {
@@ -93,6 +94,47 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         });
     }
 
+    showRecordModal() {
+        $('#recordFile').val('~/bettercap-session.record');
+        // https://stackoverflow.com/questions/10636667/bootstrap-modal-appearing-under-background
+        $('#recordModal').appendTo('body').modal('show');
+    }
+
+    doRecord() {
+        $('#recordModal').modal('hide');
+
+        let file = $('#recordFile').val();
+
+        this.api.cmd("api.rest.record " + file);
+    }
+
+    stopRecording() {
+        this.api.cmd("api.rest.record off");
+    }
+
+    showReplayModal() {
+        $('#replayFile').val('~/bettercap-session.record');
+        // https://stackoverflow.com/questions/10636667/bootstrap-modal-appearing-under-background
+        $('#replayModal').appendTo('body').modal('show');
+    }
+
+    doReplay() {
+        $('#replayModal').modal('hide');
+
+        let file = $('#replayFile').val();
+
+        this.api.cmd("api.rest.replay " + file);
+    }
+
+    stopReplaying() {
+        this.api.cmd("api.rest.replay off");
+    }
+
+    replayPerc() : string {
+        let perc = parseInt(String((this.rest.state.rec_cur_frame / this.rest.state.rec_frames) * 100));
+        return String(perc);
+    }
+
     private updateState( url : string ) {
         this.modules = {};
         this.clearCmd = '';
@@ -111,6 +153,8 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     }
 
     private update() {
+        this.rest = this.api.module('api.rest');
+
         handlers = [];
         params = [];
 
