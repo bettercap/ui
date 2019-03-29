@@ -33,7 +33,7 @@
          type="range" 
          id="replayRange"
          class="custom-range" 
-         (change)="rest.state.rec_cur_frame = api.sessionFrom = api.eventsFrom = $event.target.value" 
+         (change)="setReplayFrame($event.target.value)" 
          min="0" 
          max="{{ rest.state.rec_frames }}" 
          value="{{ rest.state.rec_cur_frame }}">
@@ -59,7 +59,12 @@
           {{ rest.state.rec_time | rectime }}
         </button>
 
-        <div ngbDropdown *ngIf="!rest.state.recording && !rest.state.replaying">
+        <button *ngIf="rest.state.loading" class="btn btn-sm btn-dark" disabled>
+            <span class="spinner-border spinner-border-sm" style="font-size:.7rem" role="status" aria-hidden="true"></span>
+            loading {{ rest.state.rec_filename.split('/').pop() }} ...
+        </button>
+
+        <div ngbDropdown *ngIf="!rest.state.recording && !rest.state.replaying && !rest.state.loading">
           <button ngbDropdownToggle 
            class="btn btn-dark btn-sm">
             <i class="fas fa-circle" style="color: darkred"></i>

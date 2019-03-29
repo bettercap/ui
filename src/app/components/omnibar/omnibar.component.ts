@@ -21,6 +21,7 @@ let params = [];
 export class OmnibarComponent implements OnInit, OnDestroy {
     modules: any = {};
     clearCmd: string = "";
+    restorePause: boolean = false;
     withCmd: boolean = false;
     withLimit: boolean = false;
     withIfaces: boolean = false;
@@ -91,6 +92,11 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         this.update();
         this.api.onNewData.subscribe(session => {
             this.update();
+
+            if( this.restorePause ) {
+                this.restorePause = false; 
+                this.api.paused = true;
+            }
         });
     }
 
@@ -124,6 +130,20 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         let file = $('#replayFile').val();
 
         this.api.cmd("api.rest.replay " + file);
+    }
+
+    setReplayFrame(frame) {
+        this.rest.state.rec_cur_frame = 
+        this.api.sessionFrom = 
+        this.api.eventsFrom = frame;
+
+        let wasPaused = this.api.paused;
+
+        // unpause, wait for an update and restore pause if needed
+        this.api.paused = false;
+        if( wasPaused ) {
+            this.restorePause = true; 
+        }
     }
 
     stopReplaying() {
