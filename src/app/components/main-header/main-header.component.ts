@@ -26,6 +26,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
         aps: 0,
         ble: 0,
         hid: 0,
+        gps: 0,
         caplets: 0,
         running: 0
     };
@@ -86,6 +87,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
         this.counters.aps = session.wifi['aps'].length || 0; 
         this.counters.ble = session.ble['devices'].length || 0; 
         this.counters.hid = session.hid['devices'].length || 0; 
+        this.counters.gps = this.api.module('gps').running ? (session.gps.NumSatellites || 0) : 0;
         this.counters.caplets = session.caplets.length || 0; 
         this.counters.running = session.modules.filter(m => m.running).length;
     }

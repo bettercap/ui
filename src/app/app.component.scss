@@ -9,6 +9,7 @@ div#container{
     margin:0;
 
     &.page {
+        height: calc(100% - 163px);
         margin-top: 163px;
         padding: 10px;
 

@@ -60,6 +60,11 @@ export class OmnibarComponent implements OnInit, OnDestroy {
             'withCmd': true,
         },
 
+        '/gps': {
+            'modules': { 'gps': 'gps' },
+            'withCmd': true,
+        },
+
         '/caplets': {
             'withCmd': true
         },

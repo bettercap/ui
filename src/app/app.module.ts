@@ -17,6 +17,7 @@ import { LanTableComponent } from './components/lan-table/lan-table.component';
 import { WifiTableComponent } from './components/wifi-table/wifi-table.component';
 import { BleTableComponent } from './components/ble-table/ble-table.component';
 import { HidTableComponent } from './components/hid-table/hid-table.component';
+import { PositionComponent } from './components/position/position.component';
 import { CapletsComponent } from './components/caplets/caplets.component';
 import { AdvancedComponent } from './components/advanced/advanced.component';
 
@@ -42,6 +43,7 @@ import { RecTimePipe } from './components/rectime.pipe';
         LanTableComponent,
         BleTableComponent,
         HidTableComponent,
+        PositionComponent,
         WifiTableComponent,
         AdvancedComponent,
         CapletsComponent,

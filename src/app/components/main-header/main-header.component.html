@@ -50,6 +50,18 @@
         </li>
 
         <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [class.text-muted]="!api.module('gps').running" routerLink="/gps">
+            <i class="fas fa-globe-europe">
+              <span *ngIf="counters.gps > 0" class="badge badge-pill badge-danger">
+                <i class="fas fa-satellite"></i>
+                {{ counters.gps }}
+              </span>
+            </i>
+            <span class="nav-text">Position</span>
+          </a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/caplets">
             <i class="fas fa-scroll">
               <span *ngIf="counters.caplets > 0" class="badge badge-pill badge-danger">{{ counters.caplets }}</span>
