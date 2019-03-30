@@ -15,7 +15,7 @@ export class PositionComponent implements OnInit, OnDestroy {
     prevMarker: any;
     subscriptions: any = [];
 
-    constructor(private api: ApiService, public omnibar: OmniBarService) { 
+    constructor(public api: ApiService, public omnibar: OmniBarService) { 
         this.update();
     }
 

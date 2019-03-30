@@ -80,7 +80,7 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         },
     };
 
-    constructor(public svc: OmniBarService, private api: ApiService, private toastr: ToastrService, private router: Router) { 
+    constructor(public svc: OmniBarService, public api: ApiService, private toastr: ToastrService, private router: Router) { 
         
     }
 
