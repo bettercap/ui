@@ -144,11 +144,11 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         });
     }
 
-    curReplaytime() {
+    curReplaytime() : string {
         let cur = new Date(Date.parse(this.api.session.polled_at));
         let start = new Date(Date.parse(this.rest.state.rec_started));
         let diff = cur.getTime() - start.getTime();
-        return "" + parseInt(diff / 1000);
+        return String( diff / 1000 );
     }
 
     setReplayFrame(frame) {
