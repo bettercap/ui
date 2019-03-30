@@ -25,6 +25,7 @@ export class Settings {
     public interval: number = 1000;
     public events: number   = 25;
     public muted: string[]  = [];
+    public omnibar: boolean = true;
     public pinned: any = {
         modules: {},
         caplets: {}
@@ -67,6 +68,7 @@ export class Settings {
         this.interval = obj.interval || this.interval;
         this.events   = obj.events || this.events;
         this.muted    = obj.muted || this.muted;
+        this.omnibar  = obj.omnibar || this.omnibar;
         this.pinned   = obj.pinned || this.pinned;
     }
 
@@ -79,6 +81,7 @@ export class Settings {
             interval: this.interval,
             events: this.events,
             muted: this.muted,
+            omnibar: this.omnibar,
             pinned: this.pinned
         }));
     }

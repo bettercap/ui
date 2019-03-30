@@ -1,4 +1,4 @@
-<header id="uiMainHeader" class="fixed-top shadow-lg">
+<header id="uiMainHeader" class="shadow-lg">
 
   <nav class="navbar navbar-dark bg-dark">
 
@@ -96,6 +96,17 @@
             <span class="nav-text">Logout</span>
           </a>
         </li>
+
+        <li class="nav-item right">
+          <a 
+            class="nav-link" 
+            style="cursor:pointer; padding-top:35px;"
+            (click)="api.settings.omnibar = !api.settings.omnibar">
+            <i *ngIf="api.settings.omnibar" ngbTooltip="Hide Omnibar" style="font-size: .8rem; padding: 0" class="shadow fas fa-angle-double-down"></i>
+            <i *ngIf="!api.settings.omnibar" ngbTooltip="Show Omnibar" style="font-size: .8rem; padding: 0" class="shadow fas fa-angle-double-right"></i>
+          </a>
+        </li>
+
       </ul>
 
   </nav>
