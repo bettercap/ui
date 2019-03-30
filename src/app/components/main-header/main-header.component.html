@@ -107,6 +107,13 @@
           </a>
         </li>
 
+        <li *ngIf="rest.state.recording" class="nav-item right replayDate">
+          <span class="badge badge-pill badge-danger">
+            <i class="fas fa-video" style="margin-right:3px"></i>
+            recording
+          </span>
+        </li>
+
         <li *ngIf="rest.state.replaying" class="nav-item right replayDate">
           <span class="badge badge-pill badge-danger">
             <i class="fas fa-video" style="margin-right:3px"></i>

@@ -11,6 +11,7 @@ declare var ol: any;
     styleUrls: ['./position.component.scss']
 })
 export class PositionComponent implements OnInit, OnDestroy {
+    running: boolean = false;
     map: any;
     prevMarker: any;
     subscriptions: any = [];
@@ -34,10 +35,12 @@ export class PositionComponent implements OnInit, OnDestroy {
                 })
             ],
             view: new ol.View({
-                center: ol.proj.fromLonLat([0, 0]),
+                center: ol.proj.fromLonLat([this.api.session.gps.Longitude, this.api.session.gps.Latitude]),
                 zoom: 18
             })
         });
+
+        this.addMarker(this.api.session.gps.Latitude, this.api.session.gps.Longitude)
     }
 
     ngOnDestroy() {
@@ -83,6 +86,8 @@ export class PositionComponent implements OnInit, OnDestroy {
     */
 
     private update() {
+        this.running = this.api.module('gps').running;
+
         if( this.map ) {
             /*
             let step = this.steps[this.idx++ % this.steps.length];

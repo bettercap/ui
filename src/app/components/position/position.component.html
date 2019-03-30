@@ -3,12 +3,13 @@
   <table class="table table-sm table-dark">
     <tbody>
       <tr>
-        <td with="1%" *ngIf="!api.module('gps').running">
+        <td with="1%" *ngIf="!running">
           <span class="badge badge-danger">
             Not running
           </span> 
         </td>
-        <ng-container *ngIf="api.module('gps').running">
+
+        <ng-container *ngIf="running">
           <td with="1%" *ngIf="api.session.gps.NumSatellites == 0">
             <span class="badge badge-danger">
               No satellites
@@ -19,16 +20,18 @@
           <td *ngIf="api.session.gps.NumSatellites > 0">
             {{ api.session.gps.Updated | date:'HH:mm:ss' }} 
           </td>
+
+          <ng-container *ngFor="let gps of api.session.gps | keyvalue">
+            <ng-container *ngIf="gps.key != 'NumSatellites' && gps.key != 'Updated'">
+              <th with="1%">{{ gps.key }}</th>
+              <td>{{ gps.value }}</td>
+            </ng-container>
+          </ng-container>
         </ng-container>
-      <ng-container *ngFor="let gps of api.session.gps | keyvalue">
-        <ng-container *ngIf="gps.key != 'NumSatellites' && gps.key != 'Updated'">
-        <th with="1%">{{ gps.key }}</th>
-        <td>{{ gps.value }}</td>
-        </ng-container>
-      </ng-container>
+
       </tr>
     </tbody>
   </table>
 
-  <div id="map" class="map"></div>
+  <div id="map" class="map" [hidden]="!running"></div>
 </div>
