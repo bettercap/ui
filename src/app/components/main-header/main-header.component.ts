@@ -19,6 +19,7 @@ declare var $: any;
 })
 export class MainHeaderComponent implements OnInit, OnDestroy {
     apiFirstUpdate: boolean = true;
+    rest: any = null;
 
     counters : any = {
         events: 0,
@@ -82,6 +83,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     }
 
     private updateSession(session) {
+        this.rest = this.api.module('api.rest');
         this.sessionError = null;
         this.counters.hosts = session.lan['hosts'].length || 0; 
         this.counters.aps = session.wifi['aps'].length || 0; 

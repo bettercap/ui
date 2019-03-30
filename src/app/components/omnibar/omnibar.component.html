@@ -25,8 +25,8 @@
           <i class="fas fa-stop"></i>
         </button>
 
-        <button class="btn btn-dark btn-sm">
-          {{ rest.state.rec_cur_frame | rectime }}
+        <button class="btn btn-dark btn-sm" ngbTooltip="Replaying {{ api.session.polled_at | date:'short' }}">
+          {{ curReplaytime() | rectime }}
         </button>
 
         <input 
@@ -39,7 +39,7 @@
          value="{{ rest.state.rec_cur_frame }}">
 
         <button class="btn btn-dark btn-sm">
-          {{ rest.state.rec_frames | rectime }}
+          {{ rest.state.rec_time | rectime }}
         </button>
 
       </div>
@@ -170,9 +170,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="input-group input-group-sm">
-
         <input [(ngModel)]="svc.query" type="text" class="form-control" placeholder="Search ..." aria-label="Search"/>
-
       </div>
     </div>
   </div>

@@ -25,6 +25,7 @@ export interface Session {
     hid: HID;
     packets: Packets;
     started_at: string;
+    polled_at: string;
     active: boolean;
     gps: Gps;
     modules: Module[];
