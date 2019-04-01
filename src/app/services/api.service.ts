@@ -39,7 +39,7 @@ export class Settings {
         if( this.host == 'localhost' || this.host == '127.0.0.1' )
             return false;
 
-        return this.schema == 'https:';
+        return this.schema != 'https:';
     }
 
     public isPinned(name : string) : boolean {
