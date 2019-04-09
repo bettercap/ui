@@ -1,3 +1,4 @@
+@import '~highlight.js/styles/dracula.css';
 @import "variables";
 
 body{
@@ -143,4 +144,10 @@ div.action-container {
     -webkit-box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
     box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
+}
+
+.modal-full {
+    min-width: 100%;
+    min-height: 100%;
+    margin: 0;
 }

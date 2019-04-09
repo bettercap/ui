@@ -1,3 +1,6 @@
+import { HighlightModule } from 'ngx-highlightjs';
+import json from 'highlight.js/lib/languages/json';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -31,6 +34,12 @@ import { UnbashPipe } from './components/unbash.pipe';
 import { SizePipe } from './components/size.pipe';
 import { ModIconPipe } from './components/modicon.pipe';
 import { RecTimePipe } from './components/rectime.pipe';
+
+export function hljsLanguages() {
+  return [
+    {name: 'json', func: json}
+  ];
+}
 
 @NgModule({
     declarations: [
@@ -70,6 +79,9 @@ import { RecTimePipe } from './components/rectime.pipe';
             preventDuplicates: true,
             maxOpened: 5,
             countDuplicates: true
+        }),
+        HighlightModule.forRoot({
+            languages: hljsLanguages
         })
     ],
     entryComponents:[EventComponent],
