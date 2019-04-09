@@ -14,6 +14,7 @@ export interface Session {
     os: string;
     arch: string;
     goversion: string;
+    resources: any;
     options: Option;
     interface: Interface;
     interfaces: any[];

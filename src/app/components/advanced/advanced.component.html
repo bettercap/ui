@@ -67,6 +67,23 @@
                   </span>
                 </td>
               </tr>
+
+              <tr>
+                <th>CPU</th>
+                <td>Using {{ api.session.resources.max_cpus }} of {{ api.session.resources.cpus }} logical CPUs 
+                  <span class="text-muted">({{ api.session.resources.goroutines }} goroutines)</span>
+                </td>
+              </tr>
+              <tr>
+                <th>MEM</th>
+                <td>
+                  Heap: {{ api.session.resources.alloc | size }} Sys: {{ api.session.resources.sys | size }} 
+                  <span class="text-muted">
+                    gc cycles: {{ api.session.resources.gcs }}
+                  </span>
+                </td>
+              </tr>
+
             </tbody>
           </table>
         </div>
