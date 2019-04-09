@@ -181,6 +181,7 @@
             <div ngbDropdown [open]="visibleMeta == host.mac+group.key" placement="left">
               <button ngbDropdownToggle 
                 class="btn btn-sm badge badge-warning btn-action drop-small btn-tiny"
+                [class.badge-danger]="group.key == 'PORTS'"
                 (click)="visibleMeta = (visibleMeta == host.mac+group.key ? null : host.mac+group.key)">
                 {{ group.key }}
               </button>
@@ -188,13 +189,24 @@
               <div ngbDropdownMenu class="menu-dropdown">
                 <table class="table table-sm table-dark">
                   <tbody>
-                    <tr *ngFor="let item of group.value | keyvalue">
-                      <th>{{ item.key == undefined || item.key === 'undefined' ? '' : item.key }}</th>
-                      <td>{{ item.value }}</td>
-                    </tr>
+                    <ng-container *ngIf="group.key == 'PORTS'">
+                      <tr *ngFor="let port of host.meta.values.ports | keyvalue">
+                        <td>{{ port.value.port }}</td>
+                        <td [class.empty]="port.value.service == ''">{{ port.value.service ? port.value.service : '?' }}</td>
+                        <td class="text-muted">{{ port.value.proto }}</td>
+                      </tr>
+                    </ng-container>
+
+                    <ng-container *ngIf="group.key != 'PORTS'">
+                      <tr *ngFor="let item of group.value | keyvalue">
+                        <th>{{ item.key == undefined || item.key === 'undefined' ? '' : item.key }}</th>
+                        <td>{{ item.value }}</td>
+                      </tr>
+                    </ng-container>
                   </tbody>
                 </table>
               </div>
+
             </div>
 
           </span>
