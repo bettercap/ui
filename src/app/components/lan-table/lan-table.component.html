@@ -173,8 +173,8 @@
         <td class="time">{{ host.last_seen | date: 'HH:mm:ss'}}</td>
         <td class="metas nowrap">
 
-          <span *ngIf="host == iface" class="badge badge-secondary btn-tiny">interface</span>
-          <span *ngIf="host == gateway" class="badge badge-secondary btn-tiny">gateway</span>
+          <span *ngIf="host.mac == iface.mac" class="badge badge-secondary btn-tiny">interface</span>
+          <span *ngIf="host.mac == gateway.mac" class="badge badge-secondary btn-tiny">gateway</span>
 
           <span *ngFor="let group of groupMetas(host.meta.values) | keyvalue" class="btn-group drop-left">
 

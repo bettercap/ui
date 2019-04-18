@@ -184,8 +184,13 @@ export class LanTableComponent implements OnInit, OnDestroy {
 
             this.hosts.push(host); 
         }
-        this.hosts.push(this.iface);
-        this.hosts.push(this.gateway);
+
+        if( this.iface.mac == this.gateway.mac ) {
+            this.hosts.push(this.iface);
+        } else {
+            this.hosts.push(this.iface);
+            this.hosts.push(this.gateway);
+        }
 
         this.sortService.sort(this.hosts, this.sort)
     }
