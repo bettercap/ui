@@ -6,7 +6,7 @@
         <th sortable-column="mac">BSSID</th>
         <th sortable-column="hostname">ESSID</th>
         <th sortable-column="vendor">Vendor</th>
-        <th sortable-column="encryption">Encryption</th>
+        <th sortable-column="encryption" style="text-align:center">Encryption</th>
 
         <th width="1%" *ngIf="hopping" sortable-column="channel">Ch</th>
         <th width="1%" *ngIf="!hopping">
@@ -17,9 +17,8 @@
 
         <th width="1%" sortable-column="clients">Clients</th>
         <th sortable-column="sent">Sent</th>
-        <th sortable-column="received">Received</th>
-        <th sortable-column="last_seen">Last seen</th>
-        <th></th>
+        <th sortable-column="received">Recvd</th>
+        <th sortable-column="last_seen">Seen</th>
       </tr>
     </thead>
     <tbody>
@@ -58,28 +57,50 @@
               </div>
             </div>
           </td>
+
           <td [class.empty]="ap.hostname === '<hidden>'">
             {{ ap.hostname }}
             <span *ngIf="ap.alias" class="badge badge-pill badge-secondary" style="margin-left:5px">{{ ap.alias }}</span>
           </td>
-          <td [class.empty]="!ap.vendor">{{ ap.vendor ? ap.vendor : 'unknown' }}</td>
 
-          <td align="center">
+          <td [class.empty]="!ap.vendor">
+            {{ ap.vendor ? ap.vendor : 'unknown' }}
+          </td>
+
+          <td align="center" class="nowrap">
             <i *ngIf="ap.encryption === 'OPEN'" class="fas fa-unlock empty" placement="top" ngbTooltip="Open Network"></i>
 
             <span *ngIf="ap.encryption !== 'OPEN'" ngbTooltip="{{ ap.cipher }}, {{ ap.authentication}}">
               <i *ngIf="ap.handshake" style="color: red; margin-right: 5px" ngbTooltip="WPA key material captured to {{ api.env('wifi.handshakes.file') }}" class="fas fa-key"></i>
               {{ ap.encryption }}
             </span>
+
+            <div ngbDropdown *ngIf="(ap.wps | json) != '{}'" [open]="visibleWPS == ap.mac" placement="left" style="display: inline">
+              <button ngbDropdownToggle 
+                class="btn btn-sm badge badge-secondary btn-action drop-small btn-tiny" 
+                (click)="visibleWPS = (visibleWPS == ap.mac ? null : ap.mac)">
+                WPS 
+              </button>
+
+              <div ngbDropdownMenu class="menu-dropdown">
+                <table class="table table-sm table-dark">
+                  <tbody>
+                    <tr *ngFor="let item of ap.wps | keyvalue">
+                      <th>{{ item.key }}</th>
+                      <td>{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </td>
           
           <td *ngIf="hopping" align="center">
             <button type="button" class="btn btn-dark btn-sm btn-action" (click)="api.cmd('wifi.recon.channel ' + ap.channel)" ngbTooltip="Stay on channel {{ ap.channel }}.">
               {{ ap.channel }}
             </button>
-
           </td>
-
           <td *ngIf="!hopping" align="center">
             {{ ap.channel }}
           </td>
@@ -99,28 +120,6 @@
           <td [class.empty]="!ap.received">{{ ap.received | size }}</td>
           <td class="time">{{ ap.last_seen | date: 'HH:mm:ss' }}</td>
 
-          <td class="nowrap">
-            
-            <div ngbDropdown *ngIf="(ap.wps | json) != '{}'" [open]="visibleWPS == ap.mac" placement="left" style="display: inline">
-              <button ngbDropdownToggle 
-                class="btn btn-sm badge badge-warning btn-action drop-small btn-tiny" 
-                (click)="visibleWPS = (visibleWPS == ap.mac ? null : ap.mac)">
-                WPS {{ ap.wps.Version }}
-              </button>
-
-              <div ngbDropdownMenu class="menu-dropdown">
-                <table class="table table-sm table-dark">
-                  <tbody>
-                    <tr *ngFor="let item of ap.wps | keyvalue">
-                      <th>{{ item.key }}</th>
-                      <td>{{ item.value }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-          </td>
         </tr>
       </ng-container>
     </tbody>
