@@ -194,6 +194,7 @@
                         <td>{{ port.value.port }}</td>
                         <td [class.empty]="port.value.service == ''">{{ port.value.service ? port.value.service : '?' }}</td>
                         <td class="text-muted">{{ port.value.proto }}</td>
+                        <td [class.empty]="port.value.banner == ''">{{ port.value.banner ? port.value.banner : 'no banner' }}</td>
                       </tr>
                     </ng-container>
 
