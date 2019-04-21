@@ -70,15 +70,16 @@
 </div>
 
 <div id="eventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eventModalTitle" [ngModel]="curEvent" name="fieldName" ngDefaultControl>
-  <div class="modal-dialog modal-full" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
 
       <div class="modal-body" style="padding:0">
+        &nbsp;
         <span class="badge badge-{{ btnFor(curEvent.tag) }}">{{ curEvent.tag }}</span>
         &nbsp;
         <small>{{ curEvent.time | date: 'long' }}</small>
   
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-right:5px">
           <span aria-hidden="true">&times;</span>
         </button>
 
