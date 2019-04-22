@@ -168,7 +168,9 @@
             </div>
           </span>  
 
-          <span *ngIf="client.alias" class="badge badge-pill badge-secondary" style="margin-left: 5px">{{ client.alias }}</span>
+          <span *ngIf="client.alias" (click)="setAlias(client)" class="badge badge-pill badge-secondary" style="margin-left: 5px; cursor:pointer">
+            {{ client.alias }}
+          </span>
         </td>
         <td [class.empty]="!client.vendor">
           {{ client.vendor ? client.vendor : 'unknown' }}

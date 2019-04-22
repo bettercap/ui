@@ -165,7 +165,10 @@
         </td>
         <td [class.empty]="!host.hostname && !host.alias">
           {{ host.hostname }}
-          <span *ngIf="host.alias" class="badge badge-pill badge-secondary">{{ host.alias }}</span>
+          
+          <span *ngIf="host.alias" (click)="setAlias(host)" class="badge badge-pill badge-secondary" style="cursor: pointer">
+            {{ host.alias }}
+          </span>
         </td>
         <td [class.empty]="!host.vendor">{{ host.vendor ? host.vendor : 'unknown' }}</td>
         <td [class.empty]="!host.sent" class="nowrap">{{ host.sent | size }}</td>

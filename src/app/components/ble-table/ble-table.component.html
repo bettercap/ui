@@ -45,7 +45,9 @@
           
           <td [class.empty]="!device.name && !device.alias">
             {{ (device.name ? device.name : device.alias ? '' : 'none') | unbash }}
-            <span *ngIf="device.alias" class="badge badge-pill badge-secondary">{{ device.alias }}</span>
+            <span *ngIf="device.alias" (click)="setAlias(device)" class="badge badge-pill badge-secondary" style="cursor:pointer;">
+              {{ device.alias }}
+            </span>
           </td>
 
           <td [class.empty]="!device.vendor">{{ device.vendor ? device.vendor : 'unknown' }}</td>

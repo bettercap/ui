@@ -21,7 +21,11 @@
         <td class="nowrap">
           <span *ngIf="state.sniffing == device.address">
             {{ device.address | uppercase }}
-            <span *ngIf="device.alias" class="badge badge-pill badge-secondary" style="margin-left:5px">{{ device.alias }}</span>
+
+            <span *ngIf="device.alias" (click)="setAlias(device)" class="badge badge-pill badge-secondary" style="margin-left:5px; cursor: pointer">
+              {{ device.alias }}
+            </span>
+
             <span class="badge badge-pill badge-warning" style="margin-left: 5px">
               <span class="spinner-border spinner-border-sm" style="font-size:.7rem" role="status" aria-hidden="true"></span>
               <span *ngIf="state.injecting">
@@ -57,7 +61,9 @@
               </ul>
             </div>
 
-            <span *ngIf="device.alias" class="badge badge-pill badge-secondary" style="margin-left:5px">{{ device.alias }}</span>
+            <span *ngIf="device.alias" (click)="setAlias(device)" class="badge badge-pill badge-secondary" style="margin-left:5px; cursor: pointer">
+              {{ device.alias }}
+            </span>
           </div>
         </td>
         <td [class.empty]="!device.type">
