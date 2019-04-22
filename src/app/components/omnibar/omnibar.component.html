@@ -163,6 +163,15 @@
           </span>
         </div>
         <input [ngbTypeahead]="searchCommand" [(ngModel)]="cmd" id="cmd" (keyup.enter)="onCmd()" type="text" class="form-control" placeholder="Command bar ..." aria-label="Command bar ..."/>
+
+        <button 
+           type="button" 
+           class="btn btn-dark btn-sm" 
+           ngbTooltip="Hide Omnibar" 
+           placement="left" 
+           (click)="api.settings.omnibar = false">
+          <i class="far fa-caret-square-up"></i>
+        </button>
       </div>
     </div>
   </div>
