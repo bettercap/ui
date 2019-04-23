@@ -90,17 +90,17 @@
           </a>
         </li>
 
-        <li *ngIf="!api.settings.omnibar" class="nav-item">
-          <a class="nav-link" style="cursor:pointer" (click)="api.settings.omnibar = !api.settings.omnibar">
-            <i class="fas fa-bars"></i>
-            <span class="nav-text">Omnibar</span>
-          </a>
-        </li>
-
         <li class="nav-item right">
           <a style="cursor:pointer" class="nav-link" (click)="logout()">
             <i class="fas fa-sign-out-alt"></i>
             <span class="nav-text">Logout</span>
+          </a>
+        </li>
+
+        <li *ngIf="!api.settings.omnibar" class="nav-item right">
+          <a class="nav-link" style="cursor:pointer" (click)="api.settings.omnibar = !api.settings.omnibar">
+            <i class="fas fa-bars"></i>
+            <span class="nav-text">Omnibar</span>
           </a>
         </li>
 
