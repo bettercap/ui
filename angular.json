@@ -34,12 +34,14 @@
             "styles": [
                 "./node_modules/ngx-toastr/toastr.css",
                 "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-                "src/assets/fontawesome/css/all.css",
-                "src/styles.scss"
+                "./src/assets/fontawesome/css/all.css",
+                "./src/assets/openlayers/ol.css",
+                "./src/styles.scss"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./src/assets/openlayers/ol.js"
             ]
           },
           "configurations": {
