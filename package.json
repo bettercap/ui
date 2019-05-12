@@ -41,7 +41,8 @@
     "tslib": "^1.9.0",
     "url-parse": "^1.4.4",
     "yarn": "^1.13.0",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "tar": ">=4.4.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.9",
@@ -64,6 +65,7 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.1.6"
+    "typescript": "~3.1.6",
+    "tar": ">=4.4.2"
   }
 }
