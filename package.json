@@ -32,7 +32,7 @@
     "compare-versions": "^3.4.0",
     "core-js": "^2.5.4",
     "highlight.js": "^9.15.6",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.1",
     "ng": "0.0.0",
     "ngx-highlightjs": "^3.0.3",
     "ngx-toastr": "^10.0.2",
@@ -44,8 +44,8 @@
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.13.6",
-    "@angular/cli": "~7.1.4",
+    "@angular-devkit/build-angular": "^0.13.9",
+    "@angular/cli": "^7.3.9",
     "@angular/compiler-cli": "^7.2.8",
     "@angular/language-service": "~7.1.0",
     "@types/electron": "^1.6.10",
