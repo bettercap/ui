@@ -80,11 +80,26 @@ export class CapletsComponent implements OnInit, OnDestroy {
         return files;
     }
 
+    private capletNeedsUpdate(newCaplet, existingCaplet){
+        if ( !existingCaplet)
+            return true;
+        if ( newCaplet.size != existingCaplet.size )
+            return true;
+        if ( newCaplet.code.length != existingCaplet.code.length )
+            return true;
+        for ( let i = 0; i < newCaplet.code.length; i++ ) {
+            if (newCaplet.code[i] !== existingCaplet.code[i]) 
+                return true;
+        }
+        return false;
+    }
+
     private update(session) {
         for( let i = 0; i < session.caplets.length; i++ ) {
             let cap = session.caplets[i];
             if( !this.curCap || this.curCap.name == cap.name ) {
-                this.curCap = cap;
+                if (this.capletNeedsUpdate(cap, this.curCap))
+                    this.curCap = cap;
                 break;
             }
         }
