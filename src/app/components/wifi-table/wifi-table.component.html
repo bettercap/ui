@@ -69,9 +69,8 @@
 
           <td align="center" class="nowrap">
             <i *ngIf="ap.encryption === 'OPEN'" class="fas fa-unlock empty" placement="top" ngbTooltip="Open Network"></i>
-
+            <i *ngIf="ap.handshake" style="color: red; margin-right: 5px" ngbTooltip="WPA key material captured to {{ api.env('wifi.handshakes.file') }}" class="fas fa-key"></i>
             <span *ngIf="ap.encryption !== 'OPEN'" ngbTooltip="{{ ap.cipher }}, {{ ap.authentication}}">
-              <i *ngIf="ap.handshake" style="color: red; margin-right: 5px" ngbTooltip="WPA key material captured to {{ api.env('wifi.handshakes.file') }}" class="fas fa-key"></i>
               {{ ap.encryption }}
             </span>
 
