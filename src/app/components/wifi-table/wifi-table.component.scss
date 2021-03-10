@@ -1,1 +1,19 @@
+div.dropdown {
+    position: inherit;
+}
 
+tr.target {
+    background-color: #271313;
+}
+
+tr.target:hover {
+    background-color: #331d1d;
+}
+
+tr.whitelist {
+    background-color: #172110;
+}
+
+tr.whitelist:hover {
+    background-color: #1f2d15;
+}

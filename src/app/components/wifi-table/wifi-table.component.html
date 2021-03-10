@@ -1,8 +1,87 @@
+<div *ngIf="viewSkip" class="action-container shadow">
+  <form (ngSubmit)="onSkipStart()">
+    <div class="form-group">
+      <label for="targets">wifi.deauth.skip
+        <small class="text-muted">
+          Comma separated list of targets to skip during Deauth.
+        </small>
+      </label>
+      <input type="text" class="form-control form-control-sm param-input" id="deauth-whitelist" name="deauth-whitelist" placeholder="Current list of wifi.deauth.skip" [(ngModel)]="skipOpts.deauthlist">
+    </div>
+
+    <div class="form-group">
+      <label for="targets">wifi.assoc.skip
+        <small class="text-muted">
+          Comma separated list of targets to skip during Association.
+        </small>
+      </label>
+      <input type="text" class="form-control form-control-sm param-input" id="assoc-whitelist" name="assoc-whitelist" placeholder="Current list of wifi.assoc.skip" [(ngModel)]="skipOpts.assoclist">
+    </div>
+
+    <hr/>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-sm btn-warning">
+        <ng-container *ngIf="isRecon">
+          <i class="fas fa-redo-alt"></i>
+          Restart wifi.recon
+        </ng-container>
+        <ng-container *ngIf="!isRecon">
+          <i class="fas fa-play"></i>
+          Start wifi.recon
+        </ng-container>
+      </button>
+      <button type="button" class="btn btn-sm btn-dark" style="margin-left: 5px" (click)="saveSkipMenu()" ngbTooltip="For whitelist changes to take effect, wifi.recon must be (re)started.">
+        Save for later
+      </button>
+      <button type="button" class="btn btn-sm btn-dark" style="margin-left: 5px" (click)="hideSkipMenu()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="viewTarget" class="action-container shadow">
+  <form (ngSubmit)="onTargetStart()">
+    <div class="form-group">
+      <label for="targets">wifi.recon.targets
+        <small class="text-muted">
+          Comma separated list of targets to focus on during Deauth and Association attacks.
+        </small>
+      </label>
+      <input type="text" class="form-control form-control-sm param-input" id="targets" name="targets" placeholder="Current list of wifi.recon.targets" [(ngModel)]="targetOpts.targetlist">
+    </div>
+
+    <hr/>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-sm btn-warning">
+        <ng-container *ngIf="isRecon">
+          <i class="fas fa-redo-alt" ngbTooltip="Restart wifi.recon to begin targeting sequence"></i>
+          Restart wifi.recon
+        </ng-container>
+        <ng-container *ngIf="!isRecon">
+          <i class="fas fa-play" ngbTooltip="Start wifi.recon to begin targeting sequence"></i>
+          Start wifi.recon
+        </ng-container>
+      </button>
+      <button type="button" class="btn btn-sm btn-dark" style="margin-left: 5px" (click)="saveTargetMenu()">
+        Save for later
+      </button>
+      <button type="button" class="btn btn-sm btn-dark" style="margin-left: 5px" (click)="hideTargetMenu()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+
 <div class="table-responsive">
   <table class="table table-dark table-sm">
     <thead>
       <tr>
         <th width="1%" sortable-column="rssi" sort-direction="asc">RSSI</th>
+        <th *ngIf="viewSkip" width="1%" sortable-column="whitelist">Whitelist</th>
+        <th *ngIf="viewTarget" width="1%" sortable-column="targets">Targets</th>
         <th sortable-column="mac">BSSID</th>
         <th sortable-column="hostname">ESSID</th>
         <th sortable-column="vendor">Vendor</th>
@@ -30,11 +109,23 @@
       </tr>
 
       <ng-container *ngFor="let ap of aps | search: omnibar.query">
-        <tr *ngIf="(!currAP || currAP.mac == ap.mac) && (!wifi || wifi.state.channels.includes(ap.channel))" [class.alive]="ap | alive:1000">
+        <tr *ngIf="(!currAP || currAP.mac == ap.mac) && (!wifi || wifi.state.channels.includes(ap.channel))" [ngClass]="{'alive': ap | alive:1000, 'target': isTarget(ap), 'whitelist': isSkippedDeauth(ap) || isSkippedAssoc(ap) }">
           <td>
             <ui-signal-indicator [signalstrength]="ap.rssi"></ui-signal-indicator>
           </td>
+          <td *ngIf="viewSkip">
+            <input type="checkbox" style="margin-right: 15px" [attr.data-ip]="ap.mac" class="skip-deauth-toggle" [disabled]="" (change)="updateSkippingList()" [checked]="isSkippedDeauth(ap)" ngbTooltip="Deauth-Skip">
+            <input *ngIf="viewSkip" type="checkbox" style="margin-right: 15px" [attr.data-ip]="ap.mac" class="skip-assoc-toggle" [disabled]="" (change)="updateSkippingList()" [checked]="isSkippedAssoc(ap)" ngbTooltip="Association-Skip">
+            </td>
+          <td *ngIf="viewTarget">
+            <input type="checkbox" style="margin-right: 15px" [attr.data-ip]="ap.mac" class="target-toggle" [disabled]="" (change)="updateTargetList()" [checked]="isTarget(ap)" ngbTooltip="Target">
+            </td>
           <td>
+            <div style="float:right;">
+            <i *ngIf="isSkippedDeauth(ap)" style="margin-left: 5px; color: #38b130" ngbTooltip="Deauth-Skip" class="fas fa-user-slash"></i>
+            <i *ngIf="isSkippedAssoc(ap)" style="margin-left: 5px; color: #38b130" ngbTooltip="Association-Skip" class="fas fa-handshake-slash"></i>
+            <i *ngIf="isTarget(ap)" style="margin-left: 5px; color: #d2322d" ngbTooltip="Target" class="fas fa-radiation"></i>
+            </div>
             <div ngbDropdown [open]="visibleMenu == ap.mac">
               <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == ap.mac ? null : ap.mac)">
                 {{ ap.mac | uppercase }}
@@ -53,6 +144,18 @@
                   <li>
                     <a (click)="setAlias(ap); visibleMenu = null;">Set Alias</a>
                   </li>
+                  <li *ngIf="isSkippedDeauth(ap) || isSkippedAssoc(ap)">
+                    <a (click)="showWhitelistMenuFor(ap, false)">Remove from whitelist</a>
+                  </li>
+                  <li *ngIf="!isSkippedDeauth(ap) && !isSkippedAssoc(ap)">
+                    <a (click)="showWhitelistMenuFor(ap, true)">Add to whitelist</a>
+                  </li>
+                  <li *ngIf="isTarget(ap)">
+                    <a (click)="showTargetMenuFor(ap, false)">Remove from target list</a>
+                  </li>
+                  <li *ngIf="!isTarget(ap)">
+                    <a (click)="showTargetMenuFor(ap, true)">Add to target list</a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -69,7 +172,7 @@
 
           <td align="center" class="nowrap">
             <i *ngIf="ap.encryption === 'OPEN'" class="fas fa-unlock empty" placement="top" ngbTooltip="Open Network"></i>
-            <a href="{{ ap.shakefile }}"><i *ngIf="ap.handshake" style="color: red; margin-right: 5px" ngbTooltip="WPA key material captured to {{ api.env('wifi.handshakes.file') }}" class="fas fa-key"></i></a>
+            <a href="/handshakes/{{ ap.shakefile }}"><i *ngIf="ap.handshake" style="color: red; margin-right: 5px" ngbTooltip="WPA key material captured to {{ ap.shakefile }}" class="fas fa-key"></i></a>
             <span *ngIf="ap.encryption !== 'OPEN'" ngbTooltip="{{ ap.cipher }}, {{ ap.authentication}}">
               {{ ap.encryption }}
             </span>

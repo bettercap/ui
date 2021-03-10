@@ -1,3 +1,19 @@
+<div *ngIf="viewSettingsWifi" class="action-container shadow">
+  <form>
+    <div class="form-group">
+       <span>test</span>
+    </div>
+
+    <hr/>
+
+    <div class="form-group">
+      <button type="button" class="btn btn-sm btn-dark" style="margin-left: 5px" (click)="hideSettings(settingsCmd)">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+
 <div class="omnibar collapse" [class.show]="api.settings.omnibar" id="omniCollapse">
 
   <div *ngIf="withCmd" class="row">
@@ -108,6 +124,17 @@
            (click)="onClearClicked()">
           <i class="fas fa-trash-alt"></i>
         </button>
+
+          <button 
+            *ngIf="settingsCmd" 
+            type="button" 
+            class="btn btn-secondary btn-sm" 
+            ngbTooltip="Open quick settings panel for active module."
+            placement="right"
+           (click)="showSettings(settingsCmd)">
+            <i class="fas fa-sliders-h"></i>
+            Quick Settings
+          </button>
 
         <ng-container *ngIf="withLimit">
           <select 

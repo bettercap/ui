@@ -21,6 +21,7 @@ let params = [];
 export class OmnibarComponent implements OnInit, OnDestroy {
     modules: any = {};
     clearCmd: string = "";
+    settingsCmd: string = "";
     restorePause: boolean = false;
     withCmd: boolean = false;
     withLimit: boolean = false;
@@ -30,6 +31,7 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     cmd: string = '';
     ifaces: any = [];
     rest: any = null;
+    viewSettingsWifi: boolean = false;
 
     configs: any = {
         '/lan': {
@@ -45,7 +47,8 @@ export class OmnibarComponent implements OnInit, OnDestroy {
             'modules': { 'wifi': 'wifi.recon' },
             'clearCmd': 'wifi.clear',
             'withCmd': true,
-            'withIfaces': true
+            'withIfaces': true,
+            'settingsCmd': 'wifi'
         },
 
         '/ble': {
@@ -103,6 +106,16 @@ export class OmnibarComponent implements OnInit, OnDestroy {
                 this.api.paused = true;
             }
         });
+    }
+
+    showSettings(cmd : any) {
+        if( cmd == 'wifi' )
+        this.viewSettingsWifi = true;
+    }
+
+    hideSettings(cmd : any) {
+        if( cmd == 'wifi' )
+        this.viewSettingsWifi = false;
     }
 
     showRecordModal() {
@@ -177,6 +190,7 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     private updateState( url : string ) {
         this.modules = {};
         this.clearCmd = '';
+        this.settingsCmd = '';
         this.withCmd  = true;
         this.withLimit = false;
         this.withIfaces = false;

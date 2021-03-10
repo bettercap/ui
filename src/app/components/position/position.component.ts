@@ -4,6 +4,7 @@ import { OmniBarService } from '../../services/omnibar.service';
 import { Event } from '../../models/event';
 
 declare var ol: any;
+declare var window: any;
 
 @Component({
     selector: 'ui-position',
@@ -26,12 +27,12 @@ export class PositionComponent implements OnInit, OnDestroy {
                 this.update();
             })
         ];
-
+        var source = new ol.source.XYZ({url: 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png' });
         this.map = new ol.Map({
             target: 'map',
             layers: [
                 new ol.layer.Tile({
-                    source: new ol.source.OSM()
+                    source: source
                 })
             ],
             view: new ol.View({
@@ -39,7 +40,8 @@ export class PositionComponent implements OnInit, OnDestroy {
                 zoom: 18
             })
         });
-
+        // Change to other xyz url..
+        source.setUrl('http://' + window.location.host + ':8088/styles/basic-preview/{z}/{x}/{y}.png');
         this.addMarker(this.api.session.gps.Latitude, this.api.session.gps.Longitude)
     }
 
