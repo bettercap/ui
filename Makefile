@@ -3,7 +3,7 @@ deps:
 	@npm i
 
 build: deps
-	@echo "buiding ui ..."
+	@echo "building ui ..."
 	@ng build --prod
 
 zip: build
