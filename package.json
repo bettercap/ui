@@ -32,7 +32,7 @@
     "compare-versions": "^3.4.0",
     "core-js": "^2.5.4",
     "highlight.js": "^9.15.6",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ng": "0.0.0",
     "ngx-highlightjs": "^3.0.3",
     "ngx-toastr": "^10.0.2",
