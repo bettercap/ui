@@ -4,6 +4,7 @@ deps:
 
 build: deps
 	@echo "building ui ..."
+	@export NODE_OPTIONS=--openssl-legacy-provider
 	@ng build --prod
 
 zip: build
