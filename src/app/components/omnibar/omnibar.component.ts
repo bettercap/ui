@@ -1,11 +1,11 @@
-import {Component, Output, Input, OnInit, OnDestroy} from '@angular/core';
-import {Router, NavigationStart } from '@angular/router';
-import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
-import {Observable} from 'rxjs/Observable';
+import { Component, Output, Input, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
 
-import {OmniBarService} from '../../services/omnibar.service';
-import {ApiService} from '../../services/api.service';
-import { ToastrService } from 'ngx-toastr';  
+import { OmniBarService } from '../../services/omnibar.service';
+import { ApiService } from '../../services/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 declare var $: any;
 
@@ -60,6 +60,12 @@ export class OmnibarComponent implements OnInit, OnDestroy {
             'withCmd': true,
         },
 
+        '/can': {
+            'modules': { 'can': 'can.recon' },
+            'clearCmd': 'can.clear',
+            'withCmd': true,
+        },
+
         '/gps': {
             'modules': { 'gps': 'gps' },
             'withCmd': true,
@@ -80,17 +86,17 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         },
     };
 
-    constructor(public svc: OmniBarService, public api: ApiService, private toastr: ToastrService, private router: Router) { 
-        
+    constructor(public svc: OmniBarService, public api: ApiService, private toastr: ToastrService, private router: Router) {
+
     }
 
     ngOnInit() {
         this.router.events
-        .subscribe((event) => {
-            if( event instanceof NavigationStart) {
-                this.updateState(event.url);
-            }
-        });
+            .subscribe((event) => {
+                if (event instanceof NavigationStart) {
+                    this.updateState(event.url);
+                }
+            });
 
         this.updateState(this.router.url);
 
@@ -98,8 +104,8 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         this.api.onNewData.subscribe(session => {
             this.update();
 
-            if( this.restorePause ) {
-                this.restorePause = false; 
+            if (this.restorePause) {
+                this.restorePause = false;
                 this.api.paused = true;
             }
         });
@@ -139,29 +145,29 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         this.rest.state.load_progress = 0.0;
 
         $('#loadingModal').appendTo('body').modal({
-            backdrop: 'static', 
+            backdrop: 'static',
             keyboard: false
         });
     }
 
-    curReplaytime() : string {
+    curReplaytime(): string {
         let cur = new Date(Date.parse(this.api.session.polled_at));
         let start = new Date(Date.parse(this.rest.state.rec_started));
         let diff = cur.getTime() - start.getTime();
-        return String( Math.floor(diff / 1000) );
+        return String(Math.floor(diff / 1000));
     }
 
     setReplayFrame(frame) {
-        this.rest.state.rec_cur_frame = 
-        this.api.sessionFrom = 
-        this.api.eventsFrom = frame;
+        this.rest.state.rec_cur_frame =
+            this.api.sessionFrom =
+            this.api.eventsFrom = frame;
 
         let wasPaused = this.api.paused;
 
         // unpause, wait for an update and restore pause if needed
         this.api.paused = false;
-        if( wasPaused ) {
-            this.restorePause = true; 
+        if (wasPaused) {
+            this.restorePause = true;
         }
     }
 
@@ -169,21 +175,21 @@ export class OmnibarComponent implements OnInit, OnDestroy {
         this.api.cmd("api.rest.replay off");
     }
 
-    replayPerc() : string {
+    replayPerc(): string {
         let perc = parseInt(String((this.rest.state.rec_cur_frame / this.rest.state.rec_frames) * 100));
         return String(perc);
     }
 
-    private updateState( url : string ) {
+    private updateState(url: string) {
         this.modules = {};
         this.clearCmd = '';
-        this.withCmd  = true;
+        this.withCmd = true;
         this.withLimit = false;
         this.withIfaces = false;
 
-        for( var path in this.configs ) {
-            if( url.indexOf(path) === 0 ) {
-                for( var attr in this.configs[path] ) {
+        for (var path in this.configs) {
+            if (url.indexOf(path) === 0) {
+                for (var attr in this.configs[path]) {
                     this[attr] = this.configs[path][attr];
                 }
                 return;
@@ -194,72 +200,72 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     private update() {
         this.rest = this.api.module('api.rest');
 
-        if( this.rest.state.load_progress == 100.0 ) {
+        if (this.rest.state.load_progress == 100.0) {
             $('#loadingModal').modal('hide');
         }
 
         handlers = [];
         params = [];
 
-        for( let i = 0; i < this.api.session.modules.length; i++ ){
+        for (let i = 0; i < this.api.session.modules.length; i++) {
             let mod = this.api.session.modules[i];
 
             this.enabled[mod.name] = mod.running;
 
-            for( let j = 0; j < mod.handlers.length; j++ ) {
-                handlers.push( mod.handlers[j].name );
+            for (let j = 0; j < mod.handlers.length; j++) {
+                handlers.push(mod.handlers[j].name);
             }
 
-            for( let name in mod.parameters ) {
-                params.push( mod.parameters[name].name );
+            for (let name in mod.parameters) {
+                params.push(mod.parameters[name].name);
             }
-        }   
+        }
 
         this.ifaces = [];
-        for( let i = 0; i < this.api.session.interfaces.length; i++ ) {
+        for (let i = 0; i < this.api.session.interfaces.length; i++) {
             let iface = this.api.session.interfaces[i];
 
-            if( iface.addresses.length == 0 && !iface.flags.includes('LOOPBACK') ) {
+            if (iface.addresses.length == 0 && !iface.flags.includes('LOOPBACK')) {
                 this.ifaces.push(iface);
             }
         }
     }
 
     ngOnDestroy() {
-        
+
     }
 
     onClearClicked() {
-        if( confirm("This will clear the records from both the API and the UI, continue?") ) {
+        if (confirm("This will clear the records from both the API and the UI, continue?")) {
             this.api.cmd(this.clearCmd);
         }
     }
 
-    isWifiIface(iface : any ) : boolean {
+    isWifiIface(iface: any): boolean {
         let wif = this.api.session.env.data['wifi.interface'];
-        if( wif == '' ) {
+        if (wif == '') {
             return iface.name == this.api.session.interface.hostname;
         }
         return iface.name == wif;
     }
 
-    onSetWifiInterface(name : string) {
+    onSetWifiInterface(name: string) {
         this.api.cmd('set wifi.interface ' + name);
         this.toastr.info("Set wifi.interface to " + name);
     }
 
-    onModuleToggleClicked(mod : any) {
+    onModuleToggleClicked(mod: any) {
         this.update();
-        
+
         let toggle = this.enabled[mod.key] ? 'off' : 'on';
         let selected = $('#wifiiface').val();
         let bar = this;
-        let cb = function() {
+        let cb = function () {
             bar.enabled[mod.key] = !bar.enabled[mod.key];
             bar.api.cmd(mod.value + ' ' + toggle);
         };
 
-        if( selected && toggle == 'on' && this.withIfaces ) {
+        if (selected && toggle == 'on' && this.withIfaces) {
             this.api.cmd('set wifi.interface ' + selected, true).subscribe(
                 (val) => {
                     cb();
@@ -267,7 +273,7 @@ export class OmnibarComponent implements OnInit, OnDestroy {
                 error => {
                     cb();
                 },
-                () => {}
+                () => { }
             );
         } else {
             cb();
@@ -277,18 +283,18 @@ export class OmnibarComponent implements OnInit, OnDestroy {
     searchCommand(text$: Observable<string>) {
         return text$.pipe(
             distinctUntilChanged(),
-            map(function(term) {
-                if( term.length < 2 )
+            map(function (term) {
+                if (term.length < 2)
                     return [];
 
                 let lwr = term.toLowerCase();
-                if( lwr.indexOf('set ') === 0 ) {
+                if (lwr.indexOf('set ') === 0) {
                     let par = lwr.substring(4);
                     return params
                         .filter(p => p.toLowerCase().indexOf(par) > -1)
                         .map(p => 'set ' + p);
                 }
-                
+
                 return handlers.filter(h => h.toLowerCase().indexOf(lwr) > -1);
             })
         );
@@ -296,7 +302,7 @@ export class OmnibarComponent implements OnInit, OnDestroy {
 
     onCmd() {
         let cmd = this.cmd.trim();
-        if( cmd.length > 0 ) {
+        if (cmd.length > 0) {
             this.cmd = '';
             this.api.cmd(cmd);
         }

@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';  
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
@@ -20,6 +20,7 @@ import { LanTableComponent } from './components/lan-table/lan-table.component';
 import { WifiTableComponent } from './components/wifi-table/wifi-table.component';
 import { BleTableComponent } from './components/ble-table/ble-table.component';
 import { HidTableComponent } from './components/hid-table/hid-table.component';
+import { CanTableComponent } from './components/can-table/can-table.component';
 import { PositionComponent } from './components/position/position.component';
 import { CapletsComponent } from './components/caplets/caplets.component';
 import { AdvancedComponent } from './components/advanced/advanced.component';
@@ -36,9 +37,9 @@ import { ModIconPipe } from './components/modicon.pipe';
 import { RecTimePipe } from './components/rectime.pipe';
 
 export function hljsLanguages() {
-  return [
-    {name: 'json', func: json}
-  ];
+    return [
+        { name: 'json', func: json }
+    ];
 }
 
 @NgModule({
@@ -52,11 +53,12 @@ export function hljsLanguages() {
         LanTableComponent,
         BleTableComponent,
         HidTableComponent,
+        CanTableComponent,
         PositionComponent,
         WifiTableComponent,
         AdvancedComponent,
         CapletsComponent,
-        
+
         OmnibarComponent,
         SignalIndicatorComponent,
         SortableColumnComponent,
@@ -84,7 +86,7 @@ export function hljsLanguages() {
             languages: hljsLanguages
         })
     ],
-    entryComponents:[EventComponent],
+    entryComponents: [EventComponent],
     providers: [],
     bootstrap: [AppComponent]
 })

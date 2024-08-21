@@ -1,0 +1,37 @@
+<div class="table-responsive">
+  <table class="table table-dark table-sm">
+    <thead>
+      <tr>
+        <th width="1%" sortable-column="name" sort-direction="asc">Name</th>
+        <th>Description</th>
+        <th width="1%" sortable-column="frames">Frames</th>
+        <th width="1%" sortable-column="read">Read</th>
+        <th width="1%" class="nowrap" sortable-column="last_seen">Seen</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngIf="devices.length == 0">
+        <td colspan="4" align="center">
+          <i>empty</i>
+        </td>
+      </tr>
+
+      <tr *ngFor="let device of devices | search: omnibar.query" [class.alive]="device | alive:5000">
+        <td class="nowrap">
+          {{ device.name }}
+        </td>
+        <td>
+          {{ device.description ? device.description : ''}}
+        </td>
+        <td class="nowrap">
+          {{ device.frames }}
+        </td>
+        <td class="nowrap">
+          {{ device.read | size }}
+        </td>
+        <td class="nowrap time">{{ device.last_seen | date: 'HH:mm:ss' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
