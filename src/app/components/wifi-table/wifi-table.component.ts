@@ -90,15 +90,14 @@ export class WifiTableComponent implements OnInit, OnDestroy {
         let fileName = filePath.split('/').at(-1);
 
         this.api.readFile(filePath).subscribe(
-            (val) => {
+            (val: any) => {
                 var file = new File([val], fileName, { type: 'application/octect-stream' });
-                var isChrome = !!window.chrome;
-                var isIE = /*@cc_on!@*/false || !!document.documentMode;
-                var isEdge = !isIE && !!window.StyleMedia;
+                var isChrome = !!window['chrome'];
+                var isIE = !!document['documentMode'];
+                var isEdge = !isIE && !!window['StyleMedia'];
 
                 if (isChrome) {
-
-                    var url = window.URL || window.webkitURL;
+                    var url = window['URL'] || window['webkitURL'];
 
                     var downloadLink = $('<a></a>');
                     downloadLink.attr('href', url.createObjectURL(file));
