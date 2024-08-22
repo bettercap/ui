@@ -18,58 +18,58 @@ import { Command, Response } from '../models/command';
 declare var $: any;
 
 export class Settings {
-    public schema: string   = document.location.protocol || 'http:';
-    public host: string     = document.location.hostname || "127.0.0.1";
-    public port: string     = (document.location.protocol || 'http:') == 'http:' ? '8081' : '8083';
-    public path: string     = '/api';
+    public schema: string = document.location.protocol || 'http:';
+    public host: string = document.location.hostname || "127.0.0.1";
+    public port: string = (document.location.protocol || 'http:') == 'http:' ? '8081' : '8083';
+    public path: string = '/api';
     public interval: number = 1000;
-    public events: number   = 25;
-    public muted: string[]  = [];
+    public events: number = 25;
+    public muted: string[] = [];
     public omnibar: boolean = true;
     public pinned: any = {
         modules: {},
         caplets: {}
     };
 
-    public URL() : string {
+    public URL(): string {
         return this.schema + '//' + this.host + ':' + this.port + this.path;
     }
 
-    public Warning() : boolean {
-        if( this.host == 'localhost' || this.host == '127.0.0.1' )
+    public Warning(): boolean {
+        if (this.host == 'localhost' || this.host == '127.0.0.1')
             return false;
 
         return this.schema != 'https:';
     }
 
-    public isPinned(name : string) : boolean {
+    public isPinned(name: string): boolean {
         return (name in this.pinned.modules) || (name in this.pinned.caplets);
     }
 
-    public pinToggle(name : string, what : string) {
-        if( what == 'caplet' ) {
-            if( this.isPinned(name) )
+    public pinToggle(name: string, what: string) {
+        if (what == 'caplet') {
+            if (this.isPinned(name))
                 delete this.pinned.caplets[name];
             else
                 this.pinned.caplets[name] = true;
         } else {
-            if( this.isPinned(name) )
+            if (this.isPinned(name))
                 delete this.pinned.modules[name];
             else
                 this.pinned.modules[name] = true;
         }
     }
 
-    public from(obj : any) {
-        this.schema   = obj.schema || this.schema;
-        this.host     = obj.host || this.host;
-        this.port     = obj.port || this.port;
-        this.path     = obj.path || this.path;
+    public from(obj: any) {
+        this.schema = obj.schema || this.schema;
+        this.host = obj.host || this.host;
+        this.port = obj.port || this.port;
+        this.path = obj.path || this.path;
         this.interval = obj.interval || this.interval;
-        this.events   = obj.events || this.events;
-        this.muted    = obj.muted || this.muted;
-        this.omnibar  = obj.omnibar || this.omnibar;
-        this.pinned   = obj.pinned || this.pinned;
+        this.events = obj.events || this.events;
+        this.muted = obj.muted || this.muted;
+        this.omnibar = obj.omnibar || this.omnibar;
+        this.pinned = obj.pinned || this.pinned;
     }
 
     public save() {
@@ -88,15 +88,15 @@ export class Settings {
 }
 
 export class Credentials {
-    public valid: boolean       = false;
-    public user: string         = "";
-    public pass: string         = "";
+    public valid: boolean = false;
+    public user: string = "";
+    public pass: string = "";
     public headers: HttpHeaders = null;
 
-    public set(user : string, pass : string) {
-        this.user    = user;
-        this.pass    = pass;
-        this.headers = new HttpHeaders().set("Authorization", "Basic " + btoa(this.user+":"+this.pass));
+    public set(user: string, pass: string) {
+        this.user = user;
+        this.pass = pass;
+        this.headers = new HttpHeaders().set("Authorization", "Basic " + btoa(this.user + ":" + this.pass));
     }
 
     public save() {
@@ -107,8 +107,8 @@ export class Credentials {
     }
 
     public clear() {
-        this.user    = "";
-        this.pass    = "";
+        this.user = "";
+        this.pass = "";
         this.headers = null;
     }
 }
@@ -118,40 +118,40 @@ export class Credentials {
 })
 export class ApiService {
     // what API to interact with and how to interact with it
-    public settings       : Settings = new Settings();
+    public settings: Settings = new Settings();
     // updated session object
-    public session        : Session = null;
+    public session: Session = null;
     // updated events objects
-    public events         : Event[] = new Array();
+    public events: Event[] = new Array();
     // current /api/session execution time in milliseconds
-    public ping           : number = 0;
+    public ping: number = 0;
     // true if updates have been paused
-    public paused         : boolean = false;
+    public paused: boolean = false;
     // filled if /api/session can't be retrieved
-    public error          : any = null;
+    public error: any = null;
     // if filled it will pass the parameter once to /api/session
-    public sessionFrom    : string = '';
+    public sessionFrom: string = '';
     // if filled it will pass the parameter once to /api/events
-    public eventsFrom     : string = '';
+    public eventsFrom: string = '';
 
     // triggerd when the session object has been updated
-    public onNewData      : EventEmitter<Session> = new EventEmitter();
+    public onNewData: EventEmitter<Session> = new EventEmitter();
     // triggered when the events have been updated
-    public onNewEvents    : EventEmitter<Event[]> = new EventEmitter();
+    public onNewEvents: EventEmitter<Event[]> = new EventEmitter();
     // triggered when the user credentials are not valid
-    public onLoggedOut    : EventEmitter<any> = new EventEmitter();
+    public onLoggedOut: EventEmitter<any> = new EventEmitter();
     // triggered when the user credentials are valid and he's just been logged in
-    public onLoggedIn     : EventEmitter<any> = new EventEmitter();
+    public onLoggedIn: EventEmitter<any> = new EventEmitter();
     // triggered when there's an error (either bad auth or just the api is down) on /api/session
-    public onSessionError : EventEmitter<any> = new EventEmitter();
+    public onSessionError: EventEmitter<any> = new EventEmitter();
     // triggered when a command returns an error
-    public onCommandError : EventEmitter<any> = new EventEmitter();
+    public onCommandError: EventEmitter<any> = new EventEmitter();
 
-    private creds         : Credentials = new Credentials();
-    private cachedSession : Observable<Session>;
-    private cachedEvents  : Observable<Event[]>;
+    private creds: Credentials = new Credentials();
+    private cachedSession: Observable<Session>;
+    private cachedEvents: Observable<Event[]>;
 
-    constructor(private http:HttpClient) {
+    constructor(private http: HttpClient) {
         // we use these observable objects to return a cached
         // version of the session or the events when an error
         // occurs
@@ -173,30 +173,30 @@ export class ApiService {
 
     // return true if the user is logged in with valid credentials
     // and we got the first session object
-    public Ready() : boolean {
+    public Ready(): boolean {
         return this.creds.valid && this.session && this.session.modules && this.session.modules.length > 0;
     }
 
     // return a module given its name
     // TODO: just use a dictionary for session.modules!
-    public module(name : string) {
-        for( let i = 0; i < this.session.modules.length; i++ ){
+    public module(name: string) {
+        for (let i = 0; i < this.session.modules.length; i++) {
             let mod = this.session.modules[i];
-            if( mod.name == name ) {
+            if (mod.name == name) {
                 return mod;
             }
         }
         return null;
     }
 
-    public env(name : string) {
-        for( let key in this.session.env.data ) {
-            if( name == key )
+    public env(name: string) {
+        for (let key in this.session.env.data) {
+            if (name == key)
                 return this.session.env.data[key];
         }
         return "";
     }
-    
+
     // start polling /api/events every second
     public pollEvents() {
         console.log("api.pollEvents() started");
@@ -226,7 +226,7 @@ export class ApiService {
 
     // log out the user
     public logout() {
-        if( this.creds.valid == false )
+        if (this.creds.valid == false)
             return;
 
         console.log("api.logout()");
@@ -237,16 +237,16 @@ export class ApiService {
     // read settings and user credentials from the local storage if available
     private loadStorage() {
         let sets = localStorage.getItem('settings');
-        if( sets ) {
+        if (sets) {
             this.settings.from(JSON.parse(sets));
         }
 
         let auth = localStorage.getItem('auth');
-        if( auth ) {
+        if (auth) {
             let creds = JSON.parse(auth);
             console.log("found stored credentials");
             this.login(creds.username, creds.password).subscribe((session) => {
-                this.session = session;  
+                this.session = session;
             });
         } else {
             this.session = null;
@@ -272,7 +272,7 @@ export class ApiService {
 
     // handler for /api/events response
     private eventsNew(response) {
-        if( this.paused == false ) {
+        if (this.paused == false) {
             this.events = response;
             this.onNewEvents.emit(response);
         }
@@ -290,43 +290,43 @@ export class ApiService {
     }
 
     // GET /api/events and return an observable list of events
-    public getEvents() : Observable<Event[]> {
-        if( this.isPaused() )
+    public getEvents(): Observable<Event[]> {
+        if (this.isPaused())
             return this.cachedEvents;
 
         let from = this.eventsFrom;
-        if( from != '' ) {
+        if (from != '') {
             this.eventsFrom = '';
         }
 
         return this.http
-        .get<Event[]>( this.settings.URL() + '/events', 
-        {
-            headers: this.creds.headers,
-            params: {'from':from, 'n': String(this.settings.events)}
-        })
-        .map(response => this.eventsNew(response))
-        .catch(error => this.eventsError(error));
+            .get<Event[]>(this.settings.URL() + '/events',
+                {
+                    headers: this.creds.headers,
+                    params: { 'from': from, 'n': String(this.settings.events) }
+                })
+            .map(response => this.eventsNew(response))
+            .catch(error => this.eventsError(error));
     }
 
     // DELETE /api/events and clear events
     public clearEvents() {
         console.log("clearing events");
         this.http
-        .delete( this.settings.URL() + '/events', {headers: this.creds.headers})
-        .subscribe(response => this.eventsNew([]));
+            .delete(this.settings.URL() + '/events', { headers: this.creds.headers })
+            .subscribe(response => this.eventsNew([]));
     }
 
     // set the credentials as valid after a succesfull session request,
     // if the user was logged out, it'll emit the onLoggedIn event
-    private setLoggedIn() : boolean {
+    private setLoggedIn(): boolean {
         let wasLogged = this.creds.valid;
 
         this.creds.valid = true;
         this.saveStorage();
 
         // if the user wasn't logged, broadcast the logged in event
-        if(wasLogged == false) {
+        if (wasLogged == false) {
             console.log("loggedin.emit");
             this.onLoggedIn.emit();
         }
@@ -339,7 +339,7 @@ export class ApiService {
         this.ping = 0;
 
         // handle bad credentials and general errors separately
-        if( error.status == 401 ) {
+        if (error.status == 401) {
             this.logout();
             console.log("loggedout.emit");
             this.onLoggedOut.emit(error);
@@ -357,22 +357,22 @@ export class ApiService {
     private sessionNew(start, response) {
         let wasError = this.error != null;
 
-        this.ping  = new Date().getTime() - start.getTime();
+        this.ping = new Date().getTime() - start.getTime();
         this.error = null;
 
         // if in prod, make sure we're talking to a compatible API version
-        if(  compareVersions(response.version, environment.requires) == -1 ) {
-            if( environment.production ) {
+        if (compareVersions(response.version, environment.requires) == -1) {
+            if (environment.production) {
                 this.logout();
                 this.onLoggedOut.emit({
                     status: 666,
-                    error: "This client requires at least API v" + environment.requires + 
-                    " but " + this.settings.URL() + " is at v" + response.version
+                    error: "This client requires at least API v" + environment.requires +
+                        " but " + this.settings.URL() + " is at v" + response.version
                 });
                 return response;
             }
         }
-        
+
         // save credentials and emit logged in event if needed
         let wasLogged = this.setLoggedIn();
 
@@ -383,11 +383,11 @@ export class ApiService {
         // if we just logged in and the user has muted events in his
         // preferences that are not in the API ignore list, we need to
         // restore them
-        if( wasError == true || wasLogged == false ) {
-            let toRestore = this.settings.muted.filter(function(e){ return !muted.includes(e); })
-            if( toRestore.length ) {
+        if (wasError == true || wasLogged == false) {
+            let toRestore = this.settings.muted.filter(function (e) { return !muted.includes(e); })
+            if (toRestore.length) {
                 console.log("restoring muted events:", toRestore);
-                for( let i = 0; i < toRestore.length; i++ ) {
+                for (let i = 0; i < toRestore.length; i++) {
                     this.cmd("events.ignore " + toRestore[i]);
                 }
             }
@@ -404,56 +404,56 @@ export class ApiService {
         // pause ui updates if:
         //
         // the user excplicitly pressed the paused button
-        return this.paused || 
-        // an action button is hovered (https://stackoverflow.com/questions/8981463/detect-if-hovering-over-element-with-jquery)
-        $('.btn-action').filter(function() { return $(this).is(":hover"); }).length > 0 || 
-        // a dropdown is open
-        $('.menu-dropdown').is(':visible');
+        return this.paused ||
+            // an action button is hovered (https://stackoverflow.com/questions/8981463/detect-if-hovering-over-element-with-jquery)
+            $('.btn-action').filter(function () { return $(this).is(":hover"); }).length > 0 ||
+            // a dropdown is open
+            $('.menu-dropdown').is(':visible');
     }
 
     // GET /api/session and return an observable Session
-    public getSession() : Observable<Session> {
-        if( this.isPaused() )
+    public getSession(): Observable<Session> {
+        if (this.isPaused())
             return this.cachedSession;
 
         let from = this.sessionFrom;
-        if( from != '' ) {
+        if (from != '') {
             this.sessionFrom = '';
         }
 
         let start = new Date();
         return this.http
-        .get<Session>( this.settings.URL() + '/session', {
-            headers: this.creds.headers,
-            params: {'from':from}
-        })
-        .map(response => this.sessionNew(start, response))
-        .catch(error => this.sessionError(error));
+            .get<Session>(this.settings.URL() + '/session', {
+                headers: this.creds.headers,
+                params: { 'from': from }
+            })
+            .map(response => this.sessionNew(start, response))
+            .catch(error => this.sessionError(error));
     }
 
     // GET /api/file given its name
-    public readFile(name : string) {
+    public readFile(name: string) {
         console.log("readFile " + name);
         return this.http.get<Response>(
-            this.settings.URL() + '/file', 
+            this.settings.URL() + '/file',
             {
                 headers: this.creds.headers,
                 responseType: 'text' as 'json',
-                params: {'name': name}
+                params: { 'name': name }
             });
     }
 
     // POST /api/file given its name and new contents
-    public writeFile(name : string, data : string) {
+    public writeFile(name: string, data: string) {
         console.log("writeFile " + name + " " + data.length + "b");
 
         this.paused = false;
         return this.http.post<Response>(
-            this.settings.URL() + '/file', 
+            this.settings.URL() + '/file',
             new Blob([data]),
             {
                 headers: this.creds.headers,
-                params: {'name': name}
+                params: { 'name': name }
             });
     }
 
@@ -463,18 +463,18 @@ export class ApiService {
     public cmd(cmd: string, sync: boolean = false) {
         this.paused = false;
 
-        if( sync ) {
+        if (sync) {
             console.log("cmd: " + cmd);
             return this.http.post<Response>(
-                this.settings.URL() + '/session', 
-                {cmd: cmd},
-                {headers: this.creds.headers});
-        } 
+                this.settings.URL() + '/session',
+                { cmd: cmd },
+                { headers: this.creds.headers });
+        }
 
         return this.cmd(cmd, true)
             .subscribe(
-                (val) => {},
+                (val) => { },
                 error => { this.onCommandError.emit(error); },
-                () => {});
+                () => { });
     }
 }

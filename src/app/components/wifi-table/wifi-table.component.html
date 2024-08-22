@@ -76,10 +76,15 @@
             <i *ngIf="ap.encryption === 'OPEN'" class="fas fa-unlock empty" placement="top"
               ngbTooltip="Open Network"></i>
 
-            <span *ngIf="ap.encryption !== 'OPEN'" ngbTooltip="{{ ap.cipher }}, {{ ap.authentication}}">
-              <i *ngIf="ap.handshake" style="color: red; margin-right: 5px"
-                ngbTooltip="WPA key material captured to {{ api.env('wifi.handshakes.file') }}" class="fas fa-key"></i>
-              {{ ap.encryption }}
+            <span>
+              <span style="cursor:pointer;" *ngIf="ap.handshake" (click)="downloadHandshakeFor(ap)">
+                <i style=" color: red; margin-right: 5px"
+                  ngbTooltip="WPA key material captured to {{ handshakeFileFor(ap) }}" class="fas fa-key">
+                </i>
+              </span>
+              <span *ngIf="ap.encryption !== 'OPEN'" ngbTooltip="{{ ap.cipher }}, {{ ap.authentication}}">
+                {{ ap.encryption }}
+              </span>
             </span>
 
             <div ngbDropdown *ngIf="(ap.wps | json) != '{}'" [open]="visibleWPS == ap.mac" placement="left"
