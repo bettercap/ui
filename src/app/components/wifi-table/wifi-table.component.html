@@ -10,7 +10,8 @@
 
         <th width="1%" *ngIf="hopping" sortable-column="channel">Ch</th>
         <th width="1%" *ngIf="!hopping">
-          <button type="button" class="btn btn-dark btn-sm" (click)="api.cmd('wifi.recon.channel clear')" placement="right" ngbTooltip="Restore channel hopping.">
+          <button type="button" class="btn btn-dark btn-sm" (click)="api.cmd('wifi.recon.channel clear')"
+            placement="right" ngbTooltip="Restore channel hopping.">
             <i class="fas fa-broadcast-tower"></i>
           </button>
         </th>
@@ -30,13 +31,16 @@
       </tr>
 
       <ng-container *ngFor="let ap of aps | search: omnibar.query">
-        <tr *ngIf="(!currAP || currAP.mac == ap.mac) && (!wifi || wifi.state.channels.includes(ap.channel))" [class.alive]="ap | alive:1000">
+        <tr
+          *ngIf="(!currAP || currAP.mac == ap.mac) && (!wifi || !wifi.state.channels.length || wifi.state.channels.includes(ap.channel))"
+          [class.alive]="ap | alive:1000">
           <td>
             <ui-signal-indicator [signalstrength]="ap.rssi"></ui-signal-indicator>
           </td>
           <td>
             <div ngbDropdown [open]="visibleMenu == ap.mac">
-              <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleMenu = (visibleMenu == ap.mac ? null : ap.mac)">
+              <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle
+                (click)="visibleMenu = (visibleMenu == ap.mac ? null : ap.mac)">
                 {{ ap.mac | uppercase }}
               </button>
               <div ngbDropdownMenu class="menu-dropdown">
@@ -60,7 +64,8 @@
 
           <td [class.empty]="ap.hostname === '<hidden>'">
             {{ ap.hostname }}
-            <span *ngIf="ap.alias" class="badge badge-pill badge-secondary" style="margin-left:5px">{{ ap.alias }}</span>
+            <span *ngIf="ap.alias" class="badge badge-pill badge-secondary" style="margin-left:5px">{{ ap.alias
+              }}</span>
           </td>
 
           <td [class.empty]="!ap.vendor">
@@ -68,18 +73,20 @@
           </td>
 
           <td align="center" class="nowrap">
-            <i *ngIf="ap.encryption === 'OPEN'" class="fas fa-unlock empty" placement="top" ngbTooltip="Open Network"></i>
+            <i *ngIf="ap.encryption === 'OPEN'" class="fas fa-unlock empty" placement="top"
+              ngbTooltip="Open Network"></i>
 
             <span *ngIf="ap.encryption !== 'OPEN'" ngbTooltip="{{ ap.cipher }}, {{ ap.authentication}}">
-              <i *ngIf="ap.handshake" style="color: red; margin-right: 5px" ngbTooltip="WPA key material captured to {{ api.env('wifi.handshakes.file') }}" class="fas fa-key"></i>
+              <i *ngIf="ap.handshake" style="color: red; margin-right: 5px"
+                ngbTooltip="WPA key material captured to {{ api.env('wifi.handshakes.file') }}" class="fas fa-key"></i>
               {{ ap.encryption }}
             </span>
 
-            <div ngbDropdown *ngIf="(ap.wps | json) != '{}'" [open]="visibleWPS == ap.mac" placement="left" style="display: inline">
-              <button ngbDropdownToggle 
-                class="btn btn-sm badge badge-secondary btn-action drop-small btn-tiny" 
+            <div ngbDropdown *ngIf="(ap.wps | json) != '{}'" [open]="visibleWPS == ap.mac" placement="left"
+              style="display: inline">
+              <button ngbDropdownToggle class="btn btn-sm badge badge-secondary btn-action drop-small btn-tiny"
                 (click)="visibleWPS = (visibleWPS == ap.mac ? null : ap.mac)">
-                WPS 
+                WPS
               </button>
 
               <div ngbDropdownMenu class="menu-dropdown">
@@ -95,9 +102,10 @@
             </div>
 
           </td>
-          
+
           <td *ngIf="hopping" align="center">
-            <button type="button" class="btn btn-dark btn-sm btn-action" (click)="api.cmd('wifi.recon.channel ' + ap.channel)" ngbTooltip="Stay on channel {{ ap.channel }}.">
+            <button type="button" class="btn btn-dark btn-sm btn-action"
+              (click)="api.cmd('wifi.recon.channel ' + ap.channel)" ngbTooltip="Stay on channel {{ ap.channel }}.">
               {{ ap.channel }}
             </button>
           </td>
@@ -124,7 +132,7 @@
       </ng-container>
     </tbody>
   </table>
-  
+
   <table *ngIf="currAP" class="table table-sm table-dark">
     <thead>
       <tr>
@@ -150,7 +158,8 @@
         </td>
         <td class="nowrap">
           <span ngbDropdown [open]="visibleClientMenu == client.mac">
-            <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle (click)="visibleClientMenu = (visibleClientMenu == client.mac ? null : client.mac)">
+            <button class="btn btn-sm btn-dark btn-action" ngbDropdownToggle
+              (click)="visibleClientMenu = (visibleClientMenu == client.mac ? null : client.mac)">
               {{ client.mac | uppercase }}
             </button>
             <div ngbDropdownMenu class="menu-dropdown">
@@ -166,9 +175,10 @@
                 </li>
               </ul>
             </div>
-          </span>  
+          </span>
 
-          <span *ngIf="client.alias" (click)="setAlias(client)" class="badge badge-pill badge-secondary" style="margin-left: 5px; cursor:pointer">
+          <span *ngIf="client.alias" (click)="setAlias(client)" class="badge badge-pill badge-secondary"
+            style="margin-left: 5px; cursor:pointer">
             {{ client.alias }}
           </span>
         </td>
@@ -215,4 +225,3 @@
     </div>
   </div>
 </div>
-
