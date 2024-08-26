@@ -1,68 +1,68 @@
 <span [ngSwitch]="true" class="event-data">
   <span *ngSwitchCase="event.tag == 'endpoint.new'">
-    Detected <strong>{{ data.ipv4 }}</strong> 
+    Detected <strong>{{ data.ipv4 }}</strong>
     <span *ngIf="data.alias" class="badge badge-pill badge-secondary" style="margin-left: 5px">{{ data.alias }}</span>
-    {{ data.mac | uppercase }} 
+    {{ data.mac | uppercase }}
     <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>
   </span>
   <span *ngSwitchCase="event.tag == 'endpoint.lost'">
-    Lost <strong>{{ data.ipv4 }}</strong> {{ data.mac | uppercase }} 
+    Lost <strong>{{ data.ipv4 }}</strong> {{ data.mac | uppercase }}
     <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>
   </span>
 
   <span *ngSwitchCase="event.tag == 'wifi.client.probe'">
-    Station <strong>{{ data.mac | uppercase }}</strong> 
-    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span> 
+    Station <strong>{{ data.mac | uppercase }}</strong>
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>
     <span *ngIf="data.alias" class="badge badge-pill badge-secondary">{{ data.alias }}</span>
     is probing for <strong>{{ data.essid }}</strong>
   </span>
   <span *ngSwitchCase="event.tag == 'wifi.client.handshake'">
-    Captured handshake for station <strong>{{ data.station }}</strong> 
+    Captured handshake for station <strong>{{ data.station }}</strong>
     connecting to AP <strong>{{ data.ap }}</strong>
   </span>
   <span *ngSwitchCase="event.tag == 'wifi.client.new'">
-    Detected client 
+    Detected client
     <strong>{{ data.Client.mac | uppercase }}</strong>
-    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.Client.vendor }}</span> 
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.Client.vendor }}</span>
     <span *ngIf="data.Client.alias" class="badge badge-pill badge-secondary">{{ data.Client.alias }}</span>
     for AP <strong>{{ data.AP.mac | uppercase }}</strong>
   </span>
   <span *ngSwitchCase="event.tag == 'wifi.client.lost'">
-    Lost client 
+    Lost client
     <strong>{{ data.Client.mac | uppercase }}</strong>
-    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.Client.vendor }}</span> 
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.Client.vendor }}</span>
     <span *ngIf="data.Client.alias" class="badge badge-pill badge-secondary">{{ data.Client.alias }}</span>
     for AP <strong>{{ data.AP.mac | uppercase }}</strong>
   </span>
   <span *ngSwitchCase="event.tag == 'wifi.ap.new'">
-    Detected <strong>{{ data.hostname }}</strong> 
+    Detected <strong>{{ data.hostname }}</strong>
     {{ data.mac | uppercase }}
-    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span> 
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>
     with <strong>{{ data.encryption }}</strong> encryption and {{ data.clients.length }} clients
   </span>
   <span *ngSwitchCase="event.tag == 'wifi.ap.lost'">
-    Lost <strong>{{ data.hostname }}</strong> 
+    Lost <strong>{{ data.hostname }}</strong>
     {{ data.mac | uppercase }}
     <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>
   </span>
 
   <span *ngSwitchCase="event.tag == 'ble.device.new'">
-    Detected <strong>{{ data.mac | uppercase }}</strong> 
-    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>: 
+    Detected <strong>{{ data.mac | uppercase }}</strong>
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>:
     <strong>flags</strong>: {{data.flags}},
     <strong>connectable</strong>: {{data.connectable}}
   </span>
   <span *ngSwitchCase="event.tag == 'ble.device.lost'">
-    Lost <strong>{{ data.mac | uppercase }}</strong> 
-    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>: 
+    Lost <strong>{{ data.mac | uppercase }}</strong>
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>:
     <strong>flags</strong>: {{data.flags}},
     <strong>connectable</strong>: {{data.connectable}}
   </span>
   <span *ngSwitchCase="event.tag == 'ble.device.disconnected'">
   </span>
   <span *ngSwitchCase="event.tag == 'ble.connection.timeout'">
-    Timeout while connecting to <strong>{{ data.mac | uppercase }}</strong> 
-    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>: 
+    Timeout while connecting to <strong>{{ data.mac | uppercase }}</strong>
+    <span *ngIf="data.vendor" class="badge badge-pill badge-dark">{{ data.vendor }}</span>:
     <strong>flags</strong>: {{data.flags}},
     <strong>connectable</strong>: {{data.connectable}}
   </span>
@@ -73,6 +73,28 @@
   <span *ngSwitchCase="event.tag == 'hid.device.lost'">
     Lost {{data.type}} HID device <strong>{{ data.address | uppercase }}</strong>
   </span>
+
+  <span *ngSwitchCase="event.tag == 'can.message'">
+    <span *ngIf="data.Source && (data.Source | json) != '{}'" class="badge badge-pill badge-dark">
+      {{ data.Source.name }} &gt;
+    </span>
+    <span *ngIf="data.Name != ''" class="badge badge-pill badge-warning">
+      {{ data.Name }}
+    </span>
+    <span *ngIf="data.Signals && (data.Signals | json) != '{}'">
+      <span *ngFor="let item of data.Signals | keyvalue" style="margin-left:2px">
+        {{ item.key }}: {{ item.value }}
+      </span>
+    </span>
+
+    <span *ngIf="data.Name == ''" class="badge badge-pill badge-warning">
+      &lt;0x{{ data.Frame.id.toString(16) }}&gt;
+    </span>
+    <span *ngIf="data.Name == ''" class="badge badge-pill badge-dark">
+      {{ data.Frame.data }}
+    </span>
+  </span>
+
 
   <span *ngSwitchCase="event.tag == 'sys.log'">
     <strong>{{ logLevel(data.Level) }}</strong>: {{ data.Message | unbash }}

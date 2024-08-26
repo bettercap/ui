@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Event } from '../../models/event';
 
 @Component({
@@ -20,11 +20,11 @@ export class EventComponent {
 
     constructor() { }
 
-    get data() : string {
+    get data(): string {
         return this.event.data;
     }
 
-    logLevel(level : number) : string {
+    logLevel(level: number): string {
         return this.logLevels[level];
     }
 }

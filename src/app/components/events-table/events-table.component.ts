@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import { OmniBarService } from '../../services/omnibar.service';
@@ -20,8 +20,8 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     subscriptions: any = [];
     curEvent: any = null;
 
-    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) { 
-        this.sort = {field: 'time', direction: 'asc', type:''};
+    constructor(private api: ApiService, private sortService: SortService, public omnibar: OmniBarService) {
+        this.sort = { field: 'time', direction: 'asc', type: '' };
         this.update(this.api.events);
     }
 
@@ -38,7 +38,7 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        for( let i = 0; i < this.subscriptions.length; i++ ){
+        for (let i = 0; i < this.subscriptions.length; i++) {
             this.subscriptions[i].unsubscribe();
         }
         this.subscriptions = [];
@@ -49,16 +49,17 @@ export class EventsTableComponent implements OnInit, OnDestroy {
 
         this.modEnabled = mod.running;
         this.ignored = mod.state.ignoring.sort();
-        this.events = events; 
+        this.events = events;
         this.sortService.sort(this.events, this.sort)
     }
 
-    btnFor(tag : string) : string {
-        if( tag == 'wifi.client.handshake' )
+    btnFor(tag: string): string {
+        if (tag == 'wifi.client.handshake')
             return 'danger';
 
         tag = tag.split('.')[0];
-        switch(tag) {
+        switch (tag) {
+            case 'can': return 'success';
             case 'wifi': return 'success';
             case 'endpoint': return 'secondary';
             case 'ble': return 'primary';
@@ -67,13 +68,13 @@ export class EventsTableComponent implements OnInit, OnDestroy {
         }
     }
 
-    showEvent(event : any) {
+    showEvent(event: any) {
         this.curEvent = event;
         $('#eventModal').modal('show');
     }
 
     curEventData() {
-        if( this.curEvent ) {
+        if (this.curEvent) {
             return JSON.stringify(this.curEvent.data, null, 2);
         }
         return '';
