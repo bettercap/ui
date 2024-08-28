@@ -1,28 +1,23 @@
 <div class="row">
   <div class="col-2 mod-nav">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      <a 
-         (click)="curMod = 0; successMessage = '';"
-         class="nav-link" [class.active]="curMod === 0">
-          <i class="fas fa-cog" style="margin-right: 5px"></i>
-          Main
+      <a (click)="curMod = 0; successMessage = '';" class="nav-link" [class.active]="curMod === 0">
+        <i class="fas fa-cog" style="margin-right: 5px"></i>
+        Main
       </a>
 
-      <a 
-         (click)="curMod = 1; successMessage = '';"
-         class="nav-link" [class.active]="curMod === 1">
-          <i class="fas fa-ethernet" style="margin-right: 5px"></i>
-          Network
+      <a (click)="curMod = 1; successMessage = '';" class="nav-link" [class.active]="curMod === 1">
+        <i class="fas fa-ethernet" style="margin-right: 5px"></i>
+        Network
       </a>
 
-      <a 
-         *ngFor="let mod of modules | search: omnibar.query" 
-         (click)="curMod = mod; successMessage = '';"
-         href="#/advanced/{{ mod.name }}"
-         class="nav-link" [class.active]="curMod && curMod.name == mod.name" [class.text-muted]="!mod.running">
+      <a *ngFor="let mod of modules | search: omnibar.query" (click)="curMod = mod; successMessage = '';"
+        href="#/advanced/{{ mod.name }}" class="nav-link" [class.active]="curMod && curMod.name == mod.name"
+        [class.text-muted]="!mod.running">
         <i class="fas fa-{{ mod.name | modicon }}" style="margin-right: 5px"></i>
         {{ mod.name }}
-        <i *ngIf="api.settings.isPinned(mod.name)" class="fas fa-thumbtack float-right shadow" style="transform: rotate(45deg); font-size: .7rem"></i>
+        <i *ngIf="api.settings.isPinned(mod.name)" class="fas fa-thumbtack float-right shadow"
+          style="transform: rotate(45deg); font-size: .7rem"></i>
       </a>
 
     </div>
@@ -38,15 +33,6 @@
           <table class="table table-dark table-sm">
             <tbody>
               <tr>
-                <th>UI Version</th>
-                <td>
-                  {{ environment.version }}
-                  <span class="text-muted">
-                    requires API {{ environment.requires }}
-                  </span>
-                </td>
-              </tr>
-              <tr>
                 <th>Connected To</th>
                 <td>
                   {{ api.settings.URL() }}
@@ -61,7 +47,7 @@
               <tr>
                 <th>API Version</th>
                 <td>
-                  {{ api.session.version }} 
+                  {{ api.session.version }}
                   <span class="text-muted">
                     compiled with {{ api.session.goversion }} for {{ api.session.os }} {{ api.session.arch }}
                   </span>
@@ -70,14 +56,14 @@
 
               <tr>
                 <th>CPU</th>
-                <td>Using {{ api.session.resources.max_cpus }} of {{ api.session.resources.cpus }} logical CPUs 
+                <td>Using {{ api.session.resources.max_cpus }} of {{ api.session.resources.cpus }} logical CPUs
                   <span class="text-muted">({{ api.session.resources.goroutines }} goroutines)</span>
                 </td>
               </tr>
               <tr>
                 <th>MEM</th>
                 <td>
-                  Heap: {{ api.session.resources.alloc | size }} Sys: {{ api.session.resources.sys | size }} 
+                  Heap: {{ api.session.resources.alloc | size }} Sys: {{ api.session.resources.sys | size }}
                   <span class="text-muted">
                     gc cycles: {{ api.session.resources.gcs }}
                   </span>
@@ -97,14 +83,10 @@
             <tbody>
               <tr *ngFor="let arg of session.options | keyvalue | search: omnibar.query">
                 <th width="1%">{{ arg.key }}</th>
-                <td> 
+                <td>
                   <div class="input-group">
-                    <input 
-                       type="text" 
-                       class="form-control form-control-sm param-input" 
-                       name="{{ arg.key }}" 
-                       id="{{ arg.key }}" 
-                       [(ngModel)]="arg.value" readonly/>
+                    <input type="text" class="form-control form-control-sm param-input" name="{{ arg.key }}"
+                      id="{{ arg.key }}" [(ngModel)]="arg.value" readonly />
                   </div>
                 </td>
               </tr>
@@ -121,14 +103,10 @@
             <tbody>
               <tr *ngFor="let val of session.env.data | keyvalue | search: omnibar.query">
                 <th width="1%">{{ val.key }}</th>
-                <td> 
+                <td>
                   <div class="input-group">
-                    <input 
-                       type="text" 
-                       class="form-control form-control-sm param-input" 
-                       name="{{ val.key }}" 
-                       id="{{ val.key }}" 
-                       [(ngModel)]="val.value" readonly/>
+                    <input type="text" class="form-control form-control-sm param-input" name="{{ val.key }}"
+                      id="{{ val.key }}" [(ngModel)]="val.value" readonly />
                   </div>
                 </td>
               </tr>
@@ -150,12 +128,12 @@
               <ng-container *ngFor="let iface of api.session.interfaces | search: omnibar.query">
                 <tr>
                   <td width="1%" class="nowrap">
-                    <span class="badge badge-secondary" style="margin-right: 5px">{{ iface.name }}</span>   
+                    <span class="badge badge-secondary" style="margin-right: 5px">{{ iface.name }}</span>
                     <small class="text-muted">{{ iface.flags }}</small>
                   </td>
                   <td>
                     <span *ngIf="iface.mac != '0'">
-                      {{ iface.mac | uppercase }} 
+                      {{ iface.mac | uppercase }}
                       <small class="text-muted" *ngIf="iface.vendor">{{ iface.vendor }}</small>
                     </span>
                   </td>
@@ -197,7 +175,7 @@
       </div>
 
     </div>
-    
+
 
 
     <div *ngIf="curMod !== 0 && curMod !== 1" class="container-fluid shadow-sm">
@@ -206,19 +184,19 @@
           <p class="mod-description">
             {{ curMod.description }}
           </p>
-          <a (click)="api.settings.pinToggle(curMod.name)" 
-             ngbTooltip="{{ api.settings.isPinned(curMod.name) ? 'Unpin' : 'Pin' }} this module to the navigation bar."
-             style="cursor:pointer;margin-right: 15px"
-             >
-            <i class="fas fa-thumbtack shadow" [ngStyle]="{'transform': api.settings.isPinned(curMod.name) ? 'rotate(45deg)' : ''}"></i>
+          <a (click)="api.settings.pinToggle(curMod.name)"
+            ngbTooltip="{{ api.settings.isPinned(curMod.name) ? 'Unpin' : 'Pin' }} this module to the navigation bar."
+            style="cursor:pointer;margin-right: 15px">
+            <i class="fas fa-thumbtack shadow"
+              [ngStyle]="{'transform': api.settings.isPinned(curMod.name) ? 'rotate(45deg)' : ''}"></i>
           </a>
           <span *ngIf="curMod.running" class="badge badge-success">
             Running
-          </span> 
+          </span>
           <span *ngIf="!curMod.running" class="badge badge-danger">
             Not running
-          </span> 
-          <hr/>
+          </span>
+          <hr />
         </div>
       </div>
 
@@ -247,7 +225,7 @@
               </button>
             </label>
             <p class="form-text text-muted">{{ cmd.description }}</p>
-          </div> 
+          </div>
         </div>
       </div>
 
@@ -264,13 +242,8 @@
             <p class="form-text text-muted">{{ p.value.description }}</p>
 
             <div class="input-group">
-              <input 
-                 type="text" 
-                 class="form-control form-control-sm param-input" 
-                 name="{{p.key}}" 
-                 id="{{p.key}}" 
-                 (keyup.enter)="saveParam(p.value)"
-                 [(ngModel)]="p.value.current_value" />
+              <input type="text" class="form-control form-control-sm param-input" name="{{p.key}}" id="{{p.key}}"
+                (keyup.enter)="saveParam(p.value)" [(ngModel)]="p.value.current_value" />
 
               <div class="input-group-append">
                 <button class="btn btn-sm btn-dark" type="button" (click)="saveParam(p.value)">
@@ -279,7 +252,7 @@
               </div>
             </div>
 
-          </div> 
+          </div>
         </div>
       </div>
     </div>
@@ -287,7 +260,8 @@
   </div>
 </div>
 
-<div id="commandModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="commandModalTitle" [ngModel]="curCmd" name="fieldName" ngDefaultControl>
+<div id="commandModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="commandModalTitle"
+  [ngModel]="curCmd" name="fieldName" ngDefaultControl>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -310,7 +284,7 @@
           <div class="text-right">
             <button type="submit" class="btn btn-sm btn-warning">
               <i class="fas fa-play"></i> Run
-            </button> 
+            </button>
           </div>
         </form>
       </div>

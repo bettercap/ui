@@ -1,7 +1,6 @@
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router";
-import { environment } from '../environments/environment';
 import { ApiService } from './services/api.service';
 import { Session } from './models/session';
 
@@ -22,8 +21,8 @@ export class AppComponent implements OnInit, OnDestroy {
         this.api.onLoggedIn.subscribe(() => {
             console.log("logged in");
             this.session = this.api.session;
-            this.sessionSubscription = this.api.pollSession().subscribe( (session) => { this.session = session; });
-            this.eventsSubscription = this.api.pollEvents().subscribe((events) => {});
+            this.sessionSubscription = this.api.pollSession().subscribe((session) => { this.session = session; });
+            this.eventsSubscription = this.api.pollEvents().subscribe((events) => { });
         });
 
         this.api.onLoggedOut.subscribe(error => {
@@ -31,12 +30,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
             this.session = null;
 
-            if( this.sessionSubscription ) {
+            if (this.sessionSubscription) {
                 this.sessionSubscription.unsubscribe();
                 this.sessionSubscription = null;
             }
 
-            if( this.eventsSubscription ) {
+            if (this.eventsSubscription) {
                 this.eventsSubscription.unsubscribe();
                 this.eventsSubscription = null;
             }
@@ -46,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.titleService.setTitle('bettercap ' + environment.name + ' ' + environment.version);
+        this.titleService.setTitle('bettercap');
     }
 
     ngOnDestroy() {
