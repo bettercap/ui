@@ -72,6 +72,7 @@ export class WifiTableComponent implements OnInit, OnDestroy {
 
     handshakeFileFor(ap) {
         let isAggregate = this.api.env('wifi.handshakes.aggregate');
+        console.log('isAggregate = ', isAggregate);
         if (isAggregate == true) {
             return this.api.env('wifi.handshakes.file');
         } else {

@@ -112,4 +112,6 @@ export interface Data {
   'wifi.hop.period': string;
   'wifi.skip-broken': string;
   'wifi.source.file': string;
+  'wifi.handshakes.aggregate': boolean;
+  'wifi.handshakes.file': string;
 }
