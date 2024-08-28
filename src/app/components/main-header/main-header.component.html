@@ -51,7 +51,7 @@
 
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [class.text-muted]="!api.module('can').running" routerLink="/can">
-          <i class="fa fa-battery-full">
+          <i class="fa fa-car">
             <span *ngIf="counters.can > 0" class="badge badge-pill badge-danger">{{ counters.can }}</span>
           </i>
           <span class="nav-text">CAN</span>
