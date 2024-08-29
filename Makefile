@@ -2,12 +2,11 @@ all: build
 
 deps:
 	@echo "installing dependencies ..."	
-	@npm i
+	@NODE_OPTIONS=--openssl-legacy-provider npm i --legacy-peer-deps
 
 build: deps
 	@echo "building ui ..."
-	@export NODE_OPTIONS=--openssl-legacy-provider
-	@ng build --prod
+	@NODE_OPTIONS=--openssl-legacy-provider ng build --prod   
 
 
 
