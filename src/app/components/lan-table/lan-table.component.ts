@@ -1,4 +1,6 @@
-import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import ipaddr from 'ipaddr.js';
+import isIpInRange from 'ip-range-check';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import { SortService, ColumnSortedEvent } from '../../services/sort.service';
 import { ApiService } from '../../services/api.service';
 import { Host } from '../../models/host';
@@ -59,8 +61,21 @@ export class LanTableComponent implements OnInit, OnDestroy {
         this.sortSub.unsubscribe();
     }
 
-    isSpoofed(host : any) : boolean {
-        return (host.ipv4 in this.spoofList);
+    isSpoofed(host: any): boolean {
+      const whitelistedTargets = this.spoofOpts.whitelist
+        .split(',')
+        .map((s) => s.trim())
+        .filter((s) => s.length);
+      
+      if (isIpInRange(host.ipv4, whitelistedTargets)) {
+        return false;
+      }
+    
+      if (host.ipv4 in this.spoofList) {
+        return true;
+      }
+    
+      return isIpInRange(host.ipv4, Object.keys(this.spoofList));
     }
 
     private updateSpoofOpts() {
@@ -133,8 +148,6 @@ export class LanTableComponent implements OnInit, OnDestroy {
     }
 
     private update(session) {
-        const ipRe = /^(?=.*[^\.]$)((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.?){4}$/;
-
         let spoofing = this.api.session.env.data['arp.spoof.targets']
             // split by comma and trim spaces
             .split(',')
@@ -153,13 +166,14 @@ export class LanTableComponent implements OnInit, OnDestroy {
         this.spoofList = {};
         // if there are elements that are not IP addresses, it means the user
         // has set the variable manually, which overrides the UI spoof list.
-        for( let i = 0; i < spoofing.length; i++ ) {
-            if( ipRe.test(spoofing[i]) ) {
-               this.spoofList[spoofing[i]] = true; 
-            } else {
-                this.spoofList = {};
-                break;
-            }
+        for (let i = 0; i < spoofing.length; i++) {
+          let spoofedTarget = spoofing[i];
+          if (ipaddr.isValid(spoofedTarget) || ipaddr.isValidCIDR(spoofedTarget)) {
+            this.spoofList[spoofedTarget] = true;
+          } else {
+            this.spoofList = {};
+            break;
+          }
         }
 
         this.iface = session.interface;
