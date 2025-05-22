@@ -62,6 +62,10 @@ export class LanTableComponent implements OnInit, OnDestroy {
     }
 
     isSpoofed(host: any): boolean {
+      if (host.mac == this.gateway.mac) {
+        return false;
+      }
+
       const whitelistedTargets = this.spoofOpts.whitelist
         .split(',')
         .map((s) => s.trim())
