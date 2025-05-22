@@ -29,6 +29,8 @@
     "compare-versions": "^3.4.0",
     "core-js": "^2.5.4",
     "highlight.js": "^9.15.6",
+    "ip-range-check": "^0.2.0",
+    "ipaddr.js": "^2.2.0",
     "jquery": "^3.4.1",
     "ng": "0.0.0",
     "ngx-highlightjs": "^3.0.3",
