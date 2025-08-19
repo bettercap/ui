@@ -14,7 +14,7 @@ Refer to [bettercap's documentation](https://www.bettercap.org/usage/#web-ui).
 
 ## Building from Sources
 
-Assuming you have `make`, `node` and `npm` correctly installed, first clone the repo somewhere, build the source and install to `/usr/local/share/bettercap/ui`:
+Assuming you have `make`, `node` and `npm` correctly installed, first clone the repo somewhere, then:
 
 ```sh
 git clone https://github.com/bettercap/ui.git ~/ui
@@ -23,6 +23,8 @@ make deps
 make build
 sudo make install
 ```
+
+This UI is going to be built along with bettercap as one of its submodules.
 
 ## License
 
