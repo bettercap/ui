@@ -27,5 +27,3 @@ sudo make install
 ## License
 
 This UI is made with ♥  by [the dev team](https://github.com/bettercap/ui/graphs/contributors) and it's released under the GPL 3 license.
-
-
