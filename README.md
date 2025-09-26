@@ -10,7 +10,7 @@ This is the official [bettercap](https://www.bettercap.org/)'s web UI.
 
 ## Installation
 
-Refer to [bettercap's documentation](https://www.bettercap.org/usage/#web-ui).
+Refer to [bettercap's documentation](https://www.bettercap.org/usage/web_ui/).
 
 ## Building from Sources
 
